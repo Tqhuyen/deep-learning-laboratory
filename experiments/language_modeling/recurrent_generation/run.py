@@ -293,7 +293,8 @@ def aggregate(results, config):
         bpcs = [run["validation_bpc"] for run in runs]
         summary["metrics"][cell] = {
             "bpc_mean": float(np.mean(bpcs)),
-            "bpc_std": float(np.std(bpcs, ddof=0)),
+            "bpc_std": float(np.std(bpcs, ddof=1)) if len(bpcs) > 1 else 0.0,
+            "values": [float(value) for value in bpcs],
         }
         summary["gradient_slopes"][cell] = float(
             np.mean([run["gradient_slope"] for run in runs])
@@ -357,6 +358,14 @@ def write_report(run_directory, summary, config, tier):
         )
     lines += [
         "",
+        "| cell | " + " | ".join(f"seed {seed}" for seed in config["seeds"]) + " |",
+        "|---|" + "---:|" * len(config["seeds"]),
+    ]
+    for cell in CELLS:
+        values = summary["metrics"][cell]["values"]
+        lines.append("| " + cell + " | " + " | ".join(f"{value:.4f}" for value in values) + " |")
+    lines += [
+        "",
         "| pair | Δ BPC | 95% paired-bootstrap CI | bootstrap p | Holm p |",
         "|---|---:|---|---:|---:|",
     ]
@@ -369,8 +378,9 @@ def write_report(run_directory, summary, config, tier):
     lines += [
         "",
         "A negative Δ BPC means the first cell has lower bits per character.",
-        "CIs are over validation windows; they quantify uncertainty on this corpus,",
-        "not a universal ordering of the cells.",
+        "The bootstrap resamples validation windows, so its interval can be much",
+        "narrower than run-to-run spread; the per-seed table is the stricter check.",
+        "CIs quantify uncertainty on this corpus, not a universal ordering.",
         "",
         "Samples are in `samples.txt` (same prompt, same sampling seed per cell).",
         "",

@@ -111,6 +111,8 @@ deep-learning-laboratory/
 │   └── smoke/              every experiment at the tiny tier
 ├── notebooks/
 │   └── recurrent_comparison.ipynb  Kaggle GPU run of both comparison studies
+├── results/
+│   └── recurrent_comparison/  reports, per-seed tables and figures
 ├── data/                   tiny Shakespeare, SST-2 fixture, prepare_sst2.py
 ├── docs/
 │   ├── conventions.md      tiers, scaling, testing, reproducibility
@@ -192,6 +194,17 @@ steps**, and is the difference larger than seed and test noise?
 
 `notebooks/recurrent_comparison.ipynb` runs both studies at the `development`
 tier on a Kaggle GPU and displays the reports and figures inline.
+
+Measured results (development tier, 3 seeds, Kaggle GPU):
+
+| task | RNN | GRU | LSTM | conditional conclusion |
+|---|---:|---:|---:|---|
+| SST-2 accuracy | 0.674 | **0.739** | **0.739** | gated cells beat the RNN; GRU ≈ LSTM |
+| Shakespeare BPC (lower is better) | **2.384** | 2.407 | 2.546 | RNN leads, but only the LSTM gap is stable across seeds |
+
+The full per-seed tables, confidence intervals, statistical tests, figures and
+interpretation are in
+[`results/recurrent_comparison/README.md`](results/recurrent_comparison/README.md).
 
 ## Learning path
 

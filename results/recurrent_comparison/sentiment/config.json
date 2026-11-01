@@ -1,0 +1,35 @@
+{
+  "source": "sst2",
+  "train_limit": 20000,
+  "max_steps": 1500,
+  "batch_size": 64,
+  "max_len": 64,
+  "embedding_dim": 64,
+  "target_parameters": 2000000,
+  "min_frequency": 2,
+  "learning_rate": 0.0003,
+  "weight_decay": 0.01,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "eval_every": 100,
+  "validation_batches": 10,
+  "val_fraction": 0.1,
+  "length_buckets": [
+    0,
+    8,
+    16,
+    32,
+    64
+  ],
+  "bootstrap_repetitions": 2000,
+  "tier": "development",
+  "seed": 0,
+  "device": "cuda",
+  "vocabulary_size": 9070,
+  "train_examples": 18001,
+  "validation_examples": 1999,
+  "test_examples": 872
+}

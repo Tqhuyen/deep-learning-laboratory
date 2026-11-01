@@ -355,9 +355,10 @@ def aggregate(results: dict[str, list[dict]], config: dict) -> dict:
         nlls = [run["nll"] for run in runs]
         summary["metrics"][cell] = {
             "accuracy_mean": float(np.mean(accuracies)),
-            "accuracy_std": float(np.std(accuracies, ddof=0)),
+            "accuracy_std": float(np.std(accuracies, ddof=1)) if len(accuracies) > 1 else 0.0,
             "nll_mean": float(np.mean(nlls)),
-            "nll_std": float(np.std(nlls, ddof=0)),
+            "nll_std": float(np.std(nlls, ddof=1)) if len(nlls) > 1 else 0.0,
+            "values": [float(value) for value in accuracies],
         }
         summary["gradient_slopes"][cell] = float(np.mean([run["gradient_slope"] for run in runs]))
 
@@ -435,6 +436,14 @@ def write_report(run_directory: Path, summary: dict, config: dict, tier: str) ->
         )
     lines += [
         "",
+        "| cell | " + " | ".join(f"seed {seed}" for seed in config["seeds"]) + " |",
+        "|---|" + "---:|" * len(config["seeds"]),
+    ]
+    for cell in CELLS:
+        values = summary["metrics"][cell]["values"]
+        lines.append("| " + cell + " | " + " | ".join(f"{value:.4f}" for value in values) + " |")
+    lines += [
+        "",
         "| pair | accuracy difference | 95% paired-bootstrap CI | McNemar p | Holm p |",
         "|---|---:|---|---:|---:|",
     ]
@@ -446,8 +455,11 @@ def write_report(run_directory: Path, summary: dict, config: dict, tier: str) ->
         )
     lines += [
         "",
-        "A CI that excludes zero and a Holm-corrected McNemar p < 0.05 support a",
-        "difference on this test set; neither establishes a universal ordering.",
+        "McNemar uses seed-0 predictions; the bootstrap interval uses seed-averaged",
+        "per-example correctness. Neither accounts for seed variability, so the",
+        "per-seed table above is the stricter check. A CI that excludes zero and a",
+        "Holm-corrected McNemar p < 0.05 support a difference on this test set;",
+        "neither establishes a universal ordering.",
         "",
     ]
     (run_directory / "report.md").write_text("\n".join(lines), encoding="utf-8")
@@ -557,6 +569,7 @@ def main() -> None:
     )
 
     series_by_length, counts, edges = accuracy_by_length(results, config)
+    bucket_labels = [f"{edges[index]}-{edges[index + 1]}" for index in range(len(edges) - 1)]
     plot_lines(
         {
             cell: (list(range(len(values))), values, None)
@@ -566,6 +579,7 @@ def main() -> None:
         xlabel="token-length bucket (see report)",
         ylabel="test accuracy",
         title="Sentiment accuracy by sequence length",
+        xticks=bucket_labels,
     )
     (run_directory / "length_buckets.json").write_text(
         json.dumps({"edges": edges, "counts": counts, "series": series_by_length}, indent=2),

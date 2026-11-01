@@ -30,6 +30,7 @@ def plot_lines(
     ylabel: str,
     title: str,
     logy: bool = False,
+    xticks: Sequence[str] | None = None,
 ) -> Path:
     """Plot named ``(x, y, yerr)`` series; ``yerr=None`` draws a plain line."""
     plt = _pyplot()
@@ -43,6 +44,9 @@ def plot_lines(
     axis.set_title(title)
     if logy:
         axis.set_yscale("log")
+    if xticks is not None:
+        axis.set_xticks(range(len(xticks)))
+        axis.set_xticklabels(xticks)
     axis.grid(alpha=0.25)
     axis.legend(frameon=False)
     figure.tight_layout()

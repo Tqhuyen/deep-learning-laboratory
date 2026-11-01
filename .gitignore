@@ -29,3 +29,6 @@ Thumbs.db
 
 # Prepared benchmark data (run data/prepare_sst2.py)
 data/sst2/
+
+# Kaggle output download
+kaggle_output/

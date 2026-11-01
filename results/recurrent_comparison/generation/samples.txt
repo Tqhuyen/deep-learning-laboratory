@@ -1,0 +1,33 @@
+# Samples (same prompt and sampling seed per cell)
+
+## rnn
+
+ROMEO:
+By not her lady lood more soldiep
+Is the many their senatation and in the father speak
+That fear upon the rest iastand's war
+That in the fear me speak, and therein;
+What semfest the mort a recoming t
+
+## gru
+
+ROMEO:
+By noble have wellow me in the eppess.
+
+ROMEO:
+Now, Lond Carrown,
+I that what little an sawn do as that the word subject
+By young in the fetsemble mother; more times,
+Will meet my motty of recoming t
+
+## lstm
+
+ROMEO:
+By not her you marces,
+Till lobe her fauthth of not menalance,
+The intale father his litse?
+
+MENENIUS:
+There of as and himself noch'd as fether
+As my connemence, so moth me fellows was the recomided
+
