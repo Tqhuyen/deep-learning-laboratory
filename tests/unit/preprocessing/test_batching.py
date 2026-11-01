@@ -2,15 +2,9 @@ from __future__ import annotations
 
 import torch
 
-from laboratory.data.batching import (
-    LanguageModelDataset,
-    Seq2SeqCollator,
-    Seq2SeqDataset,
-    pad_sequences,
-    random_lm_batch,
-    train_val_split,
-)
-from laboratory.data.tokenization import WordTokenizer
+from laboratory.datasets.sequence import Seq2SeqDataset
+from laboratory.preprocessing.batching import Seq2SeqCollator, pad_sequences, random_lm_batch
+from laboratory.preprocessing.text import WordTokenizer
 
 
 def test_pad_sequences_reports_pre_padding_lengths_and_truncates():
@@ -23,35 +17,11 @@ def test_pad_sequences_reports_pre_padding_lengths_and_truncates():
     assert lengths.tolist() == [2]
 
 
-def test_language_model_dataset_shifts_targets_by_one():
-    ids = torch.arange(10)
-    dataset = LanguageModelDataset(ids, block_size=4)
-    inputs, targets = dataset[0]
-    assert inputs.tolist() == [0, 1, 2, 3]
-    assert targets.tolist() == [1, 2, 3, 4]
-
-
-def test_language_model_dataset_rejects_short_streams():
-    try:
-        LanguageModelDataset(torch.arange(4), block_size=4)
-    except ValueError as error:
-        assert "block_size" in str(error)
-    else:
-        raise AssertionError("expected ValueError")
-
-
 def test_random_lm_batch_returns_shifted_pairs():
     ids = torch.arange(100)
     inputs, targets = random_lm_batch(ids, block_size=8, batch_size=5)
     assert inputs.shape == targets.shape == (5, 8)
     assert torch.equal(targets[:, :-1], inputs[:, 1:])
-
-
-def test_train_val_split_is_contiguous():
-    ids = torch.arange(100)
-    training, validation = train_val_split(ids, val_fraction=0.2)
-    assert len(training) == 80
-    assert torch.equal(training[-1] + 1, validation[0])
 
 
 def test_seq2seq_collator_builds_teacher_forcing_tensors():

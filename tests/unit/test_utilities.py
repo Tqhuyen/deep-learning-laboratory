@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 import torch
 
-from laboratory.utilities import count_parameters, get_device, lengths_mask
+from laboratory.utilities import RunningMean, count_parameters, get_device, lengths_mask
 
 
 def test_auto_device_prefers_cuda_when_present():
@@ -26,3 +26,10 @@ def test_count_parameters_can_ignore_frozen_weights():
 def test_lengths_mask_marks_real_tokens():
     mask = lengths_mask(torch.tensor([2, 0]), max_len=3)
     assert mask.tolist() == [[True, True, False], [False, False, False]]
+
+
+def test_running_mean_is_weighted_by_batch_size():
+    mean = RunningMean()
+    mean.update(2.0, n=3)
+    mean.update(4.0, n=1)
+    assert mean.mean == 2.5

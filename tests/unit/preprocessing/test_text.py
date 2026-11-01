@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from laboratory.data.tokenization import (
+from laboratory.preprocessing.text import (
     BPETokenizer,
     CharTokenizer,
     WordTokenizer,

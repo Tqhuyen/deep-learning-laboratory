@@ -3,7 +3,7 @@
 Each module here is a component you can drop into a model: attention,
 positional encodings, normalisation and feed-forward blocks. Assembled
 architectures live in :mod:`laboratory.models`; losses live in
-:mod:`laboratory.objectives`.
+:mod:`laboratory.losses`.
 
 The rule for adding code: a component that is useful to more than one model
 family goes here, with the same forward signature as what it replaces.

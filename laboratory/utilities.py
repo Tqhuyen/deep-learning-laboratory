@@ -49,6 +49,22 @@ def count_parameters(model: torch.nn.Module, trainable_only: bool = True) -> int
     return sum(p.numel() for p in params)
 
 
+class RunningMean:
+    """Weighted running average, shared by training and evaluation reporting."""
+
+    def __init__(self) -> None:
+        self.total = 0.0
+        self.count = 0
+
+    def update(self, value: float, n: int = 1) -> None:
+        self.total += float(value) * n
+        self.count += n
+
+    @property
+    def mean(self) -> float:
+        return self.total / max(self.count, 1)
+
+
 def causal_mask(seq_len: int, device: torch.device | str | None = None) -> torch.Tensor:
     """Lower-triangular boolean mask, shape ``(seq_len, seq_len)``.
 

@@ -15,8 +15,9 @@ opening an editor:
 | "we change the attention pattern" | `laboratory/blocks/attention.py` | `MultiHeadAttention.forward(x, memory, attn_mask, key_padding_mask, is_causal)` |
 | "we change the feed-forward block" | `laboratory/blocks/feedforward.py` | `(B, T, D) -> (B, T, D)` |
 | "we change the residual/normalisation order" | `EncoderLayer`/`DecoderLayer` in `laboratory/models/transformer.py` | block keeps `forward(x, key_padding_mask)` |
-| "we change the objective or the data pipeline" | the experiment's `run.py` plus `laboratory/data/batching.py` | `step_fn(model, batch) -> (loss, metrics)` |
-| "we change optimisation" | `laboratory/training/`, `laboratory/experiment.py` presets | `Trainer` unchanged |
+| "we change the objective" | `laboratory/losses/<task>.py` (the experiment selects it) | `(predictions, targets) -> scalar` |
+| "we change the data pipeline" | `laboratory/datasets/` and `laboratory/preprocessing/` | dataset item and collated batch stay the same |
+| "we change optimisation" | `laboratory/optimization/`, `laboratory/experiment.py` presets | `Trainer` unchanged |
 
 If a paper does not fit this table, it is probably changing several components;
 still apply the changes one at a time.

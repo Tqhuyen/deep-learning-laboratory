@@ -15,8 +15,6 @@ composes them.
 
 from __future__ import annotations
 
-import math
-
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -30,7 +28,10 @@ from laboratory import (
     Trainer,
     cosine_warmup,
     count_parameters,
+    generate,
     get_device,
+    make_optimizer,
+    perplexity,
     save_tokenizer,
     set_seed,
     token_cross_entropy,
@@ -146,29 +147,10 @@ class RecurrentLanguageModel(nn.Module):
             loss = token_cross_entropy(logits, targets)
         return logits, loss
 
-    @torch.no_grad()
-    def generate(
-        self,
-        idx: torch.Tensor,
-        max_new_tokens: int = 100,
-        temperature: float = 0.8,
-    ) -> torch.Tensor:
-        """Sample characters, recomputing the recurrence over the whole prefix."""
-        was_training = self.training
-        self.eval()
-        for _ in range(max_new_tokens):
-            logits, _ = self(idx[:, -256:])
-            logits = logits[:, -1, :] / max(temperature, 1e-8)
-            next_id = torch.multinomial(torch.softmax(logits, dim=-1), num_samples=1)
-            idx = torch.cat([idx, next_id], dim=1)
-        self.train(was_training)
-        return idx
-
-
 def recurrent_step(model: RecurrentLanguageModel, batch):
     inputs, targets = batch
     _, loss = model(inputs, targets)
-    return loss, {"perplexity": math.exp(min(loss.detach().item(), 20.0))}
+    return loss, {"perplexity": perplexity(loss)}
 
 
 def main() -> None:
@@ -222,8 +204,10 @@ def main() -> None:
         f"{len(train_dataset):,} training windows"
     )
 
-    optimizer = torch.optim.AdamW(
-        model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"]
+    optimizer = make_optimizer(
+        model.parameters(),
+        learning_rate=config["learning_rate"],
+        weight_decay=config["weight_decay"],
     )
     scheduler = cosine_warmup(optimizer, config["warmup_steps"], config["max_steps"])
     trainer = Trainer(model, optimizer, device=device, clip_grad=1.0, scheduler=scheduler)
@@ -255,8 +239,12 @@ def main() -> None:
 
     prompt = "ROMEO:"
     prompt_ids = torch.tensor([tokenizer.encode(prompt)], device=device)
-    sample = model.generate(
-        prompt_ids, max_new_tokens=config["sample_tokens"], temperature=0.8
+    sample = generate(
+        model,
+        prompt_ids,
+        max_new_tokens=config["sample_tokens"],
+        context_window=256,
+        temperature=0.8,
     )
     sample_text = tokenizer.decode(sample[0].tolist())
     (run_directory / "sample.txt").write_text(sample_text, encoding="utf-8")

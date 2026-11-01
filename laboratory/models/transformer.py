@@ -7,7 +7,7 @@ Three models, nothing else:
 * :class:`TransformerDecoder` — causal decoder with cross-attention.
 * :class:`GPT` — decoder-only causal LM (GPT/LLaMA-style).
 * :class:`Seq2SeqTransformer` — encoder + decoder + output projection, i.e. the
-  original 2017 architecture, with greedy decoding included.
+  original 2017 architecture; decoding lives in laboratory.inference.
 
 Pre-LN (``norm_first=True``, the modern default) normalises *before* each
 sublayer and adds a final norm; post-LN matches the original paper.
@@ -24,7 +24,7 @@ from ..blocks.positional_encoding import (
     RotaryEmbedding,
     SinusoidalPositionalEncoding,
 )
-from ..objectives.language import token_cross_entropy
+from ..losses.language import token_cross_entropy
 
 
 def build_positional(name: str, d_model: int, max_len: int, dropout: float):
@@ -307,38 +307,12 @@ class GPT(nn.Module):
             loss = token_cross_entropy(logits, targets)
         return logits, loss
 
-    @torch.no_grad()
-    def generate(
-        self,
-        idx: torch.Tensor,
-        max_new_tokens: int = 100,
-        temperature: float = 1.0,
-        top_k: int | None = None,
-    ) -> torch.Tensor:
-        """Sample ``max_new_tokens`` continuations (greedy when ``temperature=0``)."""
-        was_training = self.training
-        self.eval()
-        for _ in range(max_new_tokens):
-            logits, _ = self(idx[:, -self.max_len :])
-            logits = logits[:, -1, :] / max(temperature, 1e-8)
-            if top_k is not None:
-                k = min(top_k, logits.size(-1))
-                cutoff = torch.topk(logits, k, dim=-1).values[:, [-1]]
-                logits = logits.masked_fill(logits < cutoff, float("-inf"))
-            if temperature == 0:
-                next_id = logits.argmax(dim=-1, keepdim=True)
-            else:
-                next_id = torch.multinomial(torch.softmax(logits, dim=-1), num_samples=1)
-            idx = torch.cat([idx, next_id], dim=1)
-        self.train(was_training)
-        return idx
-
 
 class Seq2SeqTransformer(nn.Module):
     """Encoder-decoder transformer for sequence-to-sequence tasks.
 
     ``forward`` returns logits ``(B, Tt, tgt_vocab_size)``; teacher forcing is
-    provided by :class:`laboratory.data.Seq2SeqCollator` (``tgt_in`` / ``tgt_out``).
+    provided by :class:`laboratory.preprocessing.Seq2SeqCollator` (``tgt_in`` / ``tgt_out``).
     """
 
     def __init__(
@@ -408,27 +382,3 @@ class Seq2SeqTransformer(nn.Module):
     ) -> torch.Tensor:
         memory = self.encode(src_ids, src_key_padding_mask)
         return self.decode(tgt_ids, memory, src_key_padding_mask, tgt_key_padding_mask)
-
-    @torch.no_grad()
-    def generate(
-        self,
-        src_ids: torch.Tensor,
-        max_new_tokens: int = 64,
-        src_key_padding_mask: torch.Tensor | None = None,
-    ) -> torch.Tensor:
-        """Greedy decoding; returns ``[<bos>, ..., <eos>]`` ids per row."""
-        was_training = self.training
-        self.eval()
-        batch = src_ids.size(0)
-        memory = self.encode(src_ids, src_key_padding_mask)
-        ys = torch.full((batch, 1), self.bos_id, dtype=torch.long, device=src_ids.device)
-        finished = torch.zeros(batch, dtype=torch.bool, device=src_ids.device)
-        for _ in range(max_new_tokens):
-            logits = self.decode(ys, memory, src_key_padding_mask)
-            next_id = logits[:, -1, :].argmax(dim=-1, keepdim=True)
-            ys = torch.cat([ys, next_id], dim=1)
-            finished |= next_id.squeeze(1) == self.eos_id
-            if bool(finished.all()) or ys.size(1) >= self.max_len:
-                break
-        self.train(was_training)
-        return ys

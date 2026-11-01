@@ -4,7 +4,7 @@ import pytest
 import torch
 import torch.nn.functional as F
 
-from laboratory.objectives.language import token_cross_entropy
+from laboratory.losses.language import token_cross_entropy
 
 
 def test_token_cross_entropy_flattens_batches_and_ignores_padding():

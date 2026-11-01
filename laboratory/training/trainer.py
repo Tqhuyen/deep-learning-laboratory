@@ -1,4 +1,4 @@
-"""The training loop and checkpointing.
+"""The training loop.
 
 The loop is about 80 lines of real logic: move the batch to the device, run the
 step function, scale the loss, clip, step, schedule, log. Everything
@@ -14,7 +14,8 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 
-from .metrics import RunningMean
+from ..utilities import RunningMean
+from .checkpoints import save_checkpoint
 
 
 def _to_device(batch, device: torch.device):
@@ -40,12 +41,12 @@ class Trainer:
 
     Args:
         model: any ``nn.Module``; it is moved to the device for you.
-        optimizer: e.g. ``torch.optim.AdamW(model.parameters(), lr=3e-4)``.
+        optimizer: from :mod:`laboratory.optimization` or constructed directly.
         device: ``"auto"`` picks CUDA when available.
         clip_grad: max global gradient norm (0 disables clipping).
         amp: mixed precision, only enabled on CUDA.
         scheduler: stepped once per optimizer step, e.g. from
-            :mod:`laboratory.training.schedules`.
+            :mod:`laboratory.optimization`.
     """
 
     def __init__(
@@ -148,32 +149,3 @@ class Trainer:
             if max_steps is not None and self.step_count >= max_steps:
                 break
         return history
-
-
-def save_checkpoint(
-    path: str | Path,
-    model: nn.Module,
-    optimizer: torch.optim.Optimizer | None = None,
-    **extra,
-) -> None:
-    """Save weights plus optional optimizer state and arbitrary metadata."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    payload = {"model": model.state_dict(), **extra}
-    if optimizer is not None:
-        payload["optimizer"] = optimizer.state_dict()
-    torch.save(payload, path)
-
-
-def load_checkpoint(
-    path: str | Path,
-    model: nn.Module,
-    optimizer: torch.optim.Optimizer | None = None,
-    map_location: str | torch.device = "cpu",
-) -> dict:
-    """Load what :func:`save_checkpoint` wrote; returns the metadata."""
-    payload = torch.load(path, map_location=map_location, weights_only=False)
-    model.load_state_dict(payload["model"])
-    if optimizer is not None and "optimizer" in payload:
-        optimizer.load_state_dict(payload["optimizer"])
-    return {k: v for k, v in payload.items() if k not in ("model", "optimizer")}

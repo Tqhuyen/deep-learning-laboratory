@@ -27,15 +27,6 @@ def test_gpt_is_causal():
     assert torch.allclose(original_logits[:, :-1], modified_logits[:, :-1], atol=1e-6)
 
 
-def test_gpt_generation_appends_exactly_the_requested_tokens():
-    model = GPT(vocab_size=9, d_model=8, n_heads=2, n_layers=1, max_len=6)
-    prompt = torch.randint(0, 9, (2, 3))
-    generated = model.generate(prompt, max_new_tokens=4, temperature=0.0)
-    assert generated.shape == (2, 7)
-    assert torch.equal(generated[:, :3], prompt)
-    assert torch.equal(generated, model.generate(prompt, max_new_tokens=4, temperature=0.0))
-
-
 def test_encoder_hides_padding_from_real_tokens():
     model = TransformerEncoder(
         vocab_size=17, d_model=16, n_heads=2, n_layers=2, max_len=8, dropout=0.0
@@ -51,7 +42,7 @@ def test_encoder_hides_padding_from_real_tokens():
     assert torch.allclose(original[:, :4], changed[:, :4], atol=1e-6)
 
 
-def test_sequence_to_sequence_forward_and_generation_shapes():
+def test_sequence_to_sequence_forward_shape():
     model = Seq2SeqTransformer(
         src_vocab_size=14,
         tgt_vocab_size=14,
@@ -71,8 +62,3 @@ def test_sequence_to_sequence_forward_and_generation_shapes():
 
     logits = model(source, target, src_key_padding_mask=source_padding)
     assert logits.shape == (2, 4, 14)
-
-    generated = model.generate(source, max_new_tokens=6, src_key_padding_mask=source_padding)
-    assert generated.shape[0] == 2
-    assert torch.all(generated[:, 0] == 1)
-    assert generated.size(1) <= 7

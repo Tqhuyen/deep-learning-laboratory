@@ -32,12 +32,16 @@ from laboratory import (
     accuracy,
     cosine_warmup,
     count_parameters,
+    exact_match,
     get_device,
+    greedy_decode,
     lengths_mask,
+    make_optimizer,
     pad_sequences,
     save_tokenizer,
     set_seed,
     token_cross_entropy,
+    trim_at_eos,
 )
 from laboratory.experiment import (
     argument_parser,
@@ -155,30 +159,24 @@ def build_step(pad_id: int):
     return step
 
 
-@torch.no_grad()
-def greedy_decode(
+def decode_sources(
     model: Seq2SeqTransformer,
     tokenizer: WordTokenizer,
     sources: list[str],
     device: torch.device,
     max_new_tokens: int,
 ) -> list[list[int]]:
-    """Run the model on raw strings and return token ids up to ``<eos>``."""
+    """Encode raw strings, decode greedily, and drop control tokens."""
     encoded = [tokenizer.encode(source) for source in sources]
     padded, lengths = pad_sequences(encoded, tokenizer.pad_id)
     mask = lengths_mask(lengths, padded.size(1)).to(device)
-    generated = model.generate(
-        padded.to(device), max_new_tokens=max_new_tokens, src_key_padding_mask=mask
+    generated = greedy_decode(
+        model,
+        padded.to(device),
+        max_new_tokens=max_new_tokens,
+        src_key_padding_mask=mask,
     )
-    results = []
-    for row in generated.tolist():
-        tokens = []
-        for token_id in row[1:]:  # skip <bos>
-            if token_id == tokenizer.eos_id:
-                break
-            tokens.append(token_id)
-        results.append(tokens)
-    return results
+    return [trim_at_eos(row[1:], tokenizer.eos_id) for row in generated.tolist()]
 
 
 def main() -> None:
@@ -249,8 +247,10 @@ def main() -> None:
     )
     print(f"model: {count_parameters(model):,} parameters, vocabulary={tokenizer.vocab_size}")
 
-    optimizer = torch.optim.AdamW(
-        model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"]
+    optimizer = make_optimizer(
+        model.parameters(),
+        learning_rate=config["learning_rate"],
+        weight_decay=config["weight_decay"],
     )
     scheduler = cosine_warmup(optimizer, config["warmup_steps"], config["max_steps"])
     trainer = Trainer(model, optimizer, device=device, clip_grad=1.0, scheduler=scheduler)
@@ -281,20 +281,20 @@ def main() -> None:
     save_tokenizer(tokenizer, run_directory / "tokenizer.json")
 
     sample_pairs = validation_pairs[: config["sample_count"]]
-    predictions = greedy_decode(
+    predictions = decode_sources(
         model,
         tokenizer,
         [source for source, _ in sample_pairs],
         device,
         max_new_tokens=config["max_len"] + 1,
     )
-    exact_matches = 0
     print("\n--- greedy decoding ---")
     for (source, target), predicted_ids in zip(sample_pairs, predictions):
         predicted = tokenizer.decode(predicted_ids)
-        exact_matches += int(predicted_ids == tokenizer.encode(target))
         print(f"source={source!r}  target={target!r}  predicted={predicted!r}")
-    exact_match_rate = exact_matches / max(len(sample_pairs), 1)
+    exact_match_rate = exact_match(
+        predictions, [tokenizer.encode(target) for _, target in sample_pairs]
+    )
     print(f"sample exact-match rate: {exact_match_rate:.2%}")
 
     write_metrics(

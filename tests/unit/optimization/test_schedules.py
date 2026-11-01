@@ -3,7 +3,7 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
-from laboratory.training.schedules import cosine_warmup, noam
+from laboratory.optimization.schedules import cosine_warmup, noam
 
 
 def test_cosine_warmup_rises_then_decays_to_the_floor():

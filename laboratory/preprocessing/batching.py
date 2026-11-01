@@ -1,28 +1,21 @@
-"""Datasets and batching.
+"""Batching: turn examples into the tensors a training step consumes.
 
-Two shapes of problem are covered, which is where almost every paper starts:
+* :func:`pad_sequences` — right padding with lengths.
+* :class:`Seq2SeqCollator` — builds ``<bos> ... <eos>`` decoder inputs and
+  ``... <eos> <pad>`` labels for teacher forcing.
+* :func:`random_lm_batch` — random windows from a flat token stream.
 
-* **Language modelling** — a flat stream of ids, cut into ``(x, y)`` pairs where
-  ``y`` is ``x`` shifted by one. Covers GPT-style "predict the next token".
-* **Sequence-to-sequence** — aligned source/target id lists. Covers translation,
-  summarisation, speech recognition. The collator builds the
-  ``<bos> ... <eos>`` input and the ``... <eos> <pad>`` label tensor used with
-  teacher forcing.
-
-Both use right padding, so padding never sits between real tokens. That matters:
-with a causal mask, real tokens then never attend pad positions.
+Padding is always on the right, so no pad ever sits between real tokens. That is
+what lets a causal mask ignore padding without special cases.
 """
 
 from __future__ import annotations
 
-from typing import Iterable, Sequence
+from typing import Sequence
 
 import torch
-from torch.utils.data import Dataset
 
-from .tokenization import CharTokenizer, WordTokenizer
-
-TokenPair = tuple[str, str]
+from ..utilities import lengths_mask
 
 
 def pad_sequences(
@@ -46,38 +39,6 @@ def pad_sequences(
     return padded, lengths.clamp(max=max_len)
 
 
-def train_val_split(ids: torch.Tensor, val_fraction: float = 0.1) -> tuple[torch.Tensor, torch.Tensor]:
-    """Contiguous split — the validation text is the tail of the corpus."""
-    n_val = int(len(ids) * val_fraction)
-    return ids[:-n_val], ids[-n_val:]
-
-
-class LanguageModelDataset(Dataset):
-    """Windows of ``block_size`` tokens with next-token targets.
-
-    ``x = ids[s : s+B]`` and ``y = ids[s+1 : s+B+1]``. ``stride`` controls
-    overlap between windows; the default (``block_size``) produces
-    non-overlapping windows.
-    """
-
-    def __init__(self, ids: Sequence[int] | torch.Tensor, block_size: int, stride: int | None = None):
-        self.ids = torch.as_tensor(ids, dtype=torch.long)
-        if len(self.ids) <= block_size:
-            raise ValueError(f"need at least block_size+1={block_size + 1} tokens, got {len(self.ids)}")
-        self.block_size = block_size
-        self.stride = stride or block_size
-        self.starts = list(range(0, len(self.ids) - block_size, self.stride))
-
-    def __len__(self) -> int:
-        return len(self.starts)
-
-    def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
-        start = self.starts[index]
-        x = self.ids[start : start + self.block_size]
-        y = self.ids[start + 1 : start + self.block_size + 1]
-        return x, y
-
-
 def random_lm_batch(
     ids: torch.Tensor,
     block_size: int,
@@ -86,7 +47,7 @@ def random_lm_batch(
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Sample a random ``(x, y)`` batch from a flat token stream.
 
-    Useful for quick experiments where building a :class:`Dataset` is noise.
+    Useful for quick experiments where building a dataset object is noise.
     """
     if len(ids) <= block_size:
         raise ValueError("token stream is shorter than block_size + 1")
@@ -94,35 +55,6 @@ def random_lm_batch(
     x = torch.stack([ids[s : s + block_size] for s in starts])
     y = torch.stack([ids[s + 1 : s + block_size + 1] for s in starts])
     return x.to(device), y.to(device)
-
-
-class Seq2SeqDataset(Dataset):
-    """Pairs of raw strings tokenized once, up front."""
-
-    def __init__(
-        self,
-        pairs: Iterable[TokenPair],
-        src_tokenizer: CharTokenizer | WordTokenizer,
-        tgt_tokenizer: CharTokenizer | WordTokenizer | None = None,
-        max_src_len: int | None = None,
-        max_tgt_len: int | None = None,
-    ):
-        tgt_tokenizer = tgt_tokenizer or src_tokenizer
-        self.examples: list[tuple[list[int], list[int]]] = []
-        for src, tgt in pairs:
-            src_ids = src_tokenizer.encode(src)
-            tgt_ids = tgt_tokenizer.encode(tgt)
-            if max_src_len is not None:
-                src_ids = src_ids[:max_src_len]
-            if max_tgt_len is not None:
-                tgt_ids = tgt_ids[:max_tgt_len]
-            self.examples.append((src_ids, tgt_ids))
-
-    def __len__(self) -> int:
-        return len(self.examples)
-
-    def __getitem__(self, index: int) -> tuple[list[int], list[int]]:
-        return self.examples[index]
 
 
 class Seq2SeqCollator:
@@ -135,7 +67,7 @@ class Seq2SeqCollator:
         src_lengths(B,)         real source lengths
         tgt_in     (B, Tt+1)    [<bos>] + target ids        -> decoder input
         tgt_out    (B, Tt+1)    target ids + [<eos>]        -> labels
-        tgt_lengths(B,)         Tt + 1
+        tgt_lengths(B,)         real lengths including <eos>
 
     Teacher forcing: at step ``t`` the decoder is fed the true token ``t-1`` and
     asked to predict ``t``. ``tgt_in``/``tgt_out`` are the same sequence shifted
@@ -170,7 +102,7 @@ class Seq2SeqCollator:
 
         return {
             "src": src,
-            "src_mask": src_lengths[:, None] > torch.arange(src.size(1))[None, :],
+            "src_mask": lengths_mask(src_lengths, src.size(1)),
             "src_lengths": src_lengths,
             "tgt_in": tgt_in,
             "tgt_out": tgt_out,

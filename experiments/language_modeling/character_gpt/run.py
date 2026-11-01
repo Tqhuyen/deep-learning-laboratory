@@ -16,8 +16,6 @@ Artifacts land in ``runs/language_modeling/character_gpt/<tier>/``.
 
 from __future__ import annotations
 
-import math
-
 import torch
 from torch.utils.data import DataLoader
 
@@ -28,7 +26,10 @@ from laboratory import (
     Trainer,
     cosine_warmup,
     count_parameters,
+    generate,
     get_device,
+    make_optimizer,
+    perplexity,
     save_tokenizer,
     set_seed,
     train_val_split,
@@ -114,7 +115,7 @@ def language_model_step(model: GPT, batch) -> tuple[torch.Tensor, dict[str, floa
     """One training step: predict the next character at every position."""
     inputs, targets = batch
     _, loss = model(inputs, targets)
-    return loss, {"perplexity": math.exp(min(loss.detach().item(), 20.0))}
+    return loss, {"perplexity": perplexity(loss)}
 
 
 def main() -> None:
@@ -160,8 +161,10 @@ def main() -> None:
         f"{tokenizer.vocab_size} characters, {len(train_dataset):,} training windows"
     )
 
-    optimizer = torch.optim.AdamW(
-        model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"]
+    optimizer = make_optimizer(
+        model.parameters(),
+        learning_rate=config["learning_rate"],
+        weight_decay=config["weight_decay"],
     )
     scheduler = cosine_warmup(optimizer, config["warmup_steps"], config["max_steps"])
     trainer = Trainer(model, optimizer, device=device, clip_grad=1.0, scheduler=scheduler)
@@ -193,7 +196,8 @@ def main() -> None:
 
     prompt = "ROMEO:"
     prompt_ids = torch.tensor([tokenizer.encode(prompt)], device=device)
-    sample = model.generate(
+    sample = generate(
+        model,
         prompt_ids,
         max_new_tokens=config["sample_tokens"],
         temperature=0.8,

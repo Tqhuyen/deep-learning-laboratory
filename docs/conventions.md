@@ -6,21 +6,47 @@ change.
 
 ## 1. Layout
 
+Directories are the **pipeline stages** every experiment passes through:
+
 ```
 laboratory/
-├── blocks/            reusable components: attention, positions, norm, feed-forward
-├── models/            assembled architectures: transformer, recurrent, future CNN/JEPA
-├── objectives/        losses: token cross-entropy, future contrastive/latent regression
-├── data/              tokenization and batching, one module per modality
-├── training/          loop, schedules, metrics, checkpoints
-├── experiment.py      tiers, seeds, run directories
-└── utilities.py       seeds, devices, mask helpers
-experiments/<area>/<name>/   one directory per experiment, each with run.py
-tests/unit/                  mirrors laboratory/: blocks/, models/, objectives/, data/, training/
-tests/smoke/                 every experiment at the tiny tier (CPU, under a minute)
-data/                        small committed corpora; nothing is downloaded at runtime
-docs/                        this contract and the paper-to-code guide
+├── datasets/        indexable examples and splits
+├── preprocessing/   tokenizers, padding, collation
+├── models/          assembled architectures
+├── losses/          objectives
+├── optimization/    optimizers and schedules
+├── training/        loop and checkpoints
+├── evaluation/      metrics and task evaluators
+├── inference/       sampling and greedy decoding
+├── postprocessing/  ids to task output
+├── blocks/          shared components: attention, positions, norm, feed-forward
+├── experiment.py    tiers, seeds, run directories
+└── utilities.py     seeds, devices, masks, running averages
+experiments/<area>/<name>/run.py   one directory per paper reproduction
+tests/unit/                        mirrors laboratory/, one directory per stage
+tests/smoke/                       every experiment at the tiny tier
+data/                              small committed corpora; nothing downloaded
+docs/                              this contract and the paper-to-code guide
 ```
+
+### Why stages *and* blocks
+
+A stage directory answers **when** code runs, which is how you search when
+something breaks ("loss is NaN" -> `losses/`, "sampling is wrong" ->
+`inference/`, "checkpoint will not load" -> `training/`). `blocks/` answers
+**what a model is made of**: attention, positions, normalisation and
+feed-forward are shared by every architecture, so they are not duplicated per
+model family.
+
+Architecture-specific behaviour is a file, not a copy of the pipeline:
+
+* RNN vs LSTM differ inside `models/recurrent.py`;
+* a different objective is a module in `losses/`, selected by the experiment;
+* a different optimizer is a name passed to `optimization.make_optimizer`;
+* a different preprocessing step is a module in `preprocessing/`.
+
+Anything only one experiment needs stays in that experiment's `run.py` until a
+second experiment needs it. That is what keeps the shared directories small.
 
 Rules:
 
@@ -30,21 +56,23 @@ Rules:
   `experiments/recurrent/language_model/run.py`).
 * An experiment may import any part of `laboratory/` and compose it freely.
   This is the point of the monorepo: experiments explore *any* component while
-  sharing tokenizers, batching, training and testing.
-* **Directories are roles, files are families.** The top-level directory answers
-  "what job does this code do"; the file answers "which family within that job".
-  All normalisations share `blocks/normalization.py`; all tokenizers share
-  `data/tokenization.py`. Do not create one file per class, and do not create a
-  new top-level directory when a sibling file is enough.
+  sharing datasets, preprocessing, training and testing.
+* **Files are families.** All normalisations share
+  `blocks/normalization.py`; all tokenizers share
+  `preprocessing/text.py`. Do not create one file per class, and do not create a
+  new top-level directory for a variant of an existing stage.
 * **Split by size or independence, not by taste.** A file may grow to roughly
   300 lines. Split it when it passes that, or when it holds two concepts that do
-  not share an interface. Keep the split inside the same role directory.
-* **Dependencies point one way:** `blocks/` imports only `utilities/`;
-  `models/` imports `blocks/` and `objectives/`; `data/` and `training/` are
-  independent; experiments import anything. `blocks/` must never import
-  `models/`, otherwise a component stops being reusable.
-* Tests mirror the library path (`tests/unit/blocks/test_attention.py`).
-  Experiments get a tiny-tier smoke run, not a mirrored unit-test file.
+  not share an interface. Keep the split inside the same stage directory.
+* **Dependencies point one way:** `utilities` is imported by every stage;
+  `blocks` imports only `utilities`; `models` imports `blocks` and `losses`;
+  `datasets` imports `preprocessing`; `training` owns the loop and checkpoints;
+  `inference`, `postprocessing` and `evaluation` do not import experiments.
+  `blocks` must never import `models`, otherwise a component stops being
+  reusable.
+* Tests mirror the library path (`tests/unit/blocks/test_attention.py`,
+  `tests/unit/inference/test_generation.py`). Experiments get a tiny-tier smoke
+  run, not a mirrored unit-test file.
 * Names are full words in `snake_case`: `positional_encoding.py`, not
   `pos_enc.py`. Standard architecture names from the literature (LSTM, RoPE,
   ALiBi, GQA, JEPA) stay as they are, because renaming them would make the code
@@ -57,13 +85,15 @@ Rules:
 | reusable convolution / residual block | `blocks/convolution.py` |
 | ResNet-style network | `models/convnet.py` |
 | JEPA encoder and predictor | `models/jepa.py` |
-| latent-prediction objective | `objectives/predictive.py` |
-| InfoNCE or other contrastive loss | `objectives/contrastive.py` |
-| image datasets and patchification | `data/vision.py` |
+| latent-prediction objective | `losses/predictive.py` |
+| InfoNCE or other contrastive loss | `losses/contrastive.py` |
+| image dataset | `datasets/vision.py` |
+| image decoding, resize, patchify, augment | `preprocessing/vision.py` |
 | EMA target encoder, RL loop, distillation | the experiment's `run.py` first; promote to `training/` when a second experiment needs it |
 
-This is why the layout is by role: adding JEPA does not touch the tokenizer
-directory, and adding a CNN does not touch attention.
+This is why the layout has two axes: adding JEPA does not touch preprocessing or
+attention, and adding a CNN does not touch tokenization. The stage directory
+says where to look; the file says which family you are looking at.
 
 ## 2. Tiers: how much compute a run may spend
 
@@ -206,15 +236,21 @@ python experiments/language_modeling/character_gpt/run.py --tier development
 
 | paper component | file |
 |---|---|
-| tokenizer / vocabulary | `laboratory/data/tokenization.py` |
-| batching, teacher forcing, masking of pads | `laboratory/data/batching.py` |
+| dataset construction and splits | `laboratory/datasets/` |
+| tokenizer / vocabulary | `laboratory/preprocessing/text.py` |
+| batching, teacher forcing, padding | `laboratory/preprocessing/batching.py` |
 | positional information (absolute, rotary, biases) | `laboratory/blocks/positional_encoding.py` |
 | attention (heads, grouping, cross-attention, masks) | `laboratory/blocks/attention.py` |
 | normalisation | `laboratory/blocks/normalization.py` |
 | activation and feed-forward variants | `laboratory/blocks/feedforward.py` |
 | block structure, residual order, model assembly | `laboratory/models/transformer.py` |
 | recurrent cells | `laboratory/models/recurrent.py` |
-| optimiser, schedule, loop, checkpointing | `laboratory/training/` |
+| loss | `laboratory/losses/` |
+| optimiser and schedule | `laboratory/optimization/` |
+| training loop and checkpoints | `laboratory/training/` |
+| metric or task evaluator | `laboratory/evaluation/` |
+| sampling, greedy decoding, KV cache | `laboratory/inference/` |
+| output decoding / detokenisation | `laboratory/postprocessing/` |
 
 `docs/paper-to-code.md` turns this table into a step-by-step workflow with
 worked examples.
