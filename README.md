@@ -39,7 +39,7 @@ feed-forward are shared by every architecture and are not duplicated per model.
 | `laboratory/losses/` | token cross-entropy with `ignore_index` | objectives |
 | `laboratory/optimization/` | AdamW/Adam/SGD factory, warmup/cosine, Noam | optimisation ablations |
 | `laboratory/training/` | loop, clipping, mixed precision, checkpoints | every experiment |
-| `laboratory/evaluation/` | token accuracy, perplexity, exact match | reported metrics |
+| `laboratory/evaluation/` | metrics, statistics, diagnostics, loss landscapes | reported results and mechanism checks |
 | `laboratory/inference/` | temperature/top-k sampling, greedy decoding | generation |
 | `laboratory/postprocessing/` | trimming at `<eos>`, ids to task output | decoding outputs |
 | `laboratory/experiment.py` | tiers, seeds, run directories | reproducibility |
@@ -109,6 +109,9 @@ deep-learning-laboratory/
 ├── tests/
 │   ├── unit/               mirrors laboratory/: one directory per stage
 │   └── smoke/              every experiment at the tiny tier
+├── analysis/               post-hoc tools over trained checkpoints
+│   ├── loss_landscape.py   3-D filter-normalised surfaces
+│   └── context_sweep.py    BPC versus evaluation context
 ├── notebooks/
 │   └── recurrent_comparison.ipynb  Kaggle GPU run of both comparison studies
 ├── results/
@@ -205,6 +208,10 @@ Measured results (development tier, 3 seeds, Kaggle GPU):
 The full per-seed tables, confidence intervals, statistical tests, figures and
 interpretation are in
 [`results/recurrent_comparison/README.md`](results/recurrent_comparison/README.md).
+That report also contains the 3-D loss surfaces and a 32–256 character context
+sweep: the surfaces are local diagnostics, and the sweep shows the ordering is
+stable across evaluation contexts but remains conditional on the corpus,
+parameter budget and training context.
 
 ## Learning path
 

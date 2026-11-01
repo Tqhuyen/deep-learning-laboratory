@@ -23,6 +23,7 @@ laboratory/
 ├── experiment.py    tiers, seeds, run directories
 └── utilities.py     seeds, devices, masks, running averages
 experiments/<area>/<name>/run.py   one directory per paper reproduction
+analysis/                          post-hoc tools that read checkpoints (no training)
 tests/unit/                        mirrors laboratory/, one directory per stage
 tests/smoke/                       every experiment at the tiny tier
 data/                              small committed corpora; nothing downloaded
@@ -252,6 +253,8 @@ python experiments/language_modeling/character_gpt/run.py --tier development
 | metric or task evaluator | `laboratory/evaluation/` |
 | sampling, greedy decoding, KV cache | `laboratory/inference/` |
 | output decoding / detokenisation | `laboratory/postprocessing/` |
+| comparison statistics and confidence intervals | `laboratory/evaluation/statistics.py` |
+| gradient reach and loss-surface diagnostics | `laboratory/evaluation/diagnostics.py`, `landscape.py` |
 
 `docs/paper-to-code.md` turns this table into a step-by-step workflow with
 worked examples.

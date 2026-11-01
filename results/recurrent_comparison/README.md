@@ -99,6 +99,19 @@ Pairwise tests (negative Δ BPC favours the first cell):
 
 ![validation BPC](generation/validation_bpc.png)
 
+The hidden-size ratios follow directly from the parameter accounting:
+
+$$
+\frac{H_{\mathrm{GRU}}}{H_{\mathrm{RNN}}}
+= \frac{664}{1159} = 0.573 \approx \frac{1}{\sqrt{3}},
+\qquad
+\frac{H_{\mathrm{LSTM}}}{H_{\mathrm{RNN}}}
+= \frac{572}{1159} = 0.494 \approx \frac{1}{2}.
+$$
+
+This is what matching $P pprox mH^2$ forces; it is arithmetic, not a
+performance theorem.
+
 **Reading.** The RNN reaches the lowest validation BPC, but its lead over the
 GRU is not stable across seeds: the stricter seed-level interval
 [−0.0468, +0.0022] includes zero. The LSTM is clearly worse: its seed-level
@@ -121,7 +134,85 @@ LSTM: By not her you marces, / Till lobe her fauthth of not menalance ...
 
 Full report: [`generation/report.md`](generation/report.md).
 
-## 3. Gradient reach does not explain the ordering
+
+## 3. 3-D loss surfaces: local geometry, not a general proof
+
+Each panel is the surface
+
+$$
+\theta(\alpha,\beta)=\theta_0+\alpha\delta_1+\beta\delta_2
+$$
+
+around one trained checkpoint, with filter-normalised orthogonal random
+directions $\delta_1,\delta_2$ and a 17×17 grid. Loss is cross-entropy on four
+fixed batches.
+
+| task | cell | min | centre | max |
+|---|---|---:|---:|---:|
+| sentiment | RNN | 0.7361 | 0.7368 | 0.9178 |
+| sentiment | GRU | 0.6904 | 0.7027 | 1.3201 |
+| sentiment | LSTM | 0.6811 | 0.6811 | 1.0627 |
+| generation | RNN | 1.5830 | 1.5830 | 5.1410 |
+| generation | GRU | 1.6163 | 1.6163 | 4.3056 |
+| generation | LSTM | 1.7014 | 1.7014 | 3.7636 |
+
+![sentiment landscape](landscapes/landscape_sentiment.png)
+![generation landscape](landscapes/landscape_generation.png)
+
+**What this shows.** Every checkpoint sits in a basin whose centre is the local
+minimum on this slice. The LSTM surface is the flattest of the three on
+sentiment (max 1.06 versus 1.32 for GRU and 0.92 for RNN); on generation the
+ordering of maxima is reversed. Sharpness does not order the test metrics, and
+the surface explains neither the 6.5-point sentiment gap nor the BPC gap.
+
+**What this cannot show.** A surface is a property of **one trained point** and
+**two random directions**. It is not a statement about the task distribution,
+and no collection of 3-D slices can prove “architecture A generalises better”.
+That would require a bound over a task class, or a counterexample showing the
+ordering flips. The surfaces are diagnostics: they tell us the solutions are
+local minima with different curvature, not that one cell is universally better.
+
+## 4. Context sweep: does the ordering change with regime?
+
+The generation checkpoints were trained at 128 characters. Evaluating the same
+checkpoints on windows of 32, 64, 128 and 256 characters (32 batches × 16
+windows, token-weighted BPC) gives:
+
+| context | RNN | GRU | LSTM |
+|---:|---:|---:|---:|
+| 32 | **2.4171** | 2.4627 | 2.5757 |
+| 64 | **2.3917** | 2.4301 | 2.5497 |
+| 128 | **2.3319** | 2.3688 | 2.4939 |
+| 256 | **2.3730** | 2.3961 | 2.5182 |
+
+![context sweep](contexts/context_sweep.png)
+
+The RNN < GRU < LSTM ordering is stable over this range at the shared parameter
+budget. Two boundary conditions matter: the models were trained at 128, so 256
+is extrapolation; and “context” here is evaluation window length, not a
+different training budget. This is stronger evidence than a single point, but
+still evidence for one corpus, one budget and one training length — not a
+general theorem.
+
+### What a general proof would require
+
+A general statement has the form: for every task distribution in a class
+$\mathcal{D}$, budget $B$ and tolerance $\epsilon$, method A needs fewer
+resources than B, or a matching lower bound rules B out. A loss surface cannot
+supply that because it fixes one $\theta$, one data sample and two directions.
+The defensible claim from these experiments is conditional:
+
+> At the tested parameter budget, data and context lengths, gated cells
+> significantly beat a parameter-matched RNN on SST-2; on character-level
+> Shakespeare the RNN has the lowest BPC, but its advantage over the GRU is not
+> stable across seeds, while the LSTM gap is.
+
+A falsifier for the capacity-allocation explanation is a width-matched
+comparison (same $H$ rather than same $P$) and training at each context length
+(not only evaluating at it). If LSTM still loses at width-matched, long-context
+training, the explanation is incomplete.
+
+## 5. Gradient reach does not explain the ordering
 
 The probe measures `||∂L/∂h_t||` for `L = ||h_last||^2` and fits a log-linear
 slope from the final step backwards:
@@ -140,7 +231,7 @@ dominant explanatory variable. The classification gap is better explained by
 the presence of multiplicative gates; the generation gap by parameter
 allocation across gate matrices.
 
-## 4. What is and is not established
+## 6. What is and is not established
 
 Established, conditional on this data, budget and seeds:
 
@@ -167,6 +258,11 @@ starts to matter.
 python data/prepare_sst2.py
 python experiments/sequence_classification/sentiment/run.py --tier development --device cuda
 python experiments/language_modeling/recurrent_generation/run.py --tier development --device cuda
+
+# post-hoc analysis of the checkpoints
+python analysis/loss_landscape.py --task sentiment --run-directory runs/sequence_classification/sentiment/development --output-directory results/recurrent_comparison/landscapes
+python analysis/loss_landscape.py --task generation --run-directory runs/language_modeling/recurrent_generation/development --output-directory results/recurrent_comparison/landscapes
+python analysis/context_sweep.py --run-directory runs/language_modeling/recurrent_generation/development --output-directory results/recurrent_comparison/contexts
 ```
 
 or run [`notebooks/recurrent_comparison.ipynb`](../../notebooks/recurrent_comparison.ipynb)
