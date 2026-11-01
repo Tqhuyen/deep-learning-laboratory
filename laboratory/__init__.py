@@ -57,10 +57,28 @@ from .blocks import (
     repeat_kv,
     scaled_dot_product_attention,
 )
-from .datasets import LanguageModelDataset, Seq2SeqDataset, train_val_split
-from .evaluation import accuracy, exact_match, perplexity
+from .datasets import (
+    LanguageModelDataset,
+    Seq2SeqDataset,
+    SentimentDataset,
+    read_sentiment_tsv,
+    stratified_split,
+    train_val_split,
+)
+from .evaluation import (
+    accuracy,
+    bootstrap_confidence_interval,
+    decay_slope,
+    exact_match,
+    holm_adjust,
+    mcnemar_exact,
+    paired_bootstrap_difference,
+    paired_bootstrap_p_value,
+    perplexity,
+    timestep_gradient_norms,
+)
 from .inference import generate, greedy_decode, next_token
-from .losses import token_cross_entropy
+from .losses import classification_cross_entropy, token_cross_entropy
 from .models import (
     DecoderLayer,
     EncoderLayer,
@@ -71,9 +89,16 @@ from .models import (
     LSTMCell,
     RNN,
     RNNCell,
+    RecurrentLanguageModel,
+    RecurrentSequenceClassifier,
     Seq2SeqTransformer,
     TransformerDecoder,
     TransformerEncoder,
+    language_model_parameters,
+    match_classifier_hidden_size,
+    match_language_model_hidden_size,
+    recurrent_stack_parameters,
+    sequence_classifier_parameters,
 )
 from .optimization import cosine_warmup, make_optimizer, noam
 from .postprocessing import trim_at_eos
@@ -81,6 +106,7 @@ from .preprocessing import (
     BPETokenizer,
     CharTokenizer,
     Seq2SeqCollator,
+    classification_collate,
     WordTokenizer,
     load_tokenizer,
     pad_sequences,
@@ -100,6 +126,25 @@ from .utilities import (
 __version__ = "0.1.0"
 
 __all__ = [
+    "timestep_gradient_norms",
+    "stratified_split",
+    "sequence_classifier_parameters",
+    "SentimentDataset",
+    "RecurrentSequenceClassifier",
+    "RecurrentLanguageModel",
+    "recurrent_stack_parameters",
+    "read_sentiment_tsv",
+    "paired_bootstrap_difference",
+    "paired_bootstrap_p_value",
+    "mcnemar_exact",
+    "match_language_model_hidden_size",
+    "match_classifier_hidden_size",
+    "language_model_parameters",
+    "holm_adjust",
+    "decay_slope",
+    "classification_collate",
+    "classification_cross_entropy",
+    "bootstrap_confidence_interval",
     "ALiBi",
     "BPETokenizer",
     "CharTokenizer",

@@ -3,7 +3,12 @@ from __future__ import annotations
 import torch
 
 from laboratory.datasets.sequence import Seq2SeqDataset
-from laboratory.preprocessing.batching import Seq2SeqCollator, pad_sequences, random_lm_batch
+from laboratory.preprocessing.batching import (
+    Seq2SeqCollator,
+    classification_collate,
+    pad_sequences,
+    random_lm_batch,
+)
 from laboratory.preprocessing.text import WordTokenizer
 
 
@@ -42,3 +47,11 @@ def test_seq2seq_collator_builds_teacher_forcing_tensors():
     assert batch["tgt_out"][0].tolist() == [*tokenizer.encode("2 1"), tokenizer.eos_id]
     assert batch["tgt_out"][1].tolist() == [*tokenizer.encode("3"), tokenizer.eos_id, tokenizer.pad_id]
     assert batch["tgt_lengths"].tolist() == [3, 2]
+
+
+def test_classification_collate_pads_and_stacks_labels():
+    batch = [([1, 2, 3], 1), ([4], 0)]
+    collated = classification_collate(batch, pad_id=0)
+    assert collated["inputs"].tolist() == [[1, 2, 3], [4, 0, 0]]
+    assert collated["lengths"].tolist() == [3, 1]
+    assert collated["labels"].tolist() == [1, 0]

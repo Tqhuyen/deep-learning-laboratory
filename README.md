@@ -98,15 +98,20 @@ deep-learning-laboratory/
 │   └── utilities.py        seeds, devices, masks, running averages
 ├── experiments/
 │   ├── language_modeling/
-│   │   └── character_gpt/  decoder-only transformer, next-token prediction
+│   │   ├── character_gpt/  decoder-only transformer, next-token prediction
+│   │   └── recurrent_generation/  matched-parameter generation comparison
 │   ├── sequence_to_sequence/
 │   │   └── reversal/       encoder–decoder, cross-attention, teacher forcing
+│   ├── sequence_classification/
+│   │   └── sentiment/      matched-parameter RNN / GRU / LSTM on SST-2
 │   └── recurrent/
 │       └── language_model/ same corpus, RNN / LSTM / GRU
 ├── tests/
 │   ├── unit/               mirrors laboratory/: one directory per stage
 │   └── smoke/              every experiment at the tiny tier
-├── data/                   tiny Shakespeare (public domain)
+├── notebooks/
+│   └── recurrent_comparison.ipynb  Kaggle GPU run of both comparison studies
+├── data/                   tiny Shakespeare, SST-2 fixture, prepare_sst2.py
 ├── docs/
 │   ├── conventions.md      tiers, scaling, testing, reproducibility
 │   └── paper-to-code.md    workflow and worked examples
@@ -121,6 +126,9 @@ git clone https://github.com/Tqhuyen/deep-learning-laboratory.git
 cd deep-learning-laboratory
 python -m pip install -e ".[development]"
 
+# only needed for the sentiment development/full tiers
+python data/prepare_sst2.py
+
 # five CPU seconds: does the whole pipeline run?
 python experiments/language_modeling/character_gpt/run.py --tier tiny
 
@@ -129,7 +137,9 @@ python experiments/language_modeling/character_gpt/run.py --tier smoke
 ```
 
 Artifacts for every run land in `runs/<area>/<name>/<tier>/`:
-`config.json`, `checkpoint.pt`, `metrics.json` and, where useful, `sample.txt`.
+`config.json`, `metrics.json`, checkpoints (`checkpoint.pt`, or
+`checkpoints/<architecture>.pt` for comparison studies) and, where useful,
+samples or figures.
 
 ## Experiments
 
@@ -138,9 +148,13 @@ Artifacts for every run land in `runs/<area>/<name>/<tier>/`:
 | character GPT | `python experiments/language_modeling/character_gpt/run.py --tier development` | tokenization, learned positions, causal attention, sampling |
 | sequence reversal | `python experiments/sequence_to_sequence/reversal/run.py --tier development` | encoder–decoder, cross-attention, teacher forcing, greedy decoding, exact match |
 | recurrent LM | `python experiments/recurrent/language_model/run.py --tier development --cell lstm` | RNN/LSTM/GRU on the same data and training loop as the transformer |
+| sentiment comparison | `python experiments/sequence_classification/sentiment/run.py --tier development` | parameter-matched RNN/GRU/LSTM, paired bootstrap, McNemar, gradient reach |
+| generation comparison | `python experiments/language_modeling/recurrent_generation/run.py --tier development` | matched-parameter BPC comparison, bootstrap over windows, gradient reach |
 
-All three share the tokenizer, batching and trainer. Changing `--cell` or the
-model width is an architecture experiment, not a rewrite.
+All experiments share the tokenizer, batching and trainer. Changing `--cell` or
+the model width is an architecture experiment, not a rewrite. The two
+comparison studies run 3 cells × 3 seeds and write a report, raw predictions
+and figures.
 
 ### Tiers
 
@@ -157,6 +171,27 @@ model width is an architecture experiment, not a rewrite.
 pytest -q                 # full suite, CPU, under a minute (includes every tiny run)
 pytest tests/unit -q      # maths and invariants only
 ```
+
+### Recurrent comparison study
+
+The two comparison experiments answer the same question on different tasks:
+does RNN, GRU or LSTM win **at equal parameter count and equal optimizer
+steps**, and is the difference larger than seed and test noise?
+
+* parameter budgets are matched by solving
+  `m * (I*H + H^2 + 2H)` (`m = 1, 3, 4`) for the hidden size, so an LSTM gets
+  fewer units than an RNN for the same total parameters;
+* 3 cells × 3 seeds in the `development` tier, identical data, optimiser,
+  schedule, batch size and steps;
+* reports include 95 % paired bootstrap intervals, exact McNemar tests with
+  Holm correction (classification) and paired bootstrap p-values (generation);
+* the mechanism is probed by measuring `||dL/dh_t||` for `L = ||h_last||^2`,
+  i.e. how far back the final state can see, plus gate-free gradient slopes;
+* figures: validation curves, final metrics with error bars, gradient decay,
+  and accuracy by sequence length.
+
+`notebooks/recurrent_comparison.ipynb` runs both studies at the `development`
+tier on a Kaggle GPU and displays the reports and figures inline.
 
 ## Learning path
 

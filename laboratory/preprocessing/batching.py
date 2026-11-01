@@ -108,3 +108,17 @@ class Seq2SeqCollator:
             "tgt_out": tgt_out,
             "tgt_lengths": tgt_lengths,
         }
+
+
+def classification_collate(
+    batch: Sequence[tuple[list[int], int]],
+    pad_id: int,
+) -> dict[str, torch.Tensor]:
+    """Pad tokenized examples and stack labels for a classifier step."""
+    sequences, labels = zip(*batch)
+    padded, lengths = pad_sequences(sequences, pad_id)
+    return {
+        "inputs": padded,
+        "lengths": lengths,
+        "labels": torch.tensor(labels, dtype=torch.long),
+    }

@@ -8,7 +8,7 @@ modality exists. Preprocessing must stay deterministic for a given seed so an
 experiment can be reproduced on another machine.
 """
 
-from .batching import Seq2SeqCollator, pad_sequences, random_lm_batch
+from .batching import Seq2SeqCollator, classification_collate, pad_sequences, random_lm_batch
 from .text import (
     BPETokenizer,
     CharTokenizer,
@@ -21,6 +21,7 @@ __all__ = [
     "BPETokenizer",
     "CharTokenizer",
     "Seq2SeqCollator",
+    "classification_collate",
     "WordTokenizer",
     "load_tokenizer",
     "pad_sequences",

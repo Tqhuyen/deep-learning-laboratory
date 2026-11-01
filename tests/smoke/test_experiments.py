@@ -47,6 +47,8 @@ def test_experiment_runs_at_the_tiny_tier(script: Path, tmp_path: Path):
     relative = script.relative_to(REPOSITORY_ROOT / "experiments")
     area, name = relative.parts[0], relative.parts[1]
     run_directory = tmp_path / area / name / "tiny"
-    assert (run_directory / "checkpoint.pt").exists()
+    single = (run_directory / "checkpoint.pt").exists()
+    per_architecture = any((run_directory / "checkpoints").glob("*.pt"))
+    assert single or per_architecture
     assert (run_directory / "config.json").exists()
     assert (run_directory / "metrics.json").exists()

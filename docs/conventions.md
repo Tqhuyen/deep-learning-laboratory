@@ -101,7 +101,7 @@ Every `run.py` implements four presets. The tier is chosen with `--tier`.
 
 | tier | budget | what it must prove |
 |---|---|---|
-| `tiny` | < 10 s on CPU, 5 optimizer steps | shapes, masks, one backward pass, artifacts written |
+| `tiny` | < 20 s on CPU, 5 optimizer steps | shapes, masks, one backward pass, artifacts written |
 | `smoke` | < 60 s on CPU, ~100 steps | loss decreases, no NaNs, config saved |
 | `development` | minutes on one GPU, 1k–3k steps | real learning signal while iterating |
 | `full` | hours or days | numbers you would report |
@@ -128,7 +128,8 @@ Each `experiments/<area>/<name>/run.py`:
    `prepare_run`, `write_config` and `write_metrics`.
 3. Writes to `runs/<area>/<name>/<tier>/`:
    * `config.json` — resolved config, seed, device, parameter count;
-   * `checkpoint.pt` — model (and optimizer) state;
+   * `checkpoint.pt` — model (and optimizer) state; comparison studies write
+     one checkpoint per architecture under `checkpoints/`;
    * `metrics.json` — per-epoch history and final metrics;
    * optional samples (`sample.txt`).
 4. Seeds Python, NumPy and PyTorch with `--seed` before building data.

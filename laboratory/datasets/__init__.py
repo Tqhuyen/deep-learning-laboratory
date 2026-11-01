@@ -9,6 +9,14 @@ experiment needs it.
 """
 
 from .language import LanguageModelDataset, train_val_split
+from .sentiment import SentimentDataset, read_sentiment_tsv, stratified_split
 from .sequence import Seq2SeqDataset
 
-__all__ = ["LanguageModelDataset", "Seq2SeqDataset", "train_val_split"]
+__all__ = [
+    "LanguageModelDataset",
+    "Seq2SeqDataset",
+    "SentimentDataset",
+    "read_sentiment_tsv",
+    "stratified_split",
+    "train_val_split",
+]

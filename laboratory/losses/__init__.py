@@ -13,3 +13,7 @@ that no experiment runs.
 from .language import token_cross_entropy
 
 __all__ = ["token_cross_entropy"]
+
+from .classification import classification_cross_entropy
+
+__all__ = ["classification_cross_entropy", "token_cross_entropy"]

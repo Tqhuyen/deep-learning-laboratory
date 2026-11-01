@@ -12,7 +12,24 @@ Keep the constructor arguments descriptive (width, depth, heads) so experiment
 presets read like the paper's table.
 """
 
-from .recurrent import GRU, LSTM, RNN, GRUCell, LSTMCell, RNNCell
+from .recurrent import (
+    RECURRENT_LAYERS,
+    GRU,
+    LSTM,
+    RNN,
+    GRUCell,
+    LSTMCell,
+    RNNCell,
+    RecurrentLanguageModel,
+    RecurrentSequenceClassifier,
+)
+from .capacity import (
+    language_model_parameters,
+    match_classifier_hidden_size,
+    match_language_model_hidden_size,
+    recurrent_stack_parameters,
+    sequence_classifier_parameters,
+)
 from .transformer import (
     DecoderLayer,
     EncoderLayer,
@@ -32,11 +49,19 @@ __all__ = [
     "GRUCell",
     "LSTM",
     "LSTMCell",
+    "RECURRENT_LAYERS",
     "RNN",
+    "RecurrentLanguageModel",
+    "RecurrentSequenceClassifier",
     "RNNCell",
     "Seq2SeqTransformer",
     "TransformerDecoder",
     "TransformerEncoder",
     "build_positional",
     "build_rope",
+    "language_model_parameters",
+    "match_classifier_hidden_size",
+    "match_language_model_hidden_size",
+    "recurrent_stack_parameters",
+    "sequence_classifier_parameters",
 ]

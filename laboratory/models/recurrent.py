@@ -18,6 +18,8 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
+from ..losses.language import token_cross_entropy
+
 
 class RNNCell(nn.Module):
     r"""$$ h_t = \tanh(W_{ih} x_t + b_{ih} + W_{hh} h_{t-1}) $$"""
@@ -177,3 +179,79 @@ class GRU(RNN):
     """Stacked :class:`GRUCell`."""
 
     cell_type = GRUCell
+
+
+# Task heads built on the cells above. They live here (not in an experiment)
+# because both comparison experiments reuse them and their parameter counts are
+# what `laboratory.models.capacity` matches.
+
+RECURRENT_LAYERS = {"rnn": RNN, "lstm": LSTM, "gru": GRU}
+
+
+class RecurrentLanguageModel(nn.Module):
+    """Embedding -> recurrent stack -> next-token logits.
+
+    ``forward`` returns ``(logits, loss)``; ``loss`` is ``None`` without
+    targets, matching :class:`laboratory.models.GPT`.
+    """
+
+    def __init__(
+        self,
+        vocabulary_size: int,
+        embedding_dim: int = 64,
+        hidden_size: int = 256,
+        num_layers: int = 1,
+        cell: str = "lstm",
+        dropout: float = 0.0,
+    ):
+        super().__init__()
+        if cell not in RECURRENT_LAYERS:
+            raise ValueError(f"unknown cell {cell!r}; choose from {sorted(RECURRENT_LAYERS)}")
+        self.embedding = nn.Embedding(vocabulary_size, embedding_dim)
+        self.recurrent = RECURRENT_LAYERS[cell](
+            embedding_dim, hidden_size, num_layers=num_layers, dropout=dropout
+        )
+        self.head = nn.Linear(hidden_size, vocabulary_size)
+
+    def forward(self, inputs: torch.Tensor, targets: torch.Tensor | None = None):
+        outputs, _ = self.recurrent(self.embedding(inputs))
+        logits = self.head(outputs)
+        loss = token_cross_entropy(logits, targets) if targets is not None else None
+        return logits, loss
+
+
+class RecurrentSequenceClassifier(nn.Module):
+    """Embedding -> recurrent stack -> last real hidden -> class logits.
+
+    ``lengths`` is required: with right padding, the final hidden state of a row
+    is the state after its pads, so the representation must be gathered at
+    ``lengths - 1``.
+    """
+
+    def __init__(
+        self,
+        vocabulary_size: int,
+        embedding_dim: int = 64,
+        hidden_size: int = 256,
+        num_layers: int = 1,
+        cell: str = "lstm",
+        num_classes: int = 2,
+        dropout: float = 0.0,
+        pad_id: int | None = None,
+    ):
+        super().__init__()
+        if cell not in RECURRENT_LAYERS:
+            raise ValueError(f"unknown cell {cell!r}; choose from {sorted(RECURRENT_LAYERS)}")
+        self.embedding = nn.Embedding(vocabulary_size, embedding_dim, padding_idx=pad_id)
+        self.recurrent = RECURRENT_LAYERS[cell](
+            embedding_dim, hidden_size, num_layers=num_layers, dropout=dropout
+        )
+        self.dropout = nn.Dropout(dropout)
+        self.head = nn.Linear(hidden_size, num_classes)
+
+    def forward(self, inputs: torch.Tensor, lengths: torch.Tensor) -> torch.Tensor:
+        outputs, _ = self.recurrent(self.embedding(inputs))
+        last = (lengths - 1).clamp(min=0)
+        rows = torch.arange(outputs.size(0), device=outputs.device)
+        hidden = outputs[rows, last]
+        return self.head(self.dropout(hidden))
