@@ -7,7 +7,7 @@ file away from an implementation.
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776ab.svg)](https://www.python.org/)
 [![PyTorch 2.1+](https://img.shields.io/badge/pytorch-2.1%2B-ee4c2c.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2ea44f.svg)](LICENSE)
-[![Tests: CPU only](https://img.shields.io/badge/tests-CPU%20only-555555.svg)](tests/)
+[![tests](https://github.com/Tqhuyen/deep-learning-laboratory/actions/workflows/tests.yml/badge.svg)](https://github.com/Tqhuyen/deep-learning-laboratory/actions/workflows/tests.yml)
 
 The goal is not to hide deep learning behind an API. It is to make the
 distance between an equation in a paper and a runnable experiment small enough
