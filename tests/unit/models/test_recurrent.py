@@ -3,7 +3,7 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
-from laboratory.recurrent import GRU, LSTM, RNN, GRUCell, LSTMCell, RNNCell
+from laboratory.models.recurrent import GRU, LSTM, RNN, GRUCell, LSTMCell, RNNCell
 
 
 def _copy_cell_weights(cell, reference, layer: int = 0) -> None:

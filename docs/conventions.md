@@ -7,12 +7,19 @@ change.
 ## 1. Layout
 
 ```
-laboratory/                 shared, importable primitives
-experiments/<area>/<name>/  one directory per experiment, each with run.py
-tests/unit/                 correctness of the primitives (CPU, seconds)
-tests/smoke/                every experiment at the tiny tier (CPU, under a minute)
-data/                       small committed corpora; nothing is downloaded at runtime
-docs/                       this contract and the paper-to-code guide
+laboratory/
+├── blocks/            reusable components: attention, positions, norm, feed-forward
+├── models/            assembled architectures: transformer, recurrent, future CNN/JEPA
+├── objectives/        losses: token cross-entropy, future contrastive/latent regression
+├── data/              tokenization and batching, one module per modality
+├── training/          loop, schedules, metrics, checkpoints
+├── experiment.py      tiers, seeds, run directories
+└── utilities.py       seeds, devices, mask helpers
+experiments/<area>/<name>/   one directory per experiment, each with run.py
+tests/unit/                  mirrors laboratory/: blocks/, models/, objectives/, data/, training/
+tests/smoke/                 every experiment at the tiny tier (CPU, under a minute)
+data/                        small committed corpora; nothing is downloaded at runtime
+docs/                        this contract and the paper-to-code guide
 ```
 
 Rules:
@@ -24,10 +31,39 @@ Rules:
 * An experiment may import any part of `laboratory/` and compose it freely.
   This is the point of the monorepo: experiments explore *any* component while
   sharing tokenizers, batching, training and testing.
+* **Directories are roles, files are families.** The top-level directory answers
+  "what job does this code do"; the file answers "which family within that job".
+  All normalisations share `blocks/normalization.py`; all tokenizers share
+  `data/tokenization.py`. Do not create one file per class, and do not create a
+  new top-level directory when a sibling file is enough.
+* **Split by size or independence, not by taste.** A file may grow to roughly
+  300 lines. Split it when it passes that, or when it holds two concepts that do
+  not share an interface. Keep the split inside the same role directory.
+* **Dependencies point one way:** `blocks/` imports only `utilities/`;
+  `models/` imports `blocks/` and `objectives/`; `data/` and `training/` are
+  independent; experiments import anything. `blocks/` must never import
+  `models/`, otherwise a component stops being reusable.
+* Tests mirror the library path (`tests/unit/blocks/test_attention.py`).
+  Experiments get a tiny-tier smoke run, not a mirrored unit-test file.
 * Names are full words in `snake_case`: `positional_encoding.py`, not
   `pos_enc.py`. Standard architecture names from the literature (LSTM, RoPE,
-  ALiBi, GQA) stay as they are, because renaming them would make the code harder
-  to map to papers.
+  ALiBi, GQA, JEPA) stay as they are, because renaming them would make the code
+  harder to map to papers.
+
+### Adding a new model family
+
+| new thing | home |
+|---|---|
+| reusable convolution / residual block | `blocks/convolution.py` |
+| ResNet-style network | `models/convnet.py` |
+| JEPA encoder and predictor | `models/jepa.py` |
+| latent-prediction objective | `objectives/predictive.py` |
+| InfoNCE or other contrastive loss | `objectives/contrastive.py` |
+| image datasets and patchification | `data/vision.py` |
+| EMA target encoder, RL loop, distillation | the experiment's `run.py` first; promote to `training/` when a second experiment needs it |
+
+This is why the layout is by role: adding JEPA does not touch the tokenizer
+directory, and adding a CNN does not touch attention.
 
 ## 2. Tiers: how much compute a run may spend
 
@@ -170,14 +206,15 @@ python experiments/language_modeling/character_gpt/run.py --tier development
 
 | paper component | file |
 |---|---|
-| tokenizer / vocabulary | `laboratory/tokenization.py` |
-| batching, teacher forcing, masking of pads | `laboratory/data.py` |
-| positional information (absolute, rotary, biases) | `laboratory/positional_encoding.py` |
-| attention (heads, grouping, cross-attention, masks) | `laboratory/attention.py` |
-| normalisation, activation, feed-forward variants | `laboratory/layers.py` |
-| block structure, residual order, model assembly | `laboratory/transformer.py` |
-| recurrent cells | `laboratory/recurrent.py` |
-| optimiser, schedule, loop, checkpointing | `laboratory/training.py` |
+| tokenizer / vocabulary | `laboratory/data/tokenization.py` |
+| batching, teacher forcing, masking of pads | `laboratory/data/batching.py` |
+| positional information (absolute, rotary, biases) | `laboratory/blocks/positional_encoding.py` |
+| attention (heads, grouping, cross-attention, masks) | `laboratory/blocks/attention.py` |
+| normalisation | `laboratory/blocks/normalization.py` |
+| activation and feed-forward variants | `laboratory/blocks/feedforward.py` |
+| block structure, residual order, model assembly | `laboratory/models/transformer.py` |
+| recurrent cells | `laboratory/models/recurrent.py` |
+| optimiser, schedule, loop, checkpointing | `laboratory/training/` |
 
 `docs/paper-to-code.md` turns this table into a step-by-step workflow with
 worked examples.

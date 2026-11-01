@@ -1,8 +1,8 @@
-"""Normalisation, feed-forward networks and other small pieces.
+"""Feed-forward blocks.
 
-These are the parts papers swap most often (pre-LN vs post-LN, GELU vs SwiGLU,
-LayerNorm vs RMSNorm), so each one is a self-contained module with the formula
-in its docstring.
+A transformer block is attention plus one of these. Papers mostly swap the
+activation or add a gate, so both variants share the same interface
+``(batch, sequence, d_model) -> (batch, sequence, d_model)``.
 """
 
 from __future__ import annotations
@@ -10,44 +10,6 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-
-class LayerNorm(nn.Module):
-    r"""Layer normalisation (Ba et al., 2016), written out by hand.
-
-    $$\text{LN}(x) = \gamma \odot \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}} + \beta$$
-
-    Statistics are taken over the last dimension per token, not over the batch.
-    """
-
-    def __init__(self, d_model: int, eps: float = 1e-5):
-        super().__init__()
-        self.weight = nn.Parameter(torch.ones(d_model))
-        self.bias = nn.Parameter(torch.zeros(d_model))
-        self.eps = eps
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        mean = x.mean(dim=-1, keepdim=True)
-        var = x.var(dim=-1, keepdim=True, unbiased=False)
-        return (x - mean) * torch.rsqrt(var + self.eps) * self.weight + self.bias
-
-
-class RMSNorm(nn.Module):
-    r"""Root-mean-square normalisation (Zhang & Sennrich, 2019; used by LLaMA).
-
-    $$\text{RMSNorm}(x) = \gamma \odot \frac{x}{\sqrt{\frac{1}{d}\sum_i x_i^2 + \epsilon}}$$
-
-    No mean subtraction and no bias, which is cheaper and works as well.
-    """
-
-    def __init__(self, d_model: int, eps: float = 1e-6):
-        super().__init__()
-        self.weight = nn.Parameter(torch.ones(d_model))
-        self.eps = eps
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        rms = x.pow(2).mean(dim=-1, keepdim=True).add(self.eps).rsqrt()
-        return x * rms * self.weight
 
 
 class FeedForward(nn.Module):
@@ -65,7 +27,7 @@ class FeedForward(nn.Module):
         self.fc1 = nn.Linear(d_model, d_ff)
         self.fc2 = nn.Linear(d_ff, d_model)
         self.dropout = nn.Dropout(dropout)
-        self.activation = _get_activation(activation)
+        self.activation = get_activation(activation)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.fc2(self.dropout(self.activation(self.fc1(x))))
@@ -91,20 +53,11 @@ class SwiGLU(nn.Module):
         return self.dropout(self.down(F.silu(self.gate(x)) * self.up(x)))
 
 
-def _get_activation(name: str):
+def get_activation(name: str):
     activations = {"gelu": F.gelu, "relu": F.relu, "silu": F.silu, "tanh": torch.tanh}
     if name not in activations:
         raise ValueError(f"unknown activation {name!r}; choose from {sorted(activations)}")
     return activations[name]
-
-
-def make_norm(name: str, d_model: int):
-    """Factory used by the transformer blocks: ``"layernorm"`` or ``"rmsnorm"``."""
-    if name == "layernorm":
-        return LayerNorm(d_model)
-    if name == "rmsnorm":
-        return RMSNorm(d_model)
-    raise ValueError(f"unknown norm {name!r}")
 
 
 def make_ffn(name: str, d_model: int, d_ff: int | None, dropout: float):

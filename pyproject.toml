@@ -18,8 +18,8 @@ dependencies = [
 [project.optional-dependencies]
 development = ["pytest>=8"]
 
-[tool.setuptools]
-packages = ["laboratory"]
+[tool.setuptools.packages.find]
+include = ["laboratory*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

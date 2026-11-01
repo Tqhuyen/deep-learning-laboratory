@@ -3,7 +3,7 @@ from __future__ import annotations
 import torch
 import torch.nn.functional as F
 
-from laboratory.layers import FeedForward, LayerNorm, RMSNorm, SwiGLU
+from laboratory.blocks.normalization import LayerNorm, RMSNorm
 
 
 def test_layer_norm_matches_torch_reference():
@@ -23,10 +23,3 @@ def test_rms_norm_matches_its_formula():
     x = torch.randn(3, 7, 12)
     expected = x * torch.rsqrt(x.pow(2).mean(dim=-1, keepdim=True) + 1e-6) * norm.weight
     assert torch.allclose(norm(x), expected, atol=1e-6)
-
-
-def test_feed_forward_and_swiglu_preserve_shape():
-    x = torch.randn(2, 5, 32)
-    assert FeedForward(32, 64)(x).shape == x.shape
-    assert SwiGLU(32, 48)(x).shape == x.shape
-    assert SwiGLU(32)(x).shape == x.shape

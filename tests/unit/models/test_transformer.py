@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import torch
 
-from laboratory.transformer import GPT, Seq2SeqTransformer, TransformerEncoder
+from laboratory.models.transformer import GPT, Seq2SeqTransformer, TransformerEncoder
 
 
 def test_gpt_returns_logits_and_a_finite_loss():

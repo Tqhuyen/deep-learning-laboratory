@@ -21,7 +21,6 @@ from __future__ import annotations
 import random
 
 import torch
-import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 from laboratory import (
@@ -38,6 +37,7 @@ from laboratory import (
     pad_sequences,
     save_tokenizer,
     set_seed,
+    token_cross_entropy,
 )
 from laboratory.experiment import (
     argument_parser,
@@ -145,11 +145,7 @@ def build_step(pad_id: int):
             batch["tgt_in"],
             src_key_padding_mask=batch["src_mask"],
         )
-        loss = F.cross_entropy(
-            logits.reshape(-1, logits.size(-1)),
-            batch["tgt_out"].reshape(-1),
-            ignore_index=pad_id,
-        )
+        loss = token_cross_entropy(logits, batch["tgt_out"], ignore_index=pad_id)
         return loss, {
             "token_accuracy": accuracy(
                 logits.detach(), batch["tgt_out"], ignore_index=pad_id

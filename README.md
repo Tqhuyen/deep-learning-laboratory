@@ -26,16 +26,18 @@ flowchart LR
 
 ## What is inside
 
-| file | what you learn | where it appears in papers |
+| location | what you learn | where it appears in papers |
 |---|---|---|
-| `laboratory/tokenization.py` | character, word and BPE tokenizers, trained from scratch | subword tokenization, vocabulary design |
-| `laboratory/data.py` | LM windows, sequence-to-sequence batching, teacher forcing | every training pipeline |
-| `laboratory/positional_encoding.py` | sinusoidal, learned, RoPE, ALiBi | position encoding ablations |
-| `laboratory/attention.py` | scaled dot-product, multi-head, grouped-query, cross-attention, masks | the core of every transformer variant |
-| `laboratory/layers.py` | LayerNorm, RMSNorm, feed-forward, SwiGLU | block design |
-| `laboratory/transformer.py` | encoder and decoder layers, GPT, encoder–decoder with greedy decoding | GPT, T5/BART-style models |
-| `laboratory/recurrent.py` | RNN, LSTM and GRU cells written from the equations | pre-transformer sequence models |
-| `laboratory/training.py` | training loop, schedules, checkpointing, metrics | every experiment |
+| `laboratory/blocks/attention.py` | scaled dot-product, multi-head, grouped-query, cross-attention, masks | the core of every transformer variant |
+| `laboratory/blocks/positional_encoding.py` | sinusoidal, learned, RoPE, ALiBi | position encoding ablations |
+| `laboratory/blocks/normalization.py` | LayerNorm, RMSNorm | normalisation ablations |
+| `laboratory/blocks/feedforward.py` | feed-forward blocks, SwiGLU, activations | block design |
+| `laboratory/models/transformer.py` | encoder and decoder layers, GPT, encoder–decoder with greedy decoding | GPT, T5/BART-style models |
+| `laboratory/models/recurrent.py` | RNN, LSTM and GRU cells written from the equations | pre-transformer sequence models |
+| `laboratory/objectives/language.py` | token cross-entropy with padding handled | every language-model paper |
+| `laboratory/data/tokenization.py` | character, word and BPE tokenizers, trained from scratch | subword tokenization, vocabulary design |
+| `laboratory/data/batching.py` | LM windows, sequence-to-sequence batching, teacher forcing | every training pipeline |
+| `laboratory/training/` | loop, schedules, metrics, checkpointing | every experiment |
 | `laboratory/experiment.py` | tiers, seeds, run directories | how experiments stay comparable |
 
 Two rules make the code readable:
@@ -46,11 +48,39 @@ Two rules make the code readable:
 * **Shapes and equations are in docstrings.** `(batch, sequence, width)` is
   stated at every module boundary, and the gate equations are written out.
 
+## Where new work goes
+
+Directories are **roles**, files are **families**, so every addition has one
+obvious home:
+
+| adding | home |
+|---|---|
+| reusable block: convolution, new norm, new activation | `laboratory/blocks/<topic>.py` |
+| complete architecture: ResNet, ViT, JEPA | `laboratory/models/<family>.py` |
+| loss: cross-entropy, InfoNCE, latent MSE | `laboratory/objectives/<task>.py` |
+| data pipeline for a modality: images, audio | `laboratory/data/<modality>.py` |
+| new training regime: EMA teacher, RL, distillation | the experiment's `run.py` first; promote to `laboratory/training/` when a second experiment needs it |
+| a paper reproduction | `experiments/<area>/<name>/run.py` |
+
+A CNN experiment therefore lands as `blocks/convolution.py` (conv + residual
+block), `models/convnet.py` (assembled network), `objectives/classification.py`
+(cross-entropy) and `experiments/vision/cnn_classification/run.py`. JEPA reuses
+the same encoder block and adds `models/jepa.py` plus
+`objectives/predictive.py`. The full convention is in
+[`docs/conventions.md`](docs/conventions.md#1-layout).
+
 ## Repository layout
 
 ```text
 deep-learning-laboratory/
-├── laboratory/                  importable primitives, one concept per file
+├── laboratory/
+│   ├── blocks/                  reusable components: attention, positions, norm, feed-forward
+│   ├── models/                  assembled architectures: transformer, recurrent
+│   ├── objectives/              losses
+│   ├── data/                    tokenization, batching
+│   ├── training/                loop, schedules, metrics, checkpoints
+│   ├── experiment.py            tier and artifact conventions
+│   └── utilities.py             seeds, devices, mask helpers
 ├── experiments/
 │   ├── language_modeling/
 │   │   └── character_gpt/       decoder-only transformer, next-token prediction
@@ -59,7 +89,7 @@ deep-learning-laboratory/
 │   └── recurrent/
 │       └── language_model/      same corpus, RNN / LSTM / GRU
 ├── tests/
-│   ├── unit/                    maths, invariants and contracts (CPU, seconds)
+│   ├── unit/                    mirrors laboratory/: blocks, models, objectives, data, training
 │   └── smoke/                   every experiment at the tiny tier
 ├── data/                        tiny Shakespeare (public domain)
 ├── docs/
@@ -115,14 +145,17 @@ pytest tests/unit -q      # maths and invariants only
 
 ## Learning path
 
-1. Read `laboratory/tokenization.py` and `laboratory/data.py`: text becomes
-   tensors, and the target shift is the entire "self-supervision" trick.
-2. Read `laboratory/positional_encoding.py`: attention is order-blind; positions
-   are the fix.
-3. Read `laboratory/attention.py`: six lines of maths plus explicit masks.
-4. Read `laboratory/transformer.py`: a block is attention + MLP + residual, a
-   model is a stack of blocks.
-5. Read `laboratory/training.py`: the loop that turns all of it into learning.
+1. Read `laboratory/data/tokenization.py` and `laboratory/data/batching.py`:
+   text becomes tensors, and the target shift is the entire "self-supervision"
+   trick.
+2. Read `laboratory/blocks/positional_encoding.py`: attention is order-blind;
+   positions are the fix.
+3. Read `laboratory/blocks/attention.py`: six lines of maths plus explicit
+   masks.
+4. Read `laboratory/models/transformer.py`: a block is attention + MLP +
+   residual, a model is a stack of blocks.
+5. Read `laboratory/training/trainer.py`: the loop that turns all of it into
+   learning.
 6. Run the three experiments, then read `docs/paper-to-code.md` and implement a
    method you care about.
 
@@ -150,6 +183,9 @@ The repository already provides the configuration surface most papers touch:
 
 * **Correctness first, then readability.** Every nontrivial module has a test
   that proves a property, not a snapshot.
+* **Directories are roles, files are families.** Adding CNN, JEPA or a new loss
+  adds one file in one obvious directory; it does not create a new top-level
+  concept. See [Where new work goes](#where-new-work-goes).
 * **No unexplained magic.** No `nn.Transformer`, no `nn.LSTM`: the cells,
   masks and residual paths are visible and modifiable.
 * **One variable at a time.** Presets, seeds and saved configs make comparisons

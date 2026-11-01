@@ -19,7 +19,6 @@ import math
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 from laboratory import (
@@ -34,6 +33,7 @@ from laboratory import (
     get_device,
     save_tokenizer,
     set_seed,
+    token_cross_entropy,
     train_val_split,
 )
 from laboratory.experiment import (
@@ -143,10 +143,7 @@ class RecurrentLanguageModel(nn.Module):
         logits = self.head(outputs)
         loss = None
         if targets is not None:
-            loss = F.cross_entropy(
-                logits.reshape(-1, logits.size(-1)),
-                targets.reshape(-1),
-            )
+            loss = token_cross_entropy(logits, targets)
         return logits, loss
 
     @torch.no_grad()

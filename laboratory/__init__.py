@@ -1,22 +1,15 @@
 """Deep Learning Laboratory.
 
-Readable, from-scratch implementations of the pieces that almost every deep
-learning paper is assembled from:
+A small, readable collection of the pieces every deep learning paper is built
+from, grouped by the role they play in a model:
 
-* :mod:`laboratory.tokenization` — character, word and byte-pair tokenizers.
-* :mod:`laboratory.data` — language-model windows and sequence-to-sequence
-  batching with teacher-forcing targets.
-* :mod:`laboratory.positional_encoding` — sinusoidal, learned, rotary (RoPE)
-  and ALiBi position information.
-* :mod:`laboratory.attention` — scaled dot-product attention, multi-head,
-  grouped-query and cross-attention, with explicit masks.
-* :mod:`laboratory.layers` — LayerNorm, RMSNorm, feed-forward blocks, SwiGLU.
-* :mod:`laboratory.transformer` — encoder/decoder layers, GPT, sequence-to-
-  sequence transformer with greedy decoding.
-* :mod:`laboratory.recurrent` — RNN, LSTM and GRU cells written from the
-  equations.
-* :mod:`laboratory.training` — a task-agnostic training loop and learning-rate
-  schedules.
+* :mod:`laboratory.blocks` — reusable components: attention, positional
+  encodings, normalisation, feed-forward blocks.
+* :mod:`laboratory.models` — assembled architectures: transformer (encoder,
+  decoder, GPT, sequence-to-sequence) and recurrent networks.
+* :mod:`laboratory.objectives` — losses.
+* :mod:`laboratory.data` — tokenization and batching.
+* :mod:`laboratory.training` — training loop, schedules, metrics, checkpoints.
 * :mod:`laboratory.experiment` — conventions for experiments: tiers, seeds,
   output layout.
 
@@ -25,44 +18,53 @@ non-obvious equation in a docstring. Experiments live under ``experiments/``
 and always use the same tier system so they run on a laptop.
 """
 
-from . import (
-    attention,
-    data,
-    experiment,
-    layers,
-    positional_encoding,
-    recurrent,
-    tokenization,
-    training,
-    transformer,
-    utilities,
+from . import blocks, data, experiment, models, objectives, training, utilities
+from .blocks import (
+    ALiBi,
+    FeedForward,
+    LayerNorm,
+    LearnedPositionalEmbedding,
+    MultiHeadAttention,
+    RMSNorm,
+    RotaryEmbedding,
+    SinusoidalPositionalEncoding,
+    SwiGLU,
+    apply_rotary,
+    make_ffn,
+    make_norm,
+    repeat_kv,
+    scaled_dot_product_attention,
 )
-from .attention import MultiHeadAttention, repeat_kv, scaled_dot_product_attention
 from .data import (
+    BPETokenizer,
+    CharTokenizer,
     LanguageModelDataset,
     Seq2SeqCollator,
     Seq2SeqDataset,
-    pad_sequences,
-    random_lm_batch,
-    train_val_split,
-)
-from .layers import FeedForward, LayerNorm, RMSNorm, SwiGLU
-from .positional_encoding import (
-    ALiBi,
-    LearnedPositionalEmbedding,
-    RotaryEmbedding,
-    SinusoidalPositionalEncoding,
-    apply_rotary,
-)
-from .recurrent import GRU, LSTM, RNN, GRUCell, LSTMCell, RNNCell
-from .tokenization import (
-    BPETokenizer,
-    CharTokenizer,
     WordTokenizer,
     load_tokenizer,
+    pad_sequences,
+    random_lm_batch,
     save_tokenizer,
+    train_val_split,
 )
+from .models import (
+    DecoderLayer,
+    EncoderLayer,
+    GPT,
+    GRU,
+    GRUCell,
+    LSTM,
+    LSTMCell,
+    RNN,
+    RNNCell,
+    Seq2SeqTransformer,
+    TransformerDecoder,
+    TransformerEncoder,
+)
+from .objectives import token_cross_entropy
 from .training import (
+    RunningMean,
     Trainer,
     accuracy,
     cosine_warmup,
@@ -70,15 +72,13 @@ from .training import (
     noam,
     save_checkpoint,
 )
-from .transformer import (
-    DecoderLayer,
-    EncoderLayer,
-    GPT,
-    Seq2SeqTransformer,
-    TransformerDecoder,
-    TransformerEncoder,
+from .utilities import (
+    causal_mask,
+    count_parameters,
+    get_device,
+    lengths_mask,
+    set_seed,
 )
-from .utilities import causal_mask, count_parameters, get_device, lengths_mask, set_seed
 
 __version__ = "0.1.0"
 
@@ -102,6 +102,7 @@ __all__ = [
     "RNNCell",
     "RMSNorm",
     "RotaryEmbedding",
+    "RunningMean",
     "Seq2SeqCollator",
     "Seq2SeqDataset",
     "Seq2SeqTransformer",
@@ -120,6 +121,8 @@ __all__ = [
     "lengths_mask",
     "load_checkpoint",
     "load_tokenizer",
+    "make_ffn",
+    "make_norm",
     "noam",
     "pad_sequences",
     "random_lm_batch",
@@ -128,5 +131,6 @@ __all__ = [
     "save_tokenizer",
     "scaled_dot_product_attention",
     "set_seed",
+    "token_cross_entropy",
     "train_val_split",
 ]

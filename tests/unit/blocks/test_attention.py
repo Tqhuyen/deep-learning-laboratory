@@ -5,7 +5,7 @@ import math
 import pytest
 import torch
 
-from laboratory.attention import (
+from laboratory.blocks.attention import (
     MultiHeadAttention,
     repeat_kv,
     scaled_dot_product_attention,

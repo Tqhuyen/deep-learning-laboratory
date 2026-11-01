@@ -4,7 +4,7 @@ import math
 
 import torch
 
-from laboratory.positional_encoding import (
+from laboratory.blocks.positional_encoding import (
     ALiBi,
     LearnedPositionalEmbedding,
     RotaryEmbedding,

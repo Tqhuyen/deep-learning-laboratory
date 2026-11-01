@@ -11,12 +11,12 @@ opening an editor:
 
 | claim in the paper | where it lands | interface to keep |
 |---|---|---|
-| "we change how positions are encoded" | `laboratory/positional_encoding.py` or `attn_mask`/bias in `attention.py` | `(B, T, D) -> (B, T, D)` |
-| "we change the attention pattern" | `laboratory/attention.py` | `MultiHeadAttention.forward(x, memory, attn_mask, key_padding_mask, is_causal)` |
-| "we change the feed-forward block" | `laboratory/layers.py` | `(B, T, D) -> (B, T, D)` |
-| "we change the residual/normalisation order" | `EncoderLayer`/`DecoderLayer` in `laboratory/transformer.py` | block keeps `forward(x, key_padding_mask)` |
-| "we change the objective or the data pipeline" | the experiment's `run.py` plus `laboratory/data.py` | `step_fn(model, batch) -> (loss, metrics)` |
-| "we change optimisation" | `laboratory/training.py`, `laboratory/experiment.py` presets | `Trainer` unchanged |
+| "we change how positions are encoded" | `laboratory/blocks/positional_encoding.py` or `attn_mask`/bias in `laboratory/blocks/attention.py` | `(B, T, D) -> (B, T, D)` |
+| "we change the attention pattern" | `laboratory/blocks/attention.py` | `MultiHeadAttention.forward(x, memory, attn_mask, key_padding_mask, is_causal)` |
+| "we change the feed-forward block" | `laboratory/blocks/feedforward.py` | `(B, T, D) -> (B, T, D)` |
+| "we change the residual/normalisation order" | `EncoderLayer`/`DecoderLayer` in `laboratory/models/transformer.py` | block keeps `forward(x, key_padding_mask)` |
+| "we change the objective or the data pipeline" | the experiment's `run.py` plus `laboratory/data/batching.py` | `step_fn(model, batch) -> (loss, metrics)` |
+| "we change optimisation" | `laboratory/training/`, `laboratory/experiment.py` presets | `Trainer` unchanged |
 
 If a paper does not fit this table, it is probably changing several components;
 still apply the changes one at a time.
@@ -126,7 +126,7 @@ configuration as the baseline.
 
 ## Example B: a new feed-forward block (SwiGLU as the template)
 
-`laboratory/layers.py` already contains the pattern for adding one:
+`laboratory/blocks/feedforward.py` already contains the pattern for adding one:
 
 ```python
 class SwiGLU(nn.Module):
@@ -154,7 +154,7 @@ keeping positional information out of the model classes:
 model = GPT(..., pos="rope")        # head_dim must be even
 ```
 
-The underlying implementation is in `laboratory/positional_encoding.py`
+The underlying implementation is in `laboratory/blocks/positional_encoding.py`
 (`RotaryEmbedding`, `apply_rotary`), and `MultiHeadAttention` applies it after
 splitting heads. To reproduce a paper that adds *length scaling* to RoPE, change
 only `RotaryEmbedding.inv_freq` (for example, divide positions by a factor) and
@@ -163,7 +163,7 @@ keep the application code untouched. Then run the relative-position test and a
 
 ## Example D: a new recurrent cell
 
-1. Add a cell class in `laboratory/recurrent.py`, with the gate order documented.
+1. Add a cell class in `laboratory/models/recurrent.py`, with the gate order documented.
 2. Add it to `RECURRENT_LAYERS` in the recurrent experiment (or a new
    experiment directory if the training regime differs).
 3. Test it against a hand-written reference or against PyTorch's fused kernel

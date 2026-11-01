@@ -17,11 +17,14 @@ from __future__ import annotations
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-from .attention import MultiHeadAttention
-from .layers import make_ffn, make_norm
-from .positional_encoding import LearnedPositionalEmbedding, RotaryEmbedding, SinusoidalPositionalEncoding
+from ..blocks import MultiHeadAttention, make_ffn, make_norm
+from ..blocks.positional_encoding import (
+    LearnedPositionalEmbedding,
+    RotaryEmbedding,
+    SinusoidalPositionalEncoding,
+)
+from ..objectives.language import token_cross_entropy
 
 
 def build_positional(name: str, d_model: int, max_len: int, dropout: float):
@@ -301,9 +304,7 @@ class GPT(nn.Module):
 
         loss = None
         if targets is not None:
-            loss = F.cross_entropy(
-                logits.reshape(-1, logits.size(-1)), targets.reshape(-1), ignore_index=-100
-            )
+            loss = token_cross_entropy(logits, targets)
         return logits, loss
 
     @torch.no_grad()

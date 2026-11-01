@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import torch
 
-from laboratory.data import (
+from laboratory.data.batching import (
     LanguageModelDataset,
     Seq2SeqCollator,
     Seq2SeqDataset,
@@ -10,7 +10,7 @@ from laboratory.data import (
     random_lm_batch,
     train_val_split,
 )
-from laboratory.tokenization import WordTokenizer
+from laboratory.data.tokenization import WordTokenizer
 
 
 def test_pad_sequences_reports_pre_padding_lengths_and_truncates():

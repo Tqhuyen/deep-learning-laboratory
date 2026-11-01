@@ -1,71 +1,20 @@
-"""Learning-rate schedules and the training loop.
+"""The training loop and checkpointing.
 
 The loop is about 80 lines of real logic: move the batch to the device, run the
 step function, scale the loss, clip, step, schedule, log. Everything
 task-specific lives in ``step_fn(model, batch) -> (loss, logs)``, so the same
-trainer drives a language model, a translation model and an LSTM.
-
-Schedules are ``torch.optim.lr_scheduler.LambdaLR`` objects and are stepped
-once per optimizer step.
+trainer drives a language model, a translation model, a convolutional network
+or an LSTM.
 """
 
 from __future__ import annotations
 
-import math
 from pathlib import Path
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-
-class RunningMean:
-    """Weighted running average, used for loss/metric reporting."""
-
-    def __init__(self) -> None:
-        self.total = 0.0
-        self.count = 0
-
-    def update(self, value: float, n: int = 1) -> None:
-        self.total += float(value) * n
-        self.count += n
-
-    @property
-    def mean(self) -> float:
-        return self.total / max(self.count, 1)
-
-
-def accuracy(logits: torch.Tensor, targets: torch.Tensor, ignore_index: int = -100) -> float:
-    """Token-level accuracy over positions that are not ``ignore_index``."""
-    mask = targets != ignore_index
-    if not mask.any():
-        return 0.0
-    predictions = logits.argmax(dim=-1)
-    return ((predictions == targets) & mask).sum().item() / mask.sum().item()
-
-
-def cosine_warmup(optimizer, warmup_steps: int, total_steps: int, min_lr_ratio: float = 0.1):
-    """Linear warmup, then cosine decay to ``min_lr_ratio * base_lr``."""
-
-    def factor(step: int) -> float:
-        if step < warmup_steps:
-            return (step + 1) / max(warmup_steps, 1)
-        progress = (step - warmup_steps) / max(total_steps - warmup_steps, 1)
-        progress = min(progress, 1.0)
-        cosine = 0.5 * (1.0 + math.cos(math.pi * progress))
-        return min_lr_ratio + (1.0 - min_lr_ratio) * cosine
-
-    return torch.optim.lr_scheduler.LambdaLR(optimizer, factor)
-
-
-def noam(optimizer, d_model: int, warmup_steps: int):
-    """The schedule from Vaswani et al. (2017): ``d^-0.5 * min(step^-0.5, step*warmup^-1.5)``."""
-
-    def factor(step: int) -> float:
-        step = max(step, 1)
-        return d_model**-0.5 * min(step**-0.5, step * warmup_steps**-1.5)
-
-    return torch.optim.lr_scheduler.LambdaLR(optimizer, factor)
+from .metrics import RunningMean
 
 
 def _to_device(batch, device: torch.device):
@@ -95,7 +44,8 @@ class Trainer:
         device: ``"auto"`` picks CUDA when available.
         clip_grad: max global gradient norm (0 disables clipping).
         amp: mixed precision, only enabled on CUDA.
-        scheduler: stepped once per optimizer step.
+        scheduler: stepped once per optimizer step, e.g. from
+            :mod:`laboratory.training.schedules`.
     """
 
     def __init__(

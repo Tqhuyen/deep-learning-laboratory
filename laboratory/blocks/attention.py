@@ -26,7 +26,7 @@ import torch
 import torch.nn as nn
 
 from .positional_encoding import RotaryEmbedding, apply_rotary
-from .utilities import causal_mask
+from ..utilities import causal_mask
 
 
 def scaled_dot_product_attention(
