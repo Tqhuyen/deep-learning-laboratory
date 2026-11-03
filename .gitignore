@@ -32,3 +32,6 @@ data/sst2/
 
 # Kaggle output download
 kaggle_output/
+
+# Provider keys for laboratory/agents (template: .env.example)
+.env

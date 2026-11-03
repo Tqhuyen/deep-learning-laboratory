@@ -43,6 +43,7 @@ feed-forward are shared by every architecture and are not duplicated per model.
 | `laboratory/inference/` | temperature/top-k sampling, greedy decoding | generation |
 | `laboratory/postprocessing/` | trimming at `<eos>`, ids to task output | decoding outputs |
 | `laboratory/experiment.py` | tiers, seeds, run directories | reproducibility |
+| `laboratory/agents/` | ReAct, tool calling, plan-and-execute, Reflexion, self-consistency, debate over free hosted LLMs; routing across 37 free providers | LLM agent architectures |
 
 Two rules make the code readable:
 
@@ -95,8 +96,12 @@ deep-learning-laboratory/
 │   ├── inference/          sampling and greedy decoding
 │   ├── postprocessing/     ids to task output
 │   ├── experiment.py       tier and artifact conventions
+│   ├── agents/             LLM agents over free remote models: providers, routing, tools, architectures
 │   └── utilities.py        seeds, devices, masks, running averages
 ├── experiments/
+│   ├── agents/
+│   │   ├── provider_survey/          which free models answer for your keys, and call tools
+│   │   └── architecture_comparison/  agent architectures on the same tasks and model
 │   ├── language_modeling/
 │   │   ├── character_gpt/  decoder-only transformer, next-token prediction
 │   │   └── recurrent_generation/  matched-parameter generation comparison
@@ -117,9 +122,14 @@ deep-learning-laboratory/
 ├── results/
 │   └── recurrent_comparison/  reports, per-seed tables and figures
 ├── data/                   tiny Shakespeare, SST-2 fixture, prepare_sst2.py
+│   ├── free_models.json    snapshot of free chat models (37 providers)
+│   ├── agent_tasks.json    fictional-world tasks for agent experiments
+│   └── prepare_free_models.py  refreshes free_models.json
 ├── docs/
+│   ├── agents.md           free-model agents: setup, providers, routing, architectures
 │   ├── conventions.md      tiers, scaling, testing, reproducibility
 │   └── paper-to-code.md    workflow and worked examples
+├── .env.example            provider keys for the agent experiments (copy to .env)
 ├── pyproject.toml
 └── README.md
 ```
@@ -155,6 +165,8 @@ samples or figures.
 | recurrent LM | `python experiments/recurrent/language_model/run.py --tier development --cell lstm` | RNN/LSTM/GRU on the same data and training loop as the transformer |
 | sentiment comparison | `python experiments/sequence_classification/sentiment/run.py --tier development` | parameter-matched RNN/GRU/LSTM, paired bootstrap, McNemar, gradient reach |
 | generation comparison | `python experiments/language_modeling/recurrent_generation/run.py --tier development` | matched-parameter BPC comparison, bootstrap over windows, gradient reach |
+| free provider survey | `python experiments/agents/provider_survey/run.py --tier smoke` | which free models answer for your keys, latency, native tool calls |
+| agent architecture comparison | `python experiments/agents/architecture_comparison/run.py --tier development --model gpt-oss-120b` | seven agent architectures on the same free model, tools and tasks |
 
 All experiments share the tokenizer, batching and trainer. Changing `--cell` or
 the model width is an architecture experiment, not a rewrite. The two
@@ -212,6 +224,22 @@ That report also contains the 3-D loss surfaces and a 32–256 character context
 sweep: the surfaces are local diagnostics, and the sweep shows the ordering is
 stable across evaluation contexts but remains conditional on the corpus,
 parameter budget and training context.
+
+### Agents on free models
+
+`laboratory/agents/` runs agent architectures on free hosted models only; it
+trains nothing and needs no GPU. Four providers (Kilo, OVH, LLM7, AI Horde)
+answer with no key; the others take a free key in `.env`.
+
+```bash
+cp .env.example .env                                              # add any keys you have
+python experiments/agents/provider_survey/run.py --tier smoke     # what answers for you
+python experiments/agents/architecture_comparison/run.py --tier tiny   # offline, scripted
+python experiments/agents/architecture_comparison/run.py --tier development --model gpt-oss-120b
+```
+
+Agent runs write `transcripts.jsonl` instead of a checkpoint. Providers, model
+specifications, routing and caveats are in [`docs/agents.md`](docs/agents.md).
 
 ## Learning path
 
@@ -293,6 +321,11 @@ These are extension points, not claims about what is implemented today:
 * Zhang & Sennrich, *Root Mean Square Layer Normalization* — <https://arxiv.org/abs/1910.07467>
 * Shazeer, *GLU Variants Improve Transformer* — <https://arxiv.org/abs/2002.05202>
 * Karpathy, *nanoGPT* — <https://github.com/karpathy/nanoGPT>
+* Yao et al., *ReAct: Synergizing Reasoning and Acting in Language Models* — <https://arxiv.org/abs/2210.03629>
+* Wang et al., *Plan-and-Solve Prompting* — <https://arxiv.org/abs/2305.04091>
+* Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning* — <https://arxiv.org/abs/2303.11366>
+* Wang et al., *Self-Consistency Improves Chain of Thought Reasoning in Language Models* — <https://arxiv.org/abs/2203.11171>
+* Du et al., *Improving Factuality and Reasoning in Language Models through Multiagent Debate* — <https://arxiv.org/abs/2305.14325>
 
 The corpus is the public-domain Tiny Shakespeare from Karpathy's char-rnn.
 

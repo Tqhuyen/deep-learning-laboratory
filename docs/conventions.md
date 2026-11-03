@@ -21,6 +21,7 @@ laboratory/
 ├── postprocessing/  ids to task output
 ├── blocks/          shared components: attention, positions, norm, feed-forward
 ├── experiment.py    tiers, seeds, run directories
+├── agents/          self-contained area: LLM agents over free remote models, no torch
 └── utilities.py     seeds, devices, masks, running averages
 experiments/<area>/<name>/run.py   one directory per paper reproduction
 analysis/                          post-hoc tools that read checkpoints (no training)
@@ -78,6 +79,11 @@ Rules:
   `pos_enc.py`. Standard architecture names from the literature (LSTM, RoPE,
   ALiBi, GQA, JEPA) stay as they are, because renaming them would make the code
   harder to map to papers.
+* `laboratory/agents/` is the one area that is not a pipeline stage. It trains
+  nothing and imports no torch: it calls free hosted models over HTTP, so it
+  has its own small pipeline (environment -> providers -> catalog -> client ->
+  routing -> tools -> architectures -> tasks), one file per family, and imports
+  nothing from the stage directories. See [`agents.md`](agents.md).
 
 ### Adding a new model family
 
@@ -133,6 +139,11 @@ Each `experiments/<area>/<name>/run.py`:
      one checkpoint per architecture under `checkpoints/`;
    * `metrics.json` — per-epoch history and final metrics;
    * optional samples (`sample.txt`).
+   * agent experiments (`experiments/agents/`) write `transcripts.jsonl` (every
+     request, reply and episode) instead of a checkpoint. Their `tiny` tier
+     replays scripted model outputs (`ScriptedModel`, no network); `smoke` and
+     above call free remote models and need `.env` keys or the keyless
+     providers (Kilo, OVH, LLM7, AI Horde).
 4. Seeds Python, NumPy and PyTorch with `--seed` before building data.
 5. Uses `num_workers=0` (or documents another choice) so results are
    reproducible on every platform.
@@ -205,6 +216,8 @@ Two layers, both CPU-only and offline:
 They must stay fast (the whole suite is under a minute on CPU including the
 smoke runs) and must not download data. Do not test wiring or restate the
 implementation in a test; if a test would pass with the maths broken, delete it.
+Agent unit tests run on `ScriptedModel` or a fake `ChatClient` transport and
+never touch the network.
 
 **Smoke tests** (`tests/smoke/`) discover every `experiments/**/run.py` and run
 it with `--tier tiny --device cpu`, asserting exit code and artifacts. If an
@@ -255,6 +268,9 @@ python experiments/language_modeling/character_gpt/run.py --tier development
 | output decoding / detokenisation | `laboratory/postprocessing/` |
 | comparison statistics and confidence intervals | `laboratory/evaluation/statistics.py` |
 | gradient reach and loss-surface diagnostics | `laboratory/evaluation/diagnostics.py`, `landscape.py` |
+| agent architecture (loop, planning, reflection, ensemble) | `laboratory/agents/<family>.py` |
+| agent tool | `laboratory/agents/tools.py` |
+| free model provider | `laboratory/agents/providers.py` |
 
 `docs/paper-to-code.md` turns this table into a step-by-step workflow with
 worked examples.

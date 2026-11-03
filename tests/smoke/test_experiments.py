@@ -1,7 +1,8 @@
 """Smoke tests: every experiment must run end to end at the ``tiny`` tier on CPU.
 
 This is the guard that keeps the repository usable on a laptop: if a change
-makes an experiment need more than a few seconds of CPU, CI fails here.
+makes an experiment need more than a few seconds of CPU, CI fails here. The
+``tiny`` tier is also offline: agent experiments replay scripted model outputs.
 """
 
 from __future__ import annotations
@@ -49,6 +50,7 @@ def test_experiment_runs_at_the_tiny_tier(script: Path, tmp_path: Path):
     run_directory = tmp_path / area / name / "tiny"
     single = (run_directory / "checkpoint.pt").exists()
     per_architecture = any((run_directory / "checkpoints").glob("*.pt"))
-    assert single or per_architecture
+    agent_transcripts = (run_directory / "transcripts.jsonl").exists()
+    assert single or per_architecture or agent_transcripts
     assert (run_directory / "config.json").exists()
     assert (run_directory / "metrics.json").exists()

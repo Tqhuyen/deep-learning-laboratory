@@ -10,8 +10,9 @@ An **experiment** is a directory under ``experiments/<area>/<name>/`` holding a
 3. It writes its resolved config and artifacts under
    ``runs/<area>/<name>/<tier>/`` via :func:`prepare_run` and
    :func:`write_config`.
-4. It needs no network access and creates its own data if the paper's dataset is
-   not in ``data/``.
+4. Its ``tiny`` tier needs no network access and creates its own data if the
+   paper's dataset is not in ``data/``. Agent experiments call free remote
+   models from ``smoke`` upward; at ``tiny`` they replay scripted outputs.
 
 Tiers describe *how much compute* a run may spend, not what the model is:
 

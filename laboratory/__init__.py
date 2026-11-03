@@ -20,6 +20,8 @@ stage every experiment passes through, plus shared components:
 * :mod:`laboratory.postprocessing` — ids to task output.
 * :mod:`laboratory.experiment` — tiers, seeds, output layout.
 * :mod:`laboratory.utilities` — seeds, devices, masks, running averages.
+* :mod:`laboratory.agents` — LLM agents over free remote models; no torch,
+  not a pipeline stage (see ``docs/agents.md``).
 
 Architecture-specific differences (RNN vs LSTM, transformer vs CNN) are files
 inside ``models/``; a different loss, optimizer or preprocessing step is a
@@ -28,6 +30,7 @@ experiment. Nothing is duplicated per architecture.
 """
 
 from . import (
+    agents,
     blocks,
     datasets,
     evaluation,
