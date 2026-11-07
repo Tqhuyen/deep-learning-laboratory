@@ -1,0 +1,4 @@
+dataset,sigma,crop_RGB,Y_full,clipped_full
+CBSD68,15,0.011,1.76,-0.356
+Kodak24,15,-0.099,1.822,-0.32
+McMaster,15,0.02,2.811,-0.776
