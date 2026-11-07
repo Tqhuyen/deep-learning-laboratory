@@ -191,7 +191,7 @@ deep-learning-laboratory/
 │   ├── adaptation_gate_urban100.ipynb  per-image gain tuning of ADM: oracles, R2R, transfer probe (4 images)
 │   ├── adaptation_dev12.ipynb  R2R gain tuning on the 12 Urban100 dev images, σ 25 / 50, 30–90 steps
 │   └── adaptation_confirm.ipynb  R2R gain tuning with frozen settings: Urban100 confirm-88, Kodak24 / McMaster σ 50
-├── results/
+├── results/               one directory per study; results/README.md indexes them
 │   ├── recurrent_comparison/  reports, figures and report.html
 │   ├── jepa_guided_diffusion/ JEPA-conditioned ADM denoising: report, paired tests, comparisons, noise level, weight edits
 │   ├── diffusion_benchmark/   one-step diffusion posterior mean on CBSD68 / Kodak24 / McMaster: report, tables, figures
