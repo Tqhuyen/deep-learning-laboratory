@@ -426,15 +426,16 @@ Holding one denoiser fixed (DMID-d's released full-image outputs) and changing o
 Repeating the measurement with a second, architecturally different denoiser (Restormer, our own draws) shows the
 effect belongs to the protocol, not to the model:
 
-| axis | DMID-d (σ 15) | Restormer (σ 15) |
-|---|---|---|
-| GRL crop, Kodak24 | −0.102 dB | **−0.099 dB** |
-| Y channel, CBSD68 / Kodak24 / McMaster | +1.76 / +1.74 / +2.80 dB | **+1.76 / +1.82 / +2.81 dB** |
-| **clipped, quantised input** | not measurable (its outputs are uint8) | **−0.36 / −0.32 / −0.78 dB** |
+| axis | DMID-d | Restormer | largest disagreement |
+|---|---|---|---|
+| GRL crop, over 6 set–σ cells | −0.12 … +0.02 dB | −0.10 … +0.03 dB | **0.008 dB** |
+| Y channel, over 6 set–σ cells | +1.57 … +2.79 dB | +1.66 … +2.81 dB | **0.024 dB** |
+| **clipped, quantised input** | not measurable (its outputs are uint8) | σ 15: −0.36 / −0.32 / −0.78; σ 25: −0.69 / −0.62 / −1.66 dB | new axis |
 
-The third row is a new axis and the largest practical one: feeding the *same* method a clipped, quantised copy of the
-same noisy image costs 0.32–0.78 dB, three to eight times a recent SOTA margin. A paper that states neither the colour
-space nor the input convention cannot be compared with one that does.
+Two architectures agree on the first two axes to within 0.02 dB, so the effect belongs to the protocol rather than to
+the model. The third row is new and is the largest practical axis: feeding the *same* method a clipped, quantised copy
+of the same noisy image costs 0.32–0.78 dB at σ = 15 and 0.62–1.66 dB at σ = 25, which is 6–30× a recent SOTA margin.
+A paper that states neither the colour space nor the input convention cannot be compared with one that does.
 
 And the ordering does not survive: on Kodak24 at σ = 15 and σ = 25, DMID-d is 0.08 and 0.10 dB *ahead* of GRL-B in the
 published tables and 0.041 and 0.001 dB *behind* it when both are scored on the same pixels.

@@ -99,49 +99,53 @@ DMID-d and GRL-B are scored on exactly the same pixels (GRL's crop region; each 
 - Each method is on its own noise draw, so this measures the protocol effect only up to draw noise. The draw term was
   measured separately: re-deriving the noise changes per-image PSNR by about 0.001 dB, so set means move by about
   0.001 dB.
-- One denoiser (DMID-d) supplies the protocol-shift table. A second and a third would turn it from an illustration into
-  a budget.
+- Two denoisers now supply the shifts (DMID-d and Restormer, next section), and they agree to 0.02 dB. A third, and a
+  second independent implementation of the scoring code, would make it a full budget.
 
 ## A second denoiser: Restormer, and a third protocol axis
 
-The table above uses DMID-d's released outputs. To check whether the effect is a property of one model or of the
+The tables above use DMID-d's released outputs. To check whether the effect is a property of one model or of the
 protocol, Restormer (σ-specific colour weights) is run on our own draws under the same scoring rules, plus one axis
 DMID-d's outputs cannot test: a **clipped-and-quantised input**, the NTIRE convention.
 
-Run: CPU kernel `protocol-effects-restormer-s25` / `-s50` (σ 15 data from `protocol-effects-restormer-small`, which
+Runs: CPU kernels `protocol-effects-restormer-s25` and `-s50` (σ 15 from `protocol-effects-restormer-small`, which
 stopped after σ 15). Scores: [`restormer_protocols.csv`](restormer_protocols.csv),
 [`restormer_protocol_shifts.csv`](restormer_protocol_shifts.csv).
 
-**Shift against the unclipped full-image RGB score (dB), Restormer, σ 15:**
+**Shift against the unclipped full-image RGB score (dB), Restormer:**
 
-| set | GRL crop (RGB) | Y channel | clipped uint8 input |
-|---|---:|---:|---:|
-| CBSD68 | +0.011 | **+1.760** | −0.356 |
-| Kodak24 | **−0.099** | **+1.822** | −0.320 |
-| McMaster | +0.020 | **+2.811** | −0.776 |
-| mean \|shift\| | 0.043 | **2.13** | 0.48 |
+| set | σ | GRL crop (RGB) | Y channel | clipped uint8 input |
+|---|---:|---:|---:|---:|
+| CBSD68 | 15 | +0.011 | +1.760 | −0.356 |
+| CBSD68 | 25 | +0.010 | +1.658 | −0.690 |
+| Kodak24 | 15 | **−0.099** | +1.822 | −0.320 |
+| Kodak24 | 25 | **−0.086** | +1.709 | −0.617 |
+| McMaster | 15 | +0.020 | +2.811 | −0.776 |
+| McMaster | 25 | +0.025 | +2.559 | **−1.658** |
 
-**Comparison with DMID-d (σ 15):**
+**Agreement with DMID-d, which was measured independently on its own released outputs:**
 
-| axis | DMID-d | Restormer | agreement |
-|---|---|---|---|
-| GRL crop, Kodak24 | −0.102 | −0.099 | **same to 0.003 dB** |
-| GRL crop, CBSD68 | +0.004 | +0.011 | same sign, same size |
-| GRL crop, McMaster | +0.013 | +0.020 | same sign, same size |
-| Y channel, CBSD68 / Kodak24 / McMaster | +1.76 / +1.74 / +2.80 | +1.76 / +1.82 / +2.81 | **same to 0.08 dB** |
-| clipped uint8 input | not measurable (outputs are already uint8) | −0.36 / −0.32 / −0.78 | new axis |
+| axis | largest disagreement between the two models |
+|---|---|
+| GRL crop (6 cells) | **0.008 dB** |
+| Y channel (6 cells) | **0.024 dB** |
 
-Three things follow.
+Four conclusions.
 
-1. **The protocol effect is a property of the protocol, not of the model.** A diffusion posterior mean and a
-   convolutional transformer lose the same 0.10 dB to GRL's Kodak24 crop and the same 1.7–2.8 dB to the colour-space
-   choice, to within 0.08 dB. This is what turns an illustration into a budget.
-2. **The cropping effect is set-specific, not dataset-generic.** Kodak24 loses 0.10 dB; CBSD68 and McMaster gain
-   0.01–0.02 dB. A leaderboard that crops uniformly therefore mis-ranks methods differently across sets.
-3. **The input convention is a third axis and it is large.** Feeding the *same* method a clipped, quantised version of
-   the same noisy image costs **0.32–0.78 dB**, which is 3–8× the recent SOTA margins. Combined with the Y-channel
-   choice, a paper that does not state both conventions cannot be compared with one that does.
-   This also bears on reported fine-tuning gains: the NTIRE 2026 report's "+3.37 dB over public Restormer σ 50" is
-   measured against a model fed the NTIRE clipped input, and part of that gap is this convention, not the training.
+1. **The protocol effect belongs to the protocol, not to the model.** A diffusion posterior mean and a convolutional
+   transformer lose the same amount to the same scoring choices, to within 0.02 dB. This is what turns an illustration
+   into a budget.
+2. **The cropping effect is set-specific.** Kodak24 loses 0.09–0.10 dB; CBSD68 and McMaster gain 0.01–0.03 dB. A
+   leaderboard that crops uniformly therefore mis-ranks methods differently across sets, which is why the published
+   Kodak24 ordering of two methods reverses on identical pixels (see above).
+3. **The colour-space choice is the largest axis and it shrinks with σ:** 1.66–2.81 dB at σ 15, 1.66–2.56 dB at σ 25,
+   1.57–2.33 dB at σ 50 (DMID-d). A paper that does not state which channel it reports is not comparable at all.
+4. **The input convention is a third axis, and it grows with σ:** clipping costs 0.32–0.78 dB at σ 15 but
+   0.62–1.66 dB at σ 25. Neither model's published protocol clips. This is 6–30× a recent SOTA margin, and it bears
+   on reported fine-tuning gains: the NTIRE 2026 report's "+3.37 dB over public Restormer σ 50" is measured against a
+   model fed the clipped NTIRE input, so part of that gap is this convention rather than the training.
 
-**Caveat.** The clipping axis is measured at σ 15 only; σ 25 and σ 50 are running.
+**Caveat.** The clipping axis is measured at σ 15 and σ 25 only; the σ 50 run is queued. The clipping measurement also
+feeds Restormer the rounded, clipped image, so that arm carries a small additional quantisation cost that the float arm
+does not; the two arms differ in exactly the way the NTIRE protocol differs from the KAIR one, which is the quantity of
+interest.
