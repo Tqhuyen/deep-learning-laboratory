@@ -21,20 +21,24 @@ ranked.
 - **Gray.** A lift with isotropic chroma noise (DDRM's spectral construction for a channel-mean operator, applied in
   one step) makes an RGB prior usable on gray images. It gives the first diffusion-prior results on BSD68 and Set12:
   32.04 / 29.62 / 26.75 dB on BSD68 at σ = 15 / 25 / 50. On identical noise it beats Xformer on all 68 BSD68 images
-  at every σ. Xformer is the strongest released DFWB network at σ = 25 / 50; GRL-B, ahead at σ = 15, is being rerun.
+  at every σ. Xformer is the strongest released DFWB network at σ = 25 / 50; GRL-B, ahead at σ = 15, was rerun on the
+  same draws for Set12 σ = 50, where the lift is **+0.192 dB** ahead (11/12 images, p = 9.3·10⁻⁴).
 - **Large images: a measured win.** Urban100's full 100 images, with settings frozen beforehand:
   - 384-px tiles plus 90 steps of per-image adaptation give 33.402 / 30.671 dB at σ = 25 / 50.
   - Paired against GRL-B's *released outputs* on the same 100 images and the same clean copies, that is
     **+0.065 dB** (95 % CI +0.034 to +0.096, 73/100 images) and **+0.220 dB** (CI +0.183 to +0.257, 92/100).
-  - The σ = 50 margin is replicated on two further noise draws: the gain is **+0.1517 ± 0.0027 dB** across three
-    independent draws (263 of 264 image–draw pairs better).
+  - Both margins replicate on fresh noise draws with the settings frozen: **+0.1517 ± 0.0027 dB** at σ = 50 over three
+    draws (263 of 264 image–draw pairs better) and +0.1472 / +0.1498 dB at σ = 25 over two, with 88 of 88 images better
+    on every draw.
   - GRL-B is the strongest supervised denoiser without an external prior that releases weights.
   - At σ = 15 there is no gain (−0.031 dB, CI covers zero), although the adaptation itself still gains +0.134 dB on a
     cleanly held-out set.
-- **Why earlier "wins" were not real.** A measurement audit shows that scoring a *fixed* denoiser on cropped versus
-  full images, or on the Y channel versus RGB, moves its PSNR by 0.05–0.17 dB and by 1.5–2.6 dB. On Kodak24 the
-  published ordering of two methods reverses when both are scored on the same pixels. SOTA margins of 0.05 dB are
-  therefore only meaningful in a paired, same-image form, which is what the Urban100 result above uses.
+- **Why earlier "wins" were not real.** A measurement audit, run on two architectures with the denoiser otherwise held
+  fixed, shows that the scoring protocol moves a method's PSNR by 0.04–0.17 dB through cropping, by 1.6–2.8 dB through
+  the colour channel, and by **0.5–2.5 dB** (3.8 at worst) through whether the noisy input is clipped. The two models
+  agree on the first two axes to 0.024 dB, so the effect belongs to the protocol. On Kodak24 the published ordering of
+  two methods reverses when both are scored on the same pixels. Margins of 0.05 dB are therefore only meaningful in a
+  paired, same-image form, which is what the Urban100 result above uses.
 - **Per-image adaptation (test-time training), and why it works where it does.** Recorrupted-to-Recorrupted tuning of
   0.04 % of the network on the noisy image alone adds +0.15 dB on Urban100, improving all 88 held-out images, and loses
   on Kodak24, McMaster and gray images. Whether it helps is a reproducible property of the *image* (per-image gain
@@ -306,8 +310,23 @@ one-step estimate's MSE up to a 4σ² factor.
 * **Inference:** the whole image, reflect-padded to a multiple of 64; for large images, overlapping tiles (4.2).
 * **Metrics:** PSNR on uint8 for every result. SSIM and LPIPS (AlexNet) are reported for the colour benchmark and real
   noise only; the Urban100 adaptation and the gray reruns recorded PSNR only.
-* **Statistics:** paired bootstrap intervals and sign-flip tests per image, with Holm correction.
-* **Reproduction checks:** DMID's released outputs, rescored with our code, reproduce its Table 1 to 0.005 dB.
+* **Statistics:** per-image paired sign-flip tests (200,000 sign patterns), 95 % intervals, and Holm correction within
+  each declared family. The unit of inference is the image; the noise-draw effect on a set mean is measured separately
+  and is 0.0017 dB (Section 6.2), so paired tests across draws remain interpretable.
+* **Reproduction checks, all of which pass.**
+  - DMID's released outputs, rescored with our code, reproduce its Table 1 to 0.005 dB.
+  - Restormer reproduces published BSD68 at every σ to 0.005 dB and Urban100 σ 15 at 35.133 against 35.13.
+  - Xformer reproduces published BSD68 and Set12 to 0.005 dB.
+  - GRL-B's released outputs reproduce its published Table within 0.03 dB.
+  - GRL-B rerun on our draws reproduces its Set12 σ 50 number to 0.008 dB.
+* **Two checks that fail, and what we concluded from them.** SCUNet and DRUNet reproduce their published Set12 numbers
+  (≤ 0.004 dB) but land 0.10–0.35 dB below their published BSD68 numbers. Since two other models reproduce on the same
+  BSD68 copy, the discrepancy is in their reported provenance, not in our data; their BSD68 reruns are therefore not
+  used as a reference and no paired claim is made against them.
+* **Replication.** The two headline cells are rerun on fresh noise draws with the settings frozen: three draws at
+  σ = 50, two at σ = 25. Nothing is retuned between draws.
+* **What is deliberately not done.** No tuning on any test image, and no comparison against a number we cannot rerun:
+  PTG-RM, Hi-IR and IPT-V2 release no denoising weights, so their published values appear only as a reference column.
 
 ## 6. Results
 
@@ -494,6 +513,24 @@ rescore to its Table 3.
     +0.004 ± 0.008 (CC), −0.001 ± 0.002 (PolyU), +0.000 ± 0.004 dB (FMDD).
   * The sample average saturates (8 → 500 samples: ≤ 0.02 dB), so this stage cannot beat DMID-d. A gain in accuracy
     needs a better noise transformation.
+
+## 7c. What is missing, and why
+
+Two experiments that a reviewer will ask for were not run, and the paper says so rather than implying they are done.
+
+- **GainTuning's own loss and parameter set on ADM (§4.3 cites it as the direct prior art).** GainTuning (NeurIPS 2021)
+  tunes per-channel gains with a SURE loss and reports that it "does not require early stopping", making it the closest
+  work to our adaptation. Running it at our budget would either confirm that R2R is a weaker estimator — in which case
+  the certificate and predictor of §4.3 remain the contribution and the loss should be swapped — or reveal no
+  difference. **Not run:** Kaggle began rejecting our pushes with "maximum batch GPU session count of 2 reached" after
+  five batch GPU sessions in two days, and this run needs about 7–10 GPU-hours.
+- **A 2025-era released comparator on Urban100.** GRL-B is from 2023. MaIR / MaIR+ (CVPR 2025) publishes checkpoints,
+  and beating it on our draws would make the C1/C2 claims much harder to dismiss. MaIR needs CUDA-only Mamba kernels, so
+  it needs the same GPU access. **Not run**, same cause.
+- **The clipping axis at σ = 50 on Urban100.** The protocol table in 6.5 has that cell missing because the full-grid
+  kernel was cancelled at the 12-hour CPU limit.
+
+Everything else in [`claims.md`](claims.md) has the evidence attached to it.
 
 ## 8. Limitations
 
