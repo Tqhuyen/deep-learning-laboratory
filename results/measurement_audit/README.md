@@ -108,8 +108,9 @@ The tables above use DMID-d's released outputs. To check whether the effect is a
 protocol, Restormer (σ-specific colour weights) is run on our own draws under the same scoring rules, plus one axis
 DMID-d's outputs cannot test: a **clipped-and-quantised input**, the NTIRE convention.
 
-Runs: CPU kernels `protocol-effects-restormer-s25` and `-s50`; σ 15 from `protocol-effects-restormer-small`, which
-stopped after σ 15. Scores: [`restormer_protocols.csv`](restormer_protocols.csv),
+Runs: CPU kernels `protocol-effects-restormer-s25` and `-s50`; σ 15 (and Urban100, and the first three sets at σ 25)
+from `protocol-effects-restormer` and `protocol-effects-restormer-small`. The full-grid kernel was cancelled at the
+12-hour limit after finishing Urban100 σ 15 and the first three sets at σ 25; Urban100 at σ 25 and σ 50 was not run. Scores: [`restormer_protocols.csv`](restormer_protocols.csv),
 [`restormer_protocol_shifts.csv`](restormer_protocol_shifts.csv).
 
 **Shift against the unclipped full-image RGB score (dB), Restormer:**
@@ -125,6 +126,16 @@ stopped after σ 15. Scores: [`restormer_protocols.csv`](restormer_protocols.csv
 | McMaster | 15 | +0.020 | +2.811 | −0.776 |
 | McMaster | 25 | +0.025 | +2.559 | **−1.658** |
 | McMaster | 50 | +0.031 | +2.343 | **−3.807** |
+| Urban100 | 15 | −0.000 | +2.432 | −0.642 |
+
+Urban100 is the set the paper's headline claim lives on, so its row matters twice over.
+
+- **The copy is validated.** Restormer scores **35.133** on the full 100 Urban100 images at σ 15, against a published
+  35.13. That is the direct check for a copy-level defect on the set where C1 and C2 are made.
+- **No convention mismatch in the headline comparison.** GRL does not clip and neither do we, so the +0.065 / +0.220 dB
+  margins are between two methods evaluated under the same input convention. Had either side clipped, the gap would
+  carry a 0.6–2.5 dB term instead.
+- **The crop axis is empty on Urban100**, as it is for DMID-d, because GRL's Urban100 outputs cover the full image.
 
 **Agreement with DMID-d, measured independently on its own released outputs, over all nine set–σ cells:**
 
