@@ -218,8 +218,13 @@ $x_t = \sqrt{\bar\alpha_t}\,x_0 + \sqrt{1-\bar\alpha_t}\,\varepsilon$.
 
 ## 4. Method
 
-Three changes to the one-step posterior mean of Section 3. Each was checked by a pre-registered test before it was
-adopted (Appendix: decision log).
+Three changes to the one-step posterior mean of Section 3. Each was checked by a test whose success criterion was fixed
+before the run; the outcomes, including the ones that failed, are recorded per claim in [`claims.md`](claims.md) and in
+each study's report under [`../`](../README.md). Two of the three were adopted on the strength of those tests and one —
+fine-tuning — was rejected.
+
+For every claim below, a reader can reconstruct the state of knowledge before the run from the study's README, and check
+the result against the CSVs beside it.
 
 **4.1 Gray images: the isotropic chroma-noise lift** ([`../gray_lift/README.md`](../gray_lift/README.md)).
 - **Lift.** For a gray observation $y = x + \sigma n$, form $Y = y\mathbf 1 + w$ with
