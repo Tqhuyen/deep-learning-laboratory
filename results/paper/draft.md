@@ -437,11 +437,13 @@ rather than to the model.
 
 The third row is new and is the largest axis of the three. Feeding the *same* method a clipped, quantised copy of the
 same noisy image costs 0.48 dB on average at σ = 15, 0.99 dB at σ = 25 and **2.46 dB at σ = 50**, reaching **3.81 dB**
-on McMaster. The mechanism is direct: clipping is a projection onto the valid range, so the fraction of pixels pinned to
-the boundary grows with σ, and the more of the noise realisation is lost the more the reconstruction has to invent. A
-3.8 dB term is 40× a recent SOTA margin, which means a clipped-protocol number and an unclipped one are not comparable,
-and it also means that part of the NTIRE 2026 report's "+3.37 dB over public Restormer σ 50" is this convention rather
-than a training effect.
+on McMaster.
+
+That clipping hurts is not a surprise: it discards information, so every method including an oracle must do worse on a
+clipped input, and the fraction of pixels pinned to 0 or 255 grows with σ. What is worth reporting is the **size**: 3.8 dB
+is 40× a recent SOTA margin, so a clipped-protocol number and an unclipped one describe different problems and a
+leaderboard that mixes them is not ranking methods. It is also unstated in most reports, and it means part of the
+NTIRE 2026 report's "+3.37 dB over public Restormer σ 50" is this convention rather than a training effect.
 
 And the ordering does not survive: on Kodak24 at σ = 15 and σ = 25, DMID-d is 0.08 and 0.10 dB *ahead* of GRL-B in the
 published tables and 0.041 and 0.001 dB *behind* it when both are scored on the same pixels.

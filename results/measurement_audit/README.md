@@ -149,9 +149,16 @@ Four conclusions.
    between a clipped-protocol number and an unclipped one is meaningless, and it also means part of the NTIRE 2026
    report's "+3.37 dB over public Restormer σ 50" is a convention rather than a training effect.
 
-**Why clipping grows with σ.** Clipping at 0 and 255 is a projection onto the valid range. The larger σ is, the larger
-the fraction of pixels pushed onto that boundary, and the more of the noise realisation is lost; the reconstruction then
-has to invent the saturated extremes. This is a mechanism, not a fit: the effect is monotone in σ on all three sets.
+**What the clipping number does and does not say.**
+
+- **It is not a surprise that clipping hurts.** Clipping at 0 and 255 throws information away, so every method, including
+  an oracle, must do worse on a clipped input. The larger σ is, the larger the fraction of pixels pinned to the
+  boundary, and the effect is monotone in σ on all three sets, which is what the mechanism predicts.
+- **What is worth reporting is the size.** 0.48 / 0.99 / 2.46 dB at σ = 15 / 25 / 50, and 3.81 dB on McMaster, is
+  5–40× a recent SOTA margin. A clipped-protocol number and an unclipped one therefore describe different problems, and
+  a leaderboard that mixes them is not ranking methods.
+- **It is routinely unstated.** Of the papers whose protocols this project read, neither DMID nor Restormer clips, NTIRE
+  clips and quantises, and most reports do not say which convention produced their numbers.
 
 **Caveat.** The clipping arm feeds Restormer the rounded, clipped image, so it carries a small quantisation cost the
 float arm does not. That is not a confound but the quantity of interest: it is exactly how the NTIRE protocol differs
