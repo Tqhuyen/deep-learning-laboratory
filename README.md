@@ -180,6 +180,7 @@ deep-learning-laboratory/
 │   ├── urban100_s25_seed_2.ipynb  prepared, never launched: Kaggle refused the push after five GPU sessions
 │   ├── tile_rule_colour.ipynb  384-px tile rule on CBSD68 / Kodak24 / McMaster at every σ, plus DMID's 3-evaluation chain
 │   ├── denoise_protocol_effects.ipynb  CPU: one denoiser rescored under every protocol; DMID-d vs GRL-B on the same pixels
+│   ├── sure_vs_r2r_cpu.ipynb  CPU: SURE against R2R at equal budget, on DnCNN (a stand-in for the GPU-blocked GainTuning test)
 │   ├── protocol_effects_restormer.ipynb  CPU: the same grid with Restormer (cancelled at the 12 h limit after Urban100 σ 15)
 │   ├── protocol_effects_restormer_small.ipynb  CPU: the three small sets at σ 15
 │   ├── protocol_effects_restormer_s25.ipynb  CPU: the three small sets at σ 25
