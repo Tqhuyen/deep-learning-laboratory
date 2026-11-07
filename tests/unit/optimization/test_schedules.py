@@ -3,12 +3,13 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
+from laboratory.optimization.muon import Muon
 from laboratory.optimization.schedules import cosine_warmup, noam
 
 
 def test_cosine_warmup_rises_then_decays_to_the_floor():
     parameter = nn.Parameter(torch.zeros(1))
-    optimizer = torch.optim.SGD([parameter], lr=1.0)
+    optimizer = Muon([parameter], lr=1.0)
     scheduler = cosine_warmup(optimizer, warmup_steps=10, total_steps=110, min_lr_ratio=0.01)
 
     learning_rates = []
@@ -25,7 +26,7 @@ def test_cosine_warmup_rises_then_decays_to_the_floor():
 
 def test_noam_peaks_at_the_warmup_boundary():
     parameter = nn.Parameter(torch.zeros(1))
-    optimizer = torch.optim.SGD([parameter], lr=1.0)
+    optimizer = Muon([parameter], lr=1.0)
     scheduler = noam(optimizer, d_model=512, warmup_steps=40)
 
     learning_rates = []

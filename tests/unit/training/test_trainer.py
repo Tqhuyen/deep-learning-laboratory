@@ -4,13 +4,14 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from laboratory.optimization.muon import Muon
 from laboratory.training.trainer import Trainer
 
 
 def test_trainer_fits_a_linear_regression():
     torch.manual_seed(0)
     model = nn.Linear(4, 1)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.05)
+    optimizer = Muon(model.parameters(), lr=0.15)
     trainer = Trainer(model, optimizer, device="cpu")
     inputs = torch.randn(64, 4)
     targets = inputs @ torch.tensor([1.0, 2.0, -1.0, 0.5]) + 0.3

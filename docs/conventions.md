@@ -178,9 +178,10 @@ Scaling playbook:
 3. **Sequence length is the expensive axis for attention** (quadratic memory
    and time) and linear for recurrence. Do not change it while comparing
    architectures unless the paper's claim is about context length.
-4. **Batch size and learning rate move together.** `3e-4` AdamW is a sane
-   default at `d_model=256`; smaller models tolerate `1e-3`, larger models need
-   less. Warm up for 1–5 % of steps.
+4. **Batch size and learning rate move together.** `3e-4` is a sane default at
+   `d_model=256` for the default optimizer, Muon, whose updates are scaled to
+   AdamW's RMS so AdamW learning rates carry over; smaller models tolerate
+   `1e-3`, larger models need less. Warm up for 1–5 % of steps.
 5. **When memory runs out, accumulate gradients**, do not silently shrink the
    logical batch size. The effective batch is
    `micro_batch × accumulation × devices`.

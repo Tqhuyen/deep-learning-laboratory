@@ -209,7 +209,7 @@ def train_one(cell, seed, tokenizer, loaders, config, device, checkpoint_path=No
         )
 
     optimizer = make_optimizer(
-        model.parameters(),
+        model,
         learning_rate=config["learning_rate"],
         weight_decay=config["weight_decay"],
     )

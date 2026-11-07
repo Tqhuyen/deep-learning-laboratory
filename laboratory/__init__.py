@@ -109,7 +109,7 @@ from .models import (
     recurrent_stack_parameters,
     sequence_classifier_parameters,
 )
-from .optimization import cosine_warmup, make_optimizer, noam
+from .optimization import Muon, cosine_warmup, make_optimizer, noam
 from .postprocessing import trim_at_eos
 from .preprocessing import (
     BPETokenizer,
@@ -173,6 +173,7 @@ __all__ = [
     "LayerNorm",
     "LearnedPositionalEmbedding",
     "MultiHeadAttention",
+    "Muon",
     "RNN",
     "RNNCell",
     "RMSNorm",

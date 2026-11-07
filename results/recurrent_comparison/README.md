@@ -14,8 +14,9 @@ surfaces, works offline) is [`report.html`](report.html); rebuild it with
 files in this directory.
 
 Configuration shared by both tasks: 3 cells × 3 seeds, identical data,
-optimiser (AdamW), cosine schedule, batch size and optimizer-step budget. The
-embedding and the cell are sized by solving
+optimiser (AdamW; `make_optimizer` now defaults to Muon, so re-running these
+experiments trains with Muon), cosine schedule, batch size and optimizer-step
+budget. The embedding and the cell are sized by solving
 
 $$
 P_{\text{cell}}(H) = m\,(IH + H^2 + 2H), \qquad m = 1,3,4

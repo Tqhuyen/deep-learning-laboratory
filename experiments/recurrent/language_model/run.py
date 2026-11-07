@@ -205,7 +205,7 @@ def main() -> None:
     )
 
     optimizer = make_optimizer(
-        model.parameters(),
+        model,
         learning_rate=config["learning_rate"],
         weight_decay=config["weight_decay"],
     )

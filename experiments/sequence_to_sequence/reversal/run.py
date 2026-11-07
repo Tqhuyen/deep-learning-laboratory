@@ -248,7 +248,7 @@ def main() -> None:
     print(f"model: {count_parameters(model):,} parameters, vocabulary={tokenizer.vocab_size}")
 
     optimizer = make_optimizer(
-        model.parameters(),
+        model,
         learning_rate=config["learning_rate"],
         weight_decay=config["weight_decay"],
     )
