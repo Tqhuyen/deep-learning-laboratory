@@ -53,6 +53,31 @@ Two rules make the code readable:
 * **Shapes and equations are in docstrings.** `(batch, sequence, width)` is
   stated at every module boundary, and the gate equations are written out.
 
+## The denoising study
+
+The largest study in this repository asks one narrow question: what does a *frozen* pretrained diffusion model
+actually buy for Gaussian denoising, measured so that the answer survives a skeptical reader? It lives in `results/`
+and is written up in [`results/paper`](results/paper/README.md).
+
+What it found, in the order the evidence forces:
+
+| finding | number | where |
+|---|---|---|
+| One network evaluation is within 0.02 dB of DMID's 1500-evaluation ensemble, and DMID's own multi-evaluation chain is 0.11–0.14 dB *worse* than one step on matched Gaussian noise | −0.128 / −0.137 / −0.114 dB, 0/110 images better | [`diffusion_benchmark/tile_rule`](results/diffusion_benchmark/tile_rule/README.md) |
+| The prior's edge over supervised denoisers is **data scale**: a supervised SwinIR trained on 100 k ImageNet images matches it within ±0.05 dB at σ 25 | 31.84 / 33.14 / 33.44 / 33.21 vs ours 31.86 / 33.12 / 33.49 | [`paper/prior_art.md`](results/paper/prior_art.md) |
+| Grayscale needed a construction: an exact lift with isotropic chroma noise. It gives the first diffusion-prior Set12/BSD68 numbers and beats every released supervised gray denoiser on identical draws | BSD68 32.039 / 29.623 / 26.753; Xformer 68/68 images | [`gray_lift`](results/gray_lift/README.md) |
+| On Urban100 the pipeline beats the strongest *released* supervised model without an external prior, paired on all 100 images | **+0.065 dB** at σ 25, **+0.220 dB** at σ 50; σ 50 replicated on 3 draws (±0.0027) | [`urban100/full100`](results/urban100/full100/README.md), [`seed_replication`](results/urban100/seed_replication/README.md) |
+| At σ 15 there is **no** win, and one measured quantity says why | context deficit −0.082 dB at σ 15 against −0.187 at σ 50 | [`adaptation`](results/adaptation/README.md) |
+| Whether per-image adaptation helps is a property of the *image* (ρ = 0.98 across draws) and is predicted before adapting by that same deficit (ρ = −0.44…−0.56) | deficit and gain rank identically across σ and across datasets | [`adaptation`](results/adaptation/README.md) |
+| The scoring protocol moves a *fixed* denoiser by more than the margins being ranked, on two different architectures | crop 0.04–0.17 dB, RGB→Y **1.7–2.8 dB**, clipped input 0.32–0.78 dB; one published ordering reverses | [`measurement_audit`](results/measurement_audit/README.md) |
+
+Two conventions make the results checkable:
+
+* **Every claim is in [`results/paper/claims.md`](results/paper/claims.md)** with its evidence, its statistic and the
+  result that would falsify it. Claims that failed are listed there as failed.
+* **Comparisons are paired on the same pixels when they are claimed.** Margins over published numbers are shown only as
+  a reference column, because the last row of the table above is how much those numbers can move.
+
 ## Where new work goes
 
 Directories are **pipeline stages**, files are **families**, so every addition

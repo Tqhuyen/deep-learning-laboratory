@@ -1,7 +1,7 @@
 # Tile rule R on the small colour sets (CPU-free GPU run)
 
 Run: Kaggle GPU kernel [`trnquanghuyn/tile-rule-colour`](https://www.kaggle.com/code/trnquanghuyn/tile-rule-colour)
-(T4 ×2) of [`notebooks/tile_rule_colour.ipynb`](../../notebooks/tile_rule_colour.ipynb). Nothing was selected on these
+(T4 ×2) of [`notebooks/tile_rule_colour.ipynb`](../../../notebooks/tile_rule_colour.ipynb). Nothing was selected on these
 images (amendment 6): rule R is 384-px tiles with overlap 96, chosen on Urban100 dev-12, applied unchanged.
 
 - **Scores:** [`scores.csv`](scores.csv) per image, σ, arm and flip.

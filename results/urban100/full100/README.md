@@ -1,10 +1,10 @@
 # Urban100, full 100 images: the frozen pipeline, measured
 
 Run: Kaggle GPU kernel [`trnquanghuyn/urban100-full`](https://www.kaggle.com/code/trnquanghuyn/urban100-full)
-(T4 ×2, 4 h 39 min) of [`notebooks/urban100_full.ipynb`](../../notebooks/urban100_full.ipynb). The settings were frozen
+(T4 ×2, 4 h 39 min) of [`notebooks/urban100_full.ipynb`](../../../notebooks/urban100_full.ipynb). The settings were frozen
 on dev-12 before this run.
 
-Pipeline, unchanged from [`../adaptation`](../adaptation/README.md):
+Pipeline, unchanged from [`../adaptation`](../../adaptation/README.md):
 
 - **Inference:** 384-px tiles, overlap 96, horizontal-flip average (×2).
 - **Adaptation:** per-channel conv gains + GroupNorm affine, Recorrupted-to-Recorrupted, α = 0.5, 90 steps,
