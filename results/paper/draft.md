@@ -386,9 +386,10 @@ and is shown only for orientation.
 
   Both methods are scored by the same code on the same pixels, so the protocol effects of 6.5 cancel. What remains is
   the method and the noise draw; the paired interval absorbs the draw.
-- **Replication at σ = 50.** Two fresh draws give +0.1545 / +0.1491 / +0.1515 dB on confirm-88 (draws 0 / 1 / 2), mean
-  **+0.1517 dB** with a cross-draw SD of **0.0027 dB**, and 263 of 264 image–draw pairs better
-  ([`../urban100/seed_replication`](../urban100/seed_replication/README.md)). σ = 25 was not replicated.
+- **Replication.** At σ = 50, two fresh draws give +0.1545 / +0.1491 / +0.1515 dB on confirm-88 (draws 0 / 1 / 2),
+  mean **+0.1517 dB** with a cross-draw SD of **0.0027 dB**, and 263 of 264 image–draw pairs better. At σ = 25, one
+  fresh draw gives +0.1472 / +0.1498 dB on draws 0 / 1, with 88 of 88 images better on both and a per-image ranking
+  that is unchanged (ρ = 0.989) ([`../urban100/seed_replication`](../urban100/seed_replication/README.md)).
 - **By-product: the draw effect is 0.002 dB, not 0.02.** Across the three draws the *unadapted* 88-image set mean moves
   by a standard deviation of 0.0017 dB. Comparisons across draws are therefore close to exact at the set level, and the
   0.014 / 0.031 dB deficit of one step against DMID-d at σ = 25 / 50 is real.
@@ -528,7 +529,7 @@ rescore to its Table 3.
     Set12 σ = 50 only (28.038 against 28.03 published); its BSD68 rerun was stopped by the CPU deadline after 4 images.
 * **The claim is narrow, and this is deliberate.**
   * **Scope:** colour, Urban100, σ = 25 and 50. Not σ = 15 (−0.031 dB, CI covers zero). σ = 50 is replicated on three
-    draws; σ = 25 is single-draw.
+    draws and σ = 25 on two.
   * **Comparator:** GRL-B's released outputs, the strongest supervised model without an external prior that releases
     weights. PTG-RM has none.
   * **Form:** paired on the same 100 images with the same code. Not a comparison of published numbers.

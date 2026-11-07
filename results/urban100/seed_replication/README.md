@@ -11,12 +11,27 @@ Holm correction).
 - **Scores:** [`seed1_scores.csv`](seed1_scores.csv), [`seed2_scores.csv`](seed2_scores.csv), and their `*_tests.csv`.
 - **Settings:** identical to the frozen pipeline — 384-px tiles, ×2 flip, 90 R2R steps, Muon/AdamW branch, α = 0.5. The
   only change is the noise draw and the adaptation's own random seed.
-- **Scope:** Urban100 confirm-88 at σ 50 only. σ 25 was not replicated (GPU budget); claims at σ 25 remain
-  single-draw.
+- **Scope:** Urban100 confirm-88. σ 50 on two further draws (`urban100-seed-1`, `-2`); σ 25 on one further draw
+  (`urban100-s25-seed-1`). A second σ 25 draw could not be launched: Kaggle refused the push with "maximum batch GPU
+  session count of 2 reached", and the two draws already available agree to 0.003 dB.
 - **Draw construction:** the noise seed becomes `1_000_000·(index + 1 + 10·k) + 1000σ + idx` for k = 1, 2, which is
   disjoint from the published set (k = 0).
 
-## Results
+## Results, σ 25 (two draws)
+
+| draw | unadapted | adapted | gain | per-image SD | images better | worst image |
+|---|---:|---:|---:|---:|---:|---:|
+| 0 (published set) | 33.1631 | 33.3103 | **+0.1472** | 0.131 | 88/88 | +0.009 |
+| 1 | 33.1624 | 33.3121 | **+0.1498** | 0.133 | 88/88 | +0.010 |
+
+- **Across draws:** mean +0.1485 dB; the two per-draw estimates differ by 0.0026 dB.
+- **Paired by image:** the per-image gain differs between draws by +0.0026 ± 0.0156 dB, and its ranking is nearly
+  identical (Spearman **+0.989**), which is the image-property result of
+  [`../../adaptation`](../../adaptation/README.md) seen from another angle.
+- **Full-100 at σ 25, two-draw mean:** 33.403 dB, against GRL-B's released 33.337 — **+0.066 dB**.
+- **No image harmed** on either draw.
+
+## Results, σ 50 (three draws)
 
 confirm-88, σ 50, ×2 flip:
 
@@ -56,5 +71,5 @@ project assumed. Two consequences:
 **Does:** the σ 50 gain is not a draw artefact. Across two independent draws it reproduces to within 0.005 dB of the
 original, on 263 of 264 image–draw pairs.
 
-**Does not:** the σ 25 gain is still single-draw; PTG-RM still cannot be rerun; and the class of the method is still
-"no task-specific training plus test-time adaptation".
+**Does not:** PTG-RM still cannot be rerun, so the one comparator that leads the published tables stays outside every
+paired test here; and the class of the method is still "no task-specific training plus test-time adaptation".

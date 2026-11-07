@@ -11,7 +11,7 @@ Legend for **status**: `supported` means the evidence exists in this repository 
 
 | # | claim | evidence | statistic | what would falsify it | status |
 |---|---|---|---|---|---|
-| **C1** | On Urban100 colour at σ = 25 (single draw; not replicated), the pipeline (384-px tiles ×2 + 90-step R2R) beats GRL-B's released outputs on the same 100 images | [`../urban100/full100`](../urban100/full100/README.md), `scores.csv`, [`../measurement_audit/grl_rescored.csv`](../measurement_audit/grl_rescored.csv) | **+0.065 dB**, 95 % CI [+0.034, +0.096], 73/100 images, sign-flip p = 1·10⁻⁴. On the 88 images whose settings were not tuned on them: **+0.059, 63/88, p = 8.6·10⁻⁴** | GRL-B rerun on our exact draws gives ≤ 0; or any released model without an external prior scores higher on these pixels | supported, **single draw** |
+| **C1** | On Urban100 colour at σ = 25, the pipeline (384-px tiles ×2 + 90-step R2R) beats GRL-B's released outputs on the same 100 images | [`../urban100/full100`](../urban100/full100/README.md), `scores.csv`, [`../measurement_audit/grl_rescored.csv`](../measurement_audit/grl_rescored.csv) | **+0.065 dB**, 95 % CI [+0.034, +0.096], 73/100 images, sign-flip p = 1·10⁻⁴. On the 88 images whose settings were not tuned on them: **+0.059, 63/88, p = 8.6·10⁻⁴**. Replicated on a **second draw**: +0.1472 / +0.1498 dB on the 88, 88/88 images better on both, per-image ranking ρ = 0.989 | GRL-B rerun on our exact draws gives ≤ 0; or any released model without an external prior scores higher on these pixels | supported, **2 draws** |
 | **C2** | The same at σ = 50 | [`../urban100/seed_replication`](../urban100/seed_replication/README.md) | **+0.220 dB** against GRL-B on the full 100, from the **three-draw** mean. Confirm-88 gain is **+0.1517 ± 0.0027 dB** across three independent draws; pooled 264 image–draw pairs, 263/264 better, p < 10⁻⁵. Holdout-only, full 100: +0.209 | as C1 | **supported, 3 draws** |
 | **C3** | At σ = 15 the pipeline has **no** advantage | as C1 | −0.031 dB, CI [−0.072, +0.010], 52/100, p = 0.15 | a gain appears under a σ15-specific setting tuned on data disjoint from Urban100 | **negative, reported as such** |
 | **C4** | The gray lift beats every released supervised gray denoiser on **identical draws**, except where our reference reruns fail | [`../gray_lift`](../gray_lift/README.md) | BSD68 vs Xformer **68/68** images at every σ (+0.057 / +0.078 / +0.106); vs Restormer **612/612 pairs** (3 seeds × 68 images × 3 σ), mean **+0.103 dB**, and Set12 **107/108**, mean +0.151; Set12 vs GRL-B σ 50 **+0.192 dB**, 11/12, p = 9.3·10⁻⁴ | any paired comparison reversing on a validated rerun | supported |
@@ -42,8 +42,8 @@ Legend for **status**: `supported` means the evidence exists in this repository 
 ## Conditions under which C1 and C2 would be withdrawn
 
 1. ~~The 3-seed replication fails.~~ **Run and passed:** +0.1545 / +0.1491 / +0.1515 dB on draws 0 / 1 / 2, pooled
-   263/264 image–draw pairs, p < 10⁻⁵. C2 is a three-draw result. C1 (σ 25) was not replicated and remains
-   single-draw.
+   263/264 image–draw pairs, p < 10⁻⁵. C2 is a three-draw result. C1 (σ 25) was replicated on one further draw (+0.1472 / +0.1498 dB,
+   88/88 images on both).
 2. **A released model without an external prior beats us on these pixels.** MaIR / MaIR+ publishes checkpoints. If one
    of them, rerun on our draws, exceeds 33.402 / 30.671, C1 and C2 are void.
 3. ~~A copy-level defect in Urban100.~~ **Checked:** Restormer reproduces its published Urban100 σ 15 number, 35.133
