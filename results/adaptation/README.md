@@ -163,3 +163,27 @@ Tiling and adaptation both act on the prior's mismatch with the image, and they 
 **Caveat.** The cross-set check rests on four cells; the within-Urban100 evidence (n = 88, two σ, three draws on the
 gain itself) is what carries the claim. The threshold "0.1 dB" is descriptive of these four cells and is not yet a
 calibrated constant.
+
+### The predictor holds at all three noise levels, and explains the σ 15 result
+
+The same measurement, repeated on the full pipeline at every σ (n = 100 images):
+
+| σ | context deficit (dB) | adaptation gain (dB) | per-image ρ(deficit, gain) | p |
+|---:|---:|---:|---:|---:|
+| 15 | **−0.082** | **+0.134** | −0.441 | 4.3·10⁻⁶ |
+| 25 | −0.119 | +0.142 | −0.517 | 3.6·10⁻⁸ |
+| 50 | −0.187 | +0.148 | −0.558 | 1.6·10⁻⁹ |
+
+Three independent orderings agree:
+
+1. **Within each σ** (n = 88–100 images): ρ from −0.44 to −0.56.
+2. **Across σ** (three points): the deficit and the gain rank identically, rank correlation −1.0.
+3. **Across datasets** (four cells): rank correlation −1.0.
+
+**This explains the σ 15 result.** At σ 15 the prior's context deficit is half what it is at σ 50 (−0.082 against
+−0.187 dB), the adaptation therefore gains least there (+0.134 against +0.148), and that is exactly why the pipeline
+does not overtake GRL-B at σ 15 while it does at σ 25 and σ 50. No separate explanation is needed, and none of this
+required a new hyper-parameter.
+
+**What the predictor is not.** It is not a licence to tune the adaptation per σ. It says where adaptation has room, not
+what the best settings are; the settings stay frozen across σ in every result reported here.

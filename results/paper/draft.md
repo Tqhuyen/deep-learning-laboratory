@@ -35,9 +35,12 @@ ranked.
   full images, or on the Y channel versus RGB, moves its PSNR by 0.05–0.17 dB and by 1.5–2.6 dB. On Kodak24 the
   published ordering of two methods reverses when both are scored on the same pixels. SOTA margins of 0.05 dB are
   therefore only meaningful in a paired, same-image form, which is what the Urban100 result above uses.
-- **Per-image adaptation (test-time training).** Recorrupted-to-Recorrupted tuning of 0.04 % of the network on the
-  noisy image alone adds +0.15 dB at σ = 25 and 50 on Urban100, improving all 88 held-out images. It loses on Kodak24,
-  McMaster and gray images; image size, content and optimisation passes per pixel are confounded across these sets.
+- **Per-image adaptation (test-time training), and why it works where it does.** Recorrupted-to-Recorrupted tuning of
+  0.04 % of the network on the noisy image alone adds +0.15 dB on Urban100, improving all 88 held-out images, and loses
+  on Kodak24, McMaster and gray images. Whether it helps is a reproducible property of the *image* (per-image gain
+  ranks identically across noise draws, ρ = 0.98) and is predicted before adapting by one measured quantity, the prior's
+  context deficit (ρ = −0.44 to −0.56 within each σ). Deficit and gain rank identically across σ (from −0.082/+0.134 at
+  σ = 15 to −0.187/+0.148 at σ = 50) and across datasets, which also explains the one cell without a win.
 - **Limit.** A supervised network refined with CLIP features (PTG-RM) remains 0.1–0.3 dB ahead in most cells.
 
 ## 1. Introduction
@@ -263,6 +266,11 @@ adopted (Appendix: decision log).
     for each other. Measured before any adaptation, the context deficit `PSNR(whole ×1) − PSNR(512-tiles ×2)` predicts
     the adaptation gain with **ρ = −0.62** over 88 images (partial ρ = −0.54 controlling for baseline PSNR, p = 6·10⁻⁸),
     and reproduces at σ = 25 (ρ = −0.54).
+  - **Across noise levels.** The deficit grows with σ (−0.082 / −0.119 / −0.187 dB at σ = 15 / 25 / 50) and the
+    adaptation gain grows with it (+0.134 / +0.142 / +0.148 dB); per-image ρ is −0.44 / −0.52 / −0.56 on 100 images
+    each, and the two rank identically across σ. **This is also the explanation of the σ = 15 result:** the prior's
+    deficit is smallest there, so adaptation has least to recover, and that is why the pipeline does not overtake GRL-B
+    at σ = 15 while it does at the two higher levels. No separate explanation is required.
   - **Across sets.** Urban100's deficit is −0.19 dB at σ = 50, against −0.03 (Kodak24) and −0.02 (McMaster); the rank
     correlation between deficit and adaptation gain over the four measured cells is −1.0. The two sets with a deficit
     below 0.03 dB are exactly the two where adaptation loses.
