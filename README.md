@@ -176,8 +176,14 @@ deep-learning-laboratory/
 │   ├── urban100_full.ipynb  frozen tiles + R2R pipeline: all 100 at σ 15, dev-12 at σ 25 / 50 (4 h 39 min)
 │   ├── urban100_seed_replication_1.ipynb  Urban100 confirm-88 at σ 50 on a second noise draw, same pipeline
 │   ├── urban100_seed_replication_2.ipynb  the same on a third draw (3-seed standard)
+│   ├── urban100_s25_seed_1.ipynb  Urban100 confirm-88 at σ 25 on a second noise draw
+│   ├── urban100_s25_seed_2.ipynb  prepared, never launched: Kaggle refused the push after five GPU sessions
 │   ├── tile_rule_colour.ipynb  384-px tile rule on CBSD68 / Kodak24 / McMaster at every σ, plus DMID's 3-evaluation chain
 │   ├── denoise_protocol_effects.ipynb  CPU: one denoiser rescored under every protocol; DMID-d vs GRL-B on the same pixels
+│   ├── protocol_effects_restormer.ipynb  CPU: the same grid with Restormer (cancelled at the 12 h limit after Urban100 σ 15)
+│   ├── protocol_effects_restormer_small.ipynb  CPU: the three small sets at σ 15
+│   ├── protocol_effects_restormer_s25.ipynb  CPU: the three small sets at σ 25
+│   ├── protocol_effects_restormer_s50.ipynb  CPU: the three small sets at σ 50
 │   ├── grl_outputs_audit.ipynb  CPU: rescoring GRL-B's released denoising outputs on our test copies
 │   ├── grl_outputs_audit_kodak.ipynb  CPU: locating GRL's 496×496 Kodak24 regions and the rotated CBSD68 image
 │   ├── r2r_capacity_dev.ipynb  shelved: R2R parameter subsets on DIV2K crops (cannot separate size from content)
