@@ -108,8 +108,8 @@ The tables above use DMID-d's released outputs. To check whether the effect is a
 protocol, Restormer (σ-specific colour weights) is run on our own draws under the same scoring rules, plus one axis
 DMID-d's outputs cannot test: a **clipped-and-quantised input**, the NTIRE convention.
 
-Runs: CPU kernels `protocol-effects-restormer-s25` and `-s50` (σ 15 from `protocol-effects-restormer-small`, which
-stopped after σ 15). Scores: [`restormer_protocols.csv`](restormer_protocols.csv),
+Runs: CPU kernels `protocol-effects-restormer-s25` and `-s50`; σ 15 from `protocol-effects-restormer-small`, which
+stopped after σ 15. Scores: [`restormer_protocols.csv`](restormer_protocols.csv),
 [`restormer_protocol_shifts.csv`](restormer_protocol_shifts.csv).
 
 **Shift against the unclipped full-image RGB score (dB), Restormer:**
@@ -118,34 +118,41 @@ stopped after σ 15). Scores: [`restormer_protocols.csv`](restormer_protocols.cs
 |---|---:|---:|---:|---:|
 | CBSD68 | 15 | +0.011 | +1.760 | −0.356 |
 | CBSD68 | 25 | +0.010 | +1.658 | −0.690 |
+| CBSD68 | 50 | +0.010 | +1.580 | **−1.742** |
 | Kodak24 | 15 | **−0.099** | +1.822 | −0.320 |
 | Kodak24 | 25 | **−0.086** | +1.709 | −0.617 |
+| Kodak24 | 50 | **−0.106** | +1.621 | **−1.833** |
 | McMaster | 15 | +0.020 | +2.811 | −0.776 |
 | McMaster | 25 | +0.025 | +2.559 | **−1.658** |
+| McMaster | 50 | +0.031 | +2.343 | **−3.807** |
 
-**Agreement with DMID-d, which was measured independently on its own released outputs:**
+**Agreement with DMID-d, measured independently on its own released outputs, over all nine set–σ cells:**
 
 | axis | largest disagreement between the two models |
 |---|---|
-| GRL crop (6 cells) | **0.008 dB** |
-| Y channel (6 cells) | **0.024 dB** |
+| GRL crop | **0.012 dB** |
+| Y channel | **0.024 dB** |
 
 Four conclusions.
 
 1. **The protocol effect belongs to the protocol, not to the model.** A diffusion posterior mean and a convolutional
-   transformer lose the same amount to the same scoring choices, to within 0.02 dB. This is what turns an illustration
-   into a budget.
-2. **The cropping effect is set-specific.** Kodak24 loses 0.09–0.10 dB; CBSD68 and McMaster gain 0.01–0.03 dB. A
-   leaderboard that crops uniformly therefore mis-ranks methods differently across sets, which is why the published
-   Kodak24 ordering of two methods reverses on identical pixels (see above).
-3. **The colour-space choice is the largest axis and it shrinks with σ:** 1.66–2.81 dB at σ 15, 1.66–2.56 dB at σ 25,
-   1.57–2.33 dB at σ 50 (DMID-d). A paper that does not state which channel it reports is not comparable at all.
-4. **The input convention is a third axis, and it grows with σ:** clipping costs 0.32–0.78 dB at σ 15 but
-   0.62–1.66 dB at σ 25. Neither model's published protocol clips. This is 6–30× a recent SOTA margin, and it bears
-   on reported fine-tuning gains: the NTIRE 2026 report's "+3.37 dB over public Restormer σ 50" is measured against a
-   model fed the clipped NTIRE input, so part of that gap is this convention rather than the training.
+   transformer lose the same amount to the same scoring choices, over nine cells, to within 0.02 dB. That is what turns
+   an illustration into a budget.
+2. **The cropping effect is set-specific, not dataset-generic.** Kodak24 loses 0.09–0.11 dB; CBSD68 and McMaster gain
+   0.01–0.03 dB. A leaderboard that crops uniformly therefore mis-ranks methods differently across sets, which is why
+   the published Kodak24 ordering of two methods reverses on identical pixels (see above).
+3. **The colour-space choice is large and shrinks with σ:** 1.58–2.81 dB at σ 15, 1.62–2.56 dB at σ 25, 1.58–2.34 dB at
+   σ 50.
+4. **The input convention is the largest axis, and it grows steeply with σ.** Mean over the three sets:
+   **−0.48 dB at σ 15, −0.99 dB at σ 25, −2.46 dB at σ 50**; McMaster alone reaches **−3.81 dB** at σ 50. Neither
+   model's published protocol clips, and NTIRE's does. A 3.8 dB term is 40× a recent SOTA margin, so any comparison
+   between a clipped-protocol number and an unclipped one is meaningless, and it also means part of the NTIRE 2026
+   report's "+3.37 dB over public Restormer σ 50" is a convention rather than a training effect.
 
-**Caveat.** The clipping axis is measured at σ 15 and σ 25 only; the σ 50 run is queued. The clipping measurement also
-feeds Restormer the rounded, clipped image, so that arm carries a small additional quantisation cost that the float arm
-does not; the two arms differ in exactly the way the NTIRE protocol differs from the KAIR one, which is the quantity of
-interest.
+**Why clipping grows with σ.** Clipping at 0 and 255 is a projection onto the valid range. The larger σ is, the larger
+the fraction of pixels pushed onto that boundary, and the more of the noise realisation is lost; the reconstruction then
+has to invent the saturated extremes. This is a mechanism, not a fit: the effect is monotone in σ on all three sets.
+
+**Caveat.** The clipping arm feeds Restormer the rounded, clipped image, so it carries a small quantisation cost the
+float arm does not. That is not a confound but the quantity of interest: it is exactly how the NTIRE protocol differs
+from the KAIR one.

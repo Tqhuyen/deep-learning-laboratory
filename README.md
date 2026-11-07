@@ -69,7 +69,7 @@ What it found, in the order the evidence forces:
 | On Urban100 the pipeline beats the strongest *released* supervised model without an external prior, paired on all 100 images | **+0.065 dB** at σ 25, **+0.220 dB** at σ 50; σ 50 replicated on 3 draws (±0.0027) | [`urban100/full100`](results/urban100/full100/README.md), [`seed_replication`](results/urban100/seed_replication/README.md) |
 | At σ 15 there is **no** win, and one measured quantity says why | context deficit −0.082 dB at σ 15 against −0.187 at σ 50 | [`adaptation`](results/adaptation/README.md) |
 | Whether per-image adaptation helps is a property of the *image* (ρ = 0.98 across draws) and is predicted before adapting by that same deficit (ρ = −0.44…−0.56) | deficit and gain rank identically across σ and across datasets | [`adaptation`](results/adaptation/README.md) |
-| The scoring protocol moves a *fixed* denoiser by more than the margins being ranked, on two different architectures | crop 0.04–0.17 dB, RGB→Y **1.7–2.8 dB**, clipped input 0.32–0.78 dB; one published ordering reverses | [`measurement_audit`](results/measurement_audit/README.md) |
+| The scoring protocol moves a *fixed* denoiser by more than the margins being ranked, and two architectures agree to 0.02 dB | crop 0.04–0.17 dB, RGB→Y 1.6–2.8 dB, clipped input **−0.48 / −0.99 / −2.46 dB** at σ 15/25/50 (up to −3.81); one published ordering reverses | [`measurement_audit`](results/measurement_audit/README.md) |
 
 Two conventions make the results checkable:
 

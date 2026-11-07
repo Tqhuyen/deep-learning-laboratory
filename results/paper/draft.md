@@ -428,14 +428,20 @@ effect belongs to the protocol, not to the model:
 
 | axis | DMID-d | Restormer | largest disagreement |
 |---|---|---|---|
-| GRL crop, over 6 set–σ cells | −0.12 … +0.02 dB | −0.10 … +0.03 dB | **0.008 dB** |
-| Y channel, over 6 set–σ cells | +1.57 … +2.79 dB | +1.66 … +2.81 dB | **0.024 dB** |
-| **clipped, quantised input** | not measurable (its outputs are uint8) | σ 15: −0.36 / −0.32 / −0.78; σ 25: −0.69 / −0.62 / −1.66 dB | new axis |
+| GRL crop, over 9 set–σ cells | −0.12 … +0.02 dB | −0.11 … +0.03 dB | **0.012 dB** |
+| Y channel, over 9 set–σ cells | +1.57 … +2.79 dB | +1.58 … +2.81 dB | **0.024 dB** |
+| **clipped, quantised input** | not measurable (its outputs are uint8) | −0.48 / −0.99 / −2.46 dB at σ = 15 / 25 / 50, up to −3.81 | new axis |
 
-Two architectures agree on the first two axes to within 0.02 dB, so the effect belongs to the protocol rather than to
-the model. The third row is new and is the largest practical axis: feeding the *same* method a clipped, quantised copy
-of the same noisy image costs 0.32–0.78 dB at σ = 15 and 0.62–1.66 dB at σ = 25, which is 6–30× a recent SOTA margin.
-A paper that states neither the colour space nor the input convention cannot be compared with one that does.
+Two architectures agree on the first two axes to within 0.02 dB over nine cells, so the effect belongs to the protocol
+rather than to the model.
+
+The third row is new and is the largest axis of the three. Feeding the *same* method a clipped, quantised copy of the
+same noisy image costs 0.48 dB on average at σ = 15, 0.99 dB at σ = 25 and **2.46 dB at σ = 50**, reaching **3.81 dB**
+on McMaster. The mechanism is direct: clipping is a projection onto the valid range, so the fraction of pixels pinned to
+the boundary grows with σ, and the more of the noise realisation is lost the more the reconstruction has to invent. A
+3.8 dB term is 40× a recent SOTA margin, which means a clipped-protocol number and an unclipped one are not comparable,
+and it also means that part of the NTIRE 2026 report's "+3.37 dB over public Restormer σ 50" is this convention rather
+than a training effect.
 
 And the ordering does not survive: on Kodak24 at σ = 15 and σ = 25, DMID-d is 0.08 and 0.10 dB *ahead* of GRL-B in the
 published tables and 0.041 and 0.001 dB *behind* it when both are scored on the same pixels.

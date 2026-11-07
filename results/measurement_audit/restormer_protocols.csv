@@ -1,5 +1,5 @@
 dataset,image,idx,sigma,model,input,protocol,channel,psnr
-CBSD68,0-1.png,0,15,Restormer,float,full,RGB,31.024828040408877
+CBSD68,0-1.png,0,15,Restormer,float,full,RGB,31.02482804040888
 CBSD68,0-1.png,0,15,Restormer,float,GRL crop,RGB,31.035967195056585
 CBSD68,0-1.png,0,15,Restormer,float,full,Y,32.5216422086882
 CBSD68,0-1.png,0,15,Restormer,float,GRL crop,Y,32.53225350498963
@@ -800,7 +800,7 @@ CBSD68,8.png,22,25,Restormer,clipped uint8,GRL crop,RGB,33.1954924739548
 CBSD68,9.png,23,25,Restormer,float,full,RGB,30.22911508514061
 CBSD68,9.png,23,25,Restormer,float,GRL crop,RGB,30.237724566798576
 CBSD68,9.png,23,25,Restormer,float,full,Y,31.86274097011745
-CBSD68,9.png,23,25,Restormer,float,GRL crop,Y,31.870240016772375
+CBSD68,9.png,23,25,Restormer,float,GRL crop,Y,31.87024001677237
 CBSD68,9.png,23,25,Restormer,clipped uint8,full,RGB,28.85430747881369
 CBSD68,9.png,23,25,Restormer,clipped uint8,GRL crop,RGB,28.864279447150032
 CBSD68,10.png,24,25,Restormer,float,full,RGB,35.28924744592837
@@ -814,7 +814,7 @@ CBSD68,11.png,25,25,Restormer,float,GRL crop,RGB,31.254050207056583
 CBSD68,11.png,25,25,Restormer,float,full,Y,32.963309609959126
 CBSD68,11.png,25,25,Restormer,float,GRL crop,Y,32.96842222177551
 CBSD68,11.png,25,25,Restormer,clipped uint8,full,RGB,31.15708076110069
-CBSD68,11.png,25,25,Restormer,clipped uint8,GRL crop,RGB,31.160736744126535
+CBSD68,11.png,25,25,Restormer,clipped uint8,GRL crop,RGB,31.16073674412653
 CBSD68,12.png,26,25,Restormer,float,full,RGB,29.0096526358373
 CBSD68,12.png,26,25,Restormer,float,GRL crop,RGB,29.0105198837826
 CBSD68,12.png,26,25,Restormer,float,full,Y,30.59231519087172
@@ -952,7 +952,7 @@ CBSD68,34.png,48,25,Restormer,float,GRL crop,RGB,30.649770642876504
 CBSD68,34.png,48,25,Restormer,float,full,Y,32.16530674058937
 CBSD68,34.png,48,25,Restormer,float,GRL crop,Y,32.18758096061309
 CBSD68,34.png,48,25,Restormer,clipped uint8,full,RGB,29.692088651876645
-CBSD68,34.png,48,25,Restormer,clipped uint8,GRL crop,RGB,29.708349948457798
+CBSD68,34.png,48,25,Restormer,clipped uint8,GRL crop,RGB,29.7083499484578
 CBSD68,35.png,49,25,Restormer,float,full,RGB,32.372702326786104
 CBSD68,35.png,49,25,Restormer,float,GRL crop,RGB,32.378685284981216
 CBSD68,35.png,49,25,Restormer,float,full,Y,33.916356357899964
@@ -990,7 +990,7 @@ CBSD68,40.png,54,25,Restormer,float,GRL crop,Y,35.087119780921824
 CBSD68,40.png,54,25,Restormer,clipped uint8,full,RGB,31.38492275456229
 CBSD68,40.png,54,25,Restormer,clipped uint8,GRL crop,RGB,31.39433366588331
 CBSD68,41.png,55,25,Restormer,float,full,RGB,29.527349118362523
-CBSD68,41.png,55,25,Restormer,float,GRL crop,RGB,29.540042221225637
+CBSD68,41.png,55,25,Restormer,float,GRL crop,RGB,29.54004222122564
 CBSD68,41.png,55,25,Restormer,float,full,Y,31.09303092083689
 CBSD68,41.png,55,25,Restormer,float,GRL crop,Y,31.105802963919867
 CBSD68,41.png,55,25,Restormer,clipped uint8,full,RGB,28.754978146015706
@@ -1006,7 +1006,7 @@ CBSD68,43.png,57,25,Restormer,float,GRL crop,RGB,34.13820889468392
 CBSD68,43.png,57,25,Restormer,float,full,Y,35.684934235449134
 CBSD68,43.png,57,25,Restormer,float,GRL crop,Y,35.70988789706473
 CBSD68,43.png,57,25,Restormer,clipped uint8,full,RGB,31.55723121679527
-CBSD68,43.png,57,25,Restormer,clipped uint8,GRL crop,RGB,31.562894794968575
+CBSD68,43.png,57,25,Restormer,clipped uint8,GRL crop,RGB,31.56289479496857
 CBSD68,44.png,58,25,Restormer,float,full,RGB,33.317371313697336
 CBSD68,44.png,58,25,Restormer,float,GRL crop,RGB,33.330743853575214
 CBSD68,44.png,58,25,Restormer,float,full,Y,34.758801927289646
@@ -1060,7 +1060,7 @@ CBSD68,52.png,66,25,Restormer,float,GRL crop,RGB,31.13394605811657
 CBSD68,52.png,66,25,Restormer,float,full,Y,32.98212705808345
 CBSD68,52.png,66,25,Restormer,float,GRL crop,Y,32.99901517950143
 CBSD68,52.png,66,25,Restormer,clipped uint8,full,RGB,29.722729899184536
-CBSD68,52.png,66,25,Restormer,clipped uint8,GRL crop,RGB,29.736929701001397
+CBSD68,52.png,66,25,Restormer,clipped uint8,GRL crop,RGB,29.7369297010014
 CBSD68,53.png,67,25,Restormer,float,full,RGB,29.23102686328212
 CBSD68,53.png,67,25,Restormer,float,GRL crop,RGB,29.2340526875256
 CBSD68,53.png,67,25,Restormer,float,full,Y,30.72612222955716
@@ -1107,7 +1107,7 @@ Kodak24,6.png,6,25,Restormer,float,full,RGB,31.92933990585884
 Kodak24,6.png,6,25,Restormer,float,GRL crop,RGB,32.28744067393531
 Kodak24,6.png,6,25,Restormer,float,full,Y,33.75370924507604
 Kodak24,6.png,6,25,Restormer,float,GRL crop,Y,34.13751667369127
-Kodak24,6.png,6,25,Restormer,clipped uint8,full,RGB,31.702789383597757
+Kodak24,6.png,6,25,Restormer,clipped uint8,full,RGB,31.70278938359776
 Kodak24,6.png,6,25,Restormer,clipped uint8,GRL crop,RGB,31.974148381327588
 Kodak24,7.png,7,25,Restormer,float,full,RGB,36.12462555178891
 Kodak24,7.png,7,25,Restormer,float,GRL crop,RGB,35.27998189187451
@@ -1125,7 +1125,7 @@ Kodak24,9.png,9,25,Restormer,float,full,RGB,30.21918270001693
 Kodak24,9.png,9,25,Restormer,float,GRL crop,RGB,29.81362741874154
 Kodak24,9.png,9,25,Restormer,float,full,Y,31.60976184080488
 Kodak24,9.png,9,25,Restormer,float,GRL crop,Y,31.18918087080501
-Kodak24,9.png,9,25,Restormer,clipped uint8,full,RGB,30.152727042126894
+Kodak24,9.png,9,25,Restormer,clipped uint8,full,RGB,30.15272704212689
 Kodak24,9.png,9,25,Restormer,clipped uint8,GRL crop,RGB,29.775014262866826
 Kodak24,10.png,10,25,Restormer,float,full,RGB,33.72594888732828
 Kodak24,10.png,10,25,Restormer,float,GRL crop,RGB,33.35206207188273
@@ -1167,7 +1167,7 @@ Kodak24,16.png,16,25,Restormer,float,full,RGB,32.31540746655987
 Kodak24,16.png,16,25,Restormer,float,GRL crop,RGB,31.733363153109
 Kodak24,16.png,16,25,Restormer,float,full,Y,33.94775724006305
 Kodak24,16.png,16,25,Restormer,float,GRL crop,Y,33.359887658911035
-Kodak24,16.png,16,25,Restormer,clipped uint8,full,RGB,31.969100277352236
+Kodak24,16.png,16,25,Restormer,clipped uint8,full,RGB,31.96910027735224
 Kodak24,16.png,16,25,Restormer,clipped uint8,GRL crop,RGB,31.49632074630721
 Kodak24,17.png,17,25,Restormer,float,full,RGB,34.7590015836005
 Kodak24,17.png,17,25,Restormer,float,GRL crop,RGB,34.19911951827797
@@ -1210,12 +1210,12 @@ Kodak24,23.png,23,25,Restormer,float,GRL crop,RGB,31.87403324298352
 Kodak24,23.png,23,25,Restormer,float,full,Y,33.5907438954504
 Kodak24,23.png,23,25,Restormer,float,GRL crop,Y,33.47764814571329
 Kodak24,23.png,23,25,Restormer,clipped uint8,full,RGB,31.77738007264423
-Kodak24,23.png,23,25,Restormer,clipped uint8,GRL crop,RGB,31.624493128546558
+Kodak24,23.png,23,25,Restormer,clipped uint8,GRL crop,RGB,31.62449312854656
 McMaster,1.tif,0,25,Restormer,float,full,RGB,29.587431643638645
 McMaster,1.tif,0,25,Restormer,float,GRL crop,RGB,29.57064023758924
 McMaster,1.tif,0,25,Restormer,float,full,Y,32.35286769875816
 McMaster,1.tif,0,25,Restormer,float,GRL crop,Y,32.34070316723269
-McMaster,1.tif,0,25,Restormer,clipped uint8,full,RGB,28.729583200212637
+McMaster,1.tif,0,25,Restormer,clipped uint8,full,RGB,28.72958320021264
 McMaster,1.tif,0,25,Restormer,clipped uint8,GRL crop,RGB,28.709425887110093
 McMaster,2.tif,1,25,Restormer,float,full,RGB,32.195106917205166
 McMaster,2.tif,1,25,Restormer,float,GRL crop,RGB,32.22990891468036
@@ -1223,11 +1223,11 @@ McMaster,2.tif,1,25,Restormer,float,full,Y,35.109793141997805
 McMaster,2.tif,1,25,Restormer,float,GRL crop,Y,35.13954425326428
 McMaster,2.tif,1,25,Restormer,clipped uint8,full,RGB,30.69448206102023
 McMaster,2.tif,1,25,Restormer,clipped uint8,GRL crop,RGB,30.72065916105722
-McMaster,3.tif,2,25,Restormer,float,full,RGB,31.029901096718756
+McMaster,3.tif,2,25,Restormer,float,full,RGB,31.02990109671876
 McMaster,3.tif,2,25,Restormer,float,GRL crop,RGB,31.022685697179856
 McMaster,3.tif,2,25,Restormer,float,full,Y,33.34090949691161
 McMaster,3.tif,2,25,Restormer,float,GRL crop,Y,33.33228690559268
-McMaster,3.tif,2,25,Restormer,clipped uint8,full,RGB,30.352435569877077
+McMaster,3.tif,2,25,Restormer,clipped uint8,full,RGB,30.35243556987708
 McMaster,3.tif,2,25,Restormer,clipped uint8,GRL crop,RGB,30.33737700719158
 McMaster,4.tif,3,25,Restormer,float,full,RGB,34.63366517063246
 McMaster,4.tif,3,25,Restormer,float,GRL crop,RGB,34.6166626197373
@@ -1311,7 +1311,7 @@ McMaster,17.tif,16,25,Restormer,float,full,RGB,30.95558774850964
 McMaster,17.tif,16,25,Restormer,float,GRL crop,RGB,30.955237679828347
 McMaster,17.tif,16,25,Restormer,float,full,Y,34.18510755046345
 McMaster,17.tif,16,25,Restormer,float,GRL crop,Y,34.18605424903984
-McMaster,17.tif,16,25,Restormer,clipped uint8,full,RGB,29.736658722080637
+McMaster,17.tif,16,25,Restormer,clipped uint8,full,RGB,29.73665872208064
 McMaster,17.tif,16,25,Restormer,clipped uint8,GRL crop,RGB,29.73640753476831
 McMaster,18.tif,17,25,Restormer,float,full,RGB,32.092304270219884
 McMaster,18.tif,17,25,Restormer,float,GRL crop,RGB,32.1061633099676
@@ -1319,3 +1319,663 @@ McMaster,18.tif,17,25,Restormer,float,full,Y,33.47693047855153
 McMaster,18.tif,17,25,Restormer,float,GRL crop,Y,33.489795950707546
 McMaster,18.tif,17,25,Restormer,clipped uint8,full,RGB,30.668693823182203
 McMaster,18.tif,17,25,Restormer,clipped uint8,GRL crop,RGB,30.66601349216291
+CBSD68,0-1.png,0,50,Restormer,float,full,RGB,24.03176986059457
+CBSD68,0-1.png,0,50,Restormer,float,GRL crop,RGB,24.036392923670714
+CBSD68,0-1.png,0,50,Restormer,float,full,Y,25.40569778418344
+CBSD68,0-1.png,0,50,Restormer,float,GRL crop,Y,25.41005643801136
+CBSD68,0-1.png,0,50,Restormer,clipped uint8,full,RGB,23.48236624188621
+CBSD68,0-1.png,0,50,Restormer,clipped uint8,GRL crop,RGB,23.48472770517359
+CBSD68,0-2.png,1,50,Restormer,float,full,RGB,25.253605714640656
+CBSD68,0-2.png,1,50,Restormer,float,GRL crop,RGB,25.275786763534388
+CBSD68,0-2.png,1,50,Restormer,float,full,Y,26.68238919138753
+CBSD68,0-2.png,1,50,Restormer,float,GRL crop,Y,26.703768782366502
+CBSD68,0-2.png,1,50,Restormer,clipped uint8,full,RGB,24.27609020864965
+CBSD68,0-2.png,1,50,Restormer,clipped uint8,GRL crop,RGB,24.292897921490606
+CBSD68,0-3.png,2,50,Restormer,float,full,RGB,29.520539655228365
+CBSD68,0-3.png,2,50,Restormer,float,GRL crop,RGB,29.52652626533391
+CBSD68,0-3.png,2,50,Restormer,float,full,Y,31.10822813953296
+CBSD68,0-3.png,2,50,Restormer,float,GRL crop,Y,31.11397027375396
+CBSD68,0-3.png,2,50,Restormer,clipped uint8,full,RGB,24.94847972576845
+CBSD68,0-3.png,2,50,Restormer,clipped uint8,GRL crop,RGB,24.94034335087056
+CBSD68,0-4.png,3,50,Restormer,float,full,RGB,29.597948479320124
+CBSD68,0-4.png,3,50,Restormer,float,GRL crop,RGB,29.59628345890483
+CBSD68,0-4.png,3,50,Restormer,float,full,Y,31.2151746540521
+CBSD68,0-4.png,3,50,Restormer,float,GRL crop,Y,31.213798365089797
+CBSD68,0-4.png,3,50,Restormer,clipped uint8,full,RGB,27.404285121437336
+CBSD68,0-4.png,3,50,Restormer,clipped uint8,GRL crop,RGB,27.40384455116276
+CBSD68,0-5.png,4,50,Restormer,float,full,RGB,25.608245084285603
+CBSD68,0-5.png,4,50,Restormer,float,GRL crop,RGB,25.63161803385737
+CBSD68,0-5.png,4,50,Restormer,float,full,Y,27.11733597651968
+CBSD68,0-5.png,4,50,Restormer,float,GRL crop,Y,27.1405596928291
+CBSD68,0-5.png,4,50,Restormer,clipped uint8,full,RGB,24.07306819890134
+CBSD68,0-5.png,4,50,Restormer,clipped uint8,GRL crop,RGB,24.084545032564
+CBSD68,0-6.png,5,50,Restormer,float,full,RGB,23.7374112782309
+CBSD68,0-6.png,5,50,Restormer,float,GRL crop,RGB,23.74054509595663
+CBSD68,0-6.png,5,50,Restormer,float,full,Y,25.133989119095222
+CBSD68,0-6.png,5,50,Restormer,float,GRL crop,Y,25.13708558763069
+CBSD68,0-6.png,5,50,Restormer,clipped uint8,full,RGB,22.79117050463801
+CBSD68,0-6.png,5,50,Restormer,clipped uint8,GRL crop,RGB,22.790357748936003
+CBSD68,0-7.png,6,50,Restormer,float,full,RGB,23.976451853563656
+CBSD68,0-7.png,6,50,Restormer,float,GRL crop,RGB,23.977687257250334
+CBSD68,0-7.png,6,50,Restormer,float,full,Y,25.430768402710264
+CBSD68,0-7.png,6,50,Restormer,float,GRL crop,Y,25.43184999442422
+CBSD68,0-7.png,6,50,Restormer,clipped uint8,full,RGB,23.49842203223773
+CBSD68,0-7.png,6,50,Restormer,clipped uint8,GRL crop,RGB,23.49891349125429
+CBSD68,0-8.png,7,50,Restormer,float,full,RGB,33.32045044673353
+CBSD68,0-8.png,7,50,Restormer,float,GRL crop,RGB,33.306442273084954
+CBSD68,0-8.png,7,50,Restormer,float,full,Y,34.86920671472194
+CBSD68,0-8.png,7,50,Restormer,float,GRL crop,Y,34.85339885511823
+CBSD68,0-8.png,7,50,Restormer,clipped uint8,full,RGB,29.061823600358085
+CBSD68,0-8.png,7,50,Restormer,clipped uint8,GRL crop,RGB,29.072596957566898
+CBSD68,0-9.png,8,50,Restormer,float,full,RGB,28.38100154789656
+CBSD68,0-9.png,8,50,Restormer,float,GRL crop,RGB,28.40590583106119
+CBSD68,0-9.png,8,50,Restormer,float,full,Y,29.94616059374622
+CBSD68,0-9.png,8,50,Restormer,float,GRL crop,Y,29.970458816048
+CBSD68,0-9.png,8,50,Restormer,clipped uint8,full,RGB,27.214796127985664
+CBSD68,0-9.png,8,50,Restormer,clipped uint8,GRL crop,RGB,27.23104255120952
+CBSD68,0-10.png,9,50,Restormer,float,full,RGB,32.76666783750113
+CBSD68,0-10.png,9,50,Restormer,float,GRL crop,RGB,32.813284878105925
+CBSD68,0-10.png,9,50,Restormer,float,full,Y,35.27122725619647
+CBSD68,0-10.png,9,50,Restormer,float,GRL crop,Y,35.32687693523219
+CBSD68,0-10.png,9,50,Restormer,clipped uint8,full,RGB,31.608134455771754
+CBSD68,0-10.png,9,50,Restormer,clipped uint8,GRL crop,RGB,31.641237151236275
+CBSD68,0-11.png,10,50,Restormer,float,full,RGB,33.54665544299979
+CBSD68,0-11.png,10,50,Restormer,float,GRL crop,RGB,33.53672230851262
+CBSD68,0-11.png,10,50,Restormer,float,full,Y,35.29076836232226
+CBSD68,0-11.png,10,50,Restormer,float,GRL crop,Y,35.280328769166395
+CBSD68,0-11.png,10,50,Restormer,clipped uint8,full,RGB,33.28488168728705
+CBSD68,0-11.png,10,50,Restormer,clipped uint8,GRL crop,RGB,33.274699516974074
+CBSD68,0-12.png,11,50,Restormer,float,full,RGB,28.701370810737437
+CBSD68,0-12.png,11,50,Restormer,float,GRL crop,RGB,28.70128108981867
+CBSD68,0-12.png,11,50,Restormer,float,full,Y,30.196506463097982
+CBSD68,0-12.png,11,50,Restormer,float,GRL crop,Y,30.19717266460857
+CBSD68,0-12.png,11,50,Restormer,clipped uint8,full,RGB,27.685030341906845
+CBSD68,0-12.png,11,50,Restormer,clipped uint8,GRL crop,RGB,27.68213059338356
+CBSD68,0-13.png,12,50,Restormer,float,full,RGB,26.895215299433985
+CBSD68,0-13.png,12,50,Restormer,float,GRL crop,RGB,26.900563742316532
+CBSD68,0-13.png,12,50,Restormer,float,full,Y,28.48700901743175
+CBSD68,0-13.png,12,50,Restormer,float,GRL crop,Y,28.492504362952005
+CBSD68,0-13.png,12,50,Restormer,clipped uint8,full,RGB,26.186150070792525
+CBSD68,0-13.png,12,50,Restormer,clipped uint8,GRL crop,RGB,26.18816146127372
+CBSD68,0-14.png,13,50,Restormer,float,full,RGB,33.727138503158386
+CBSD68,0-14.png,13,50,Restormer,float,GRL crop,RGB,33.73335468024258
+CBSD68,0-14.png,13,50,Restormer,float,full,Y,35.63716436119511
+CBSD68,0-14.png,13,50,Restormer,float,GRL crop,Y,35.64215136823572
+CBSD68,0-14.png,13,50,Restormer,clipped uint8,full,RGB,25.41939935416069
+CBSD68,0-14.png,13,50,Restormer,clipped uint8,GRL crop,RGB,25.424598410734887
+CBSD68,0-15.png,14,50,Restormer,float,full,RGB,26.13301503010633
+CBSD68,0-15.png,14,50,Restormer,float,GRL crop,RGB,26.141723248118165
+CBSD68,0-15.png,14,50,Restormer,float,full,Y,27.551755062238243
+CBSD68,0-15.png,14,50,Restormer,float,GRL crop,Y,27.56034890876687
+CBSD68,0-15.png,14,50,Restormer,clipped uint8,full,RGB,25.684734324959628
+CBSD68,0-15.png,14,50,Restormer,clipped uint8,GRL crop,RGB,25.690229926909296
+CBSD68,1.png,15,50,Restormer,float,full,RGB,37.87203719343388
+CBSD68,1.png,15,50,Restormer,float,GRL crop,RGB,37.91822221382129
+CBSD68,1.png,15,50,Restormer,float,full,Y,39.49053456041057
+CBSD68,1.png,15,50,Restormer,float,GRL crop,Y,39.5371679263818
+CBSD68,1.png,15,50,Restormer,clipped uint8,full,RGB,35.55876139133727
+CBSD68,1.png,15,50,Restormer,clipped uint8,GRL crop,RGB,35.5772942762116
+CBSD68,2.png,16,50,Restormer,float,full,RGB,27.23830814439671
+CBSD68,2.png,16,50,Restormer,float,GRL crop,RGB,27.26805222537276
+CBSD68,2.png,16,50,Restormer,float,full,Y,29.43329390321352
+CBSD68,2.png,16,50,Restormer,float,GRL crop,Y,29.46445625687393
+CBSD68,2.png,16,50,Restormer,clipped uint8,full,RGB,26.880903856470788
+CBSD68,2.png,16,50,Restormer,clipped uint8,GRL crop,RGB,26.918076795506607
+CBSD68,3.png,17,50,Restormer,float,full,RGB,32.46916765640855
+CBSD68,3.png,17,50,Restormer,float,GRL crop,RGB,32.477676006334725
+CBSD68,3.png,17,50,Restormer,float,full,Y,34.0345842185965
+CBSD68,3.png,17,50,Restormer,float,GRL crop,Y,34.04129285532335
+CBSD68,3.png,17,50,Restormer,clipped uint8,full,RGB,27.35293805791267
+CBSD68,3.png,17,50,Restormer,clipped uint8,GRL crop,RGB,27.372683189749356
+CBSD68,4.png,18,50,Restormer,float,full,RGB,27.86330154470673
+CBSD68,4.png,18,50,Restormer,float,GRL crop,RGB,27.867743882024133
+CBSD68,4.png,18,50,Restormer,float,full,Y,29.462543287226246
+CBSD68,4.png,18,50,Restormer,float,GRL crop,Y,29.46481065137576
+CBSD68,4.png,18,50,Restormer,clipped uint8,full,RGB,26.860260133707232
+CBSD68,4.png,18,50,Restormer,clipped uint8,GRL crop,RGB,26.86030278985776
+CBSD68,5.png,19,50,Restormer,float,full,RGB,27.524184928466514
+CBSD68,5.png,19,50,Restormer,float,GRL crop,RGB,27.537119246545025
+CBSD68,5.png,19,50,Restormer,float,full,Y,29.07256022485512
+CBSD68,5.png,19,50,Restormer,float,GRL crop,Y,29.0862358637956
+CBSD68,5.png,19,50,Restormer,clipped uint8,full,RGB,26.62765272986973
+CBSD68,5.png,19,50,Restormer,clipped uint8,GRL crop,RGB,26.63586011162545
+CBSD68,6.png,20,50,Restormer,float,full,RGB,29.000617177851243
+CBSD68,6.png,20,50,Restormer,float,GRL crop,RGB,29.002135597240425
+CBSD68,6.png,20,50,Restormer,float,full,Y,30.53826989027996
+CBSD68,6.png,20,50,Restormer,float,GRL crop,Y,30.540812482543338
+CBSD68,6.png,20,50,Restormer,clipped uint8,full,RGB,27.39057701086253
+CBSD68,6.png,20,50,Restormer,clipped uint8,GRL crop,RGB,27.388560865410128
+CBSD68,7.png,21,50,Restormer,float,full,RGB,29.03375469704082
+CBSD68,7.png,21,50,Restormer,float,GRL crop,RGB,29.04248787524105
+CBSD68,7.png,21,50,Restormer,float,full,Y,31.105241542437877
+CBSD68,7.png,21,50,Restormer,float,GRL crop,Y,31.11704198564576
+CBSD68,7.png,21,50,Restormer,clipped uint8,full,RGB,25.790012982206022
+CBSD68,7.png,21,50,Restormer,clipped uint8,GRL crop,RGB,25.7957627021872
+CBSD68,8.png,22,50,Restormer,float,full,RGB,29.981114432310765
+CBSD68,8.png,22,50,Restormer,float,GRL crop,RGB,29.98813005320737
+CBSD68,8.png,22,50,Restormer,float,full,Y,31.69774572676809
+CBSD68,8.png,22,50,Restormer,float,GRL crop,Y,31.703568796905977
+CBSD68,8.png,22,50,Restormer,clipped uint8,full,RGB,29.43686493687565
+CBSD68,8.png,22,50,Restormer,clipped uint8,GRL crop,RGB,29.442555752442637
+CBSD68,9.png,23,50,Restormer,float,full,RGB,26.84064703013089
+CBSD68,9.png,23,50,Restormer,float,GRL crop,RGB,26.853497220625275
+CBSD68,9.png,23,50,Restormer,float,full,Y,28.409299196812672
+CBSD68,9.png,23,50,Restormer,float,GRL crop,Y,28.421327912171147
+CBSD68,9.png,23,50,Restormer,clipped uint8,full,RGB,24.235735101729947
+CBSD68,9.png,23,50,Restormer,clipped uint8,GRL crop,RGB,24.24934771714204
+CBSD68,10.png,24,50,Restormer,float,full,RGB,32.44636502020161
+CBSD68,10.png,24,50,Restormer,float,GRL crop,RGB,32.48821294220736
+CBSD68,10.png,24,50,Restormer,float,full,Y,34.14909620453967
+CBSD68,10.png,24,50,Restormer,float,GRL crop,Y,34.19089478279334
+CBSD68,10.png,24,50,Restormer,clipped uint8,full,RGB,27.5917392743446
+CBSD68,10.png,24,50,Restormer,clipped uint8,GRL crop,RGB,27.5974172925212
+CBSD68,11.png,25,50,Restormer,float,full,RGB,27.94726263780518
+CBSD68,11.png,25,50,Restormer,float,GRL crop,RGB,27.948214359681984
+CBSD68,11.png,25,50,Restormer,float,full,Y,29.52503683444316
+CBSD68,11.png,25,50,Restormer,float,GRL crop,Y,29.525719846775328
+CBSD68,11.png,25,50,Restormer,clipped uint8,full,RGB,27.253768312893637
+CBSD68,11.png,25,50,Restormer,clipped uint8,GRL crop,RGB,27.255737195740068
+CBSD68,12.png,26,50,Restormer,float,full,RGB,25.430340841875505
+CBSD68,12.png,26,50,Restormer,float,GRL crop,RGB,25.425092839467407
+CBSD68,12.png,26,50,Restormer,float,full,Y,26.87921580095412
+CBSD68,12.png,26,50,Restormer,float,GRL crop,Y,26.873820896482982
+CBSD68,12.png,26,50,Restormer,clipped uint8,full,RGB,24.79884761872465
+CBSD68,12.png,26,50,Restormer,clipped uint8,GRL crop,RGB,24.79369001309054
+CBSD68,13.png,27,50,Restormer,float,full,RGB,28.414630050835758
+CBSD68,13.png,27,50,Restormer,float,GRL crop,RGB,28.423534503554897
+CBSD68,13.png,27,50,Restormer,float,full,Y,29.896897459317454
+CBSD68,13.png,27,50,Restormer,float,GRL crop,Y,29.90689361372443
+CBSD68,13.png,27,50,Restormer,clipped uint8,full,RGB,26.74732330036082
+CBSD68,13.png,27,50,Restormer,clipped uint8,GRL crop,RGB,26.750792442545936
+CBSD68,14.png,28,50,Restormer,float,full,RGB,28.92571166905561
+CBSD68,14.png,28,50,Restormer,float,GRL crop,RGB,28.943490235357935
+CBSD68,14.png,28,50,Restormer,float,full,Y,30.6148578173727
+CBSD68,14.png,28,50,Restormer,float,GRL crop,Y,30.63360652614486
+CBSD68,14.png,28,50,Restormer,clipped uint8,full,RGB,28.660359958381143
+CBSD68,14.png,28,50,Restormer,clipped uint8,GRL crop,RGB,28.67400933813852
+CBSD68,15.png,29,50,Restormer,float,full,RGB,28.797916886172963
+CBSD68,15.png,29,50,Restormer,float,GRL crop,RGB,28.818351960588604
+CBSD68,15.png,29,50,Restormer,float,full,Y,30.356265121730477
+CBSD68,15.png,29,50,Restormer,float,GRL crop,Y,30.376008248364784
+CBSD68,15.png,29,50,Restormer,clipped uint8,full,RGB,26.482871125410163
+CBSD68,15.png,29,50,Restormer,clipped uint8,GRL crop,RGB,26.499367224715
+CBSD68,16.png,30,50,Restormer,float,full,RGB,28.92148030869204
+CBSD68,16.png,30,50,Restormer,float,GRL crop,RGB,28.9231801231218
+CBSD68,16.png,30,50,Restormer,float,full,Y,30.50961285606091
+CBSD68,16.png,30,50,Restormer,float,GRL crop,Y,30.51133652772517
+CBSD68,16.png,30,50,Restormer,clipped uint8,full,RGB,28.59225165396928
+CBSD68,16.png,30,50,Restormer,clipped uint8,GRL crop,RGB,28.600175304030326
+CBSD68,17.png,31,50,Restormer,float,full,RGB,30.258948707870992
+CBSD68,17.png,31,50,Restormer,float,GRL crop,RGB,30.260705114061203
+CBSD68,17.png,31,50,Restormer,float,full,Y,31.91747823874037
+CBSD68,17.png,31,50,Restormer,float,GRL crop,Y,31.916643410959683
+CBSD68,17.png,31,50,Restormer,clipped uint8,full,RGB,28.99848180748385
+CBSD68,17.png,31,50,Restormer,clipped uint8,GRL crop,RGB,29.000702671815787
+CBSD68,18.png,32,50,Restormer,float,full,RGB,26.59134684594107
+CBSD68,18.png,32,50,Restormer,float,GRL crop,RGB,26.597630997258836
+CBSD68,18.png,32,50,Restormer,float,full,Y,27.99372558324049
+CBSD68,18.png,32,50,Restormer,float,GRL crop,Y,28.000717545628465
+CBSD68,18.png,32,50,Restormer,clipped uint8,full,RGB,25.684256036266188
+CBSD68,18.png,32,50,Restormer,clipped uint8,GRL crop,RGB,25.68709958055331
+CBSD68,19.png,33,50,Restormer,float,full,RGB,27.74672781908854
+CBSD68,19.png,33,50,Restormer,float,GRL crop,RGB,27.74640600887149
+CBSD68,19.png,33,50,Restormer,float,full,Y,29.276901752765543
+CBSD68,19.png,33,50,Restormer,float,GRL crop,Y,29.275067477426017
+CBSD68,19.png,33,50,Restormer,clipped uint8,full,RGB,27.10657192462858
+CBSD68,19.png,33,50,Restormer,clipped uint8,GRL crop,RGB,27.109919810850997
+CBSD68,20.png,34,50,Restormer,float,full,RGB,32.52563076248399
+CBSD68,20.png,34,50,Restormer,float,GRL crop,RGB,32.51450397215546
+CBSD68,20.png,34,50,Restormer,float,full,Y,34.46896354908239
+CBSD68,20.png,34,50,Restormer,float,GRL crop,Y,34.45492903211254
+CBSD68,20.png,34,50,Restormer,clipped uint8,full,RGB,30.49805755008868
+CBSD68,20.png,34,50,Restormer,clipped uint8,GRL crop,RGB,30.520297832135835
+CBSD68,21.png,35,50,Restormer,float,full,RGB,27.703928272513764
+CBSD68,21.png,35,50,Restormer,float,GRL crop,RGB,27.73492799880445
+CBSD68,21.png,35,50,Restormer,float,full,Y,29.187277069798814
+CBSD68,21.png,35,50,Restormer,float,GRL crop,Y,29.21894414174476
+CBSD68,21.png,35,50,Restormer,clipped uint8,full,RGB,25.604041303866683
+CBSD68,21.png,35,50,Restormer,clipped uint8,GRL crop,RGB,25.623241348075293
+CBSD68,22.png,36,50,Restormer,float,full,RGB,28.21437630695493
+CBSD68,22.png,36,50,Restormer,float,GRL crop,RGB,28.21320256706148
+CBSD68,22.png,36,50,Restormer,float,full,Y,29.825035959432853
+CBSD68,22.png,36,50,Restormer,float,GRL crop,Y,29.82382573276784
+CBSD68,22.png,36,50,Restormer,clipped uint8,full,RGB,25.809929795220683
+CBSD68,22.png,36,50,Restormer,clipped uint8,GRL crop,RGB,25.81533249580665
+CBSD68,23.png,37,50,Restormer,float,full,RGB,26.693829113553985
+CBSD68,23.png,37,50,Restormer,float,GRL crop,RGB,26.69783593187665
+CBSD68,23.png,37,50,Restormer,float,full,Y,28.148370782873272
+CBSD68,23.png,37,50,Restormer,float,GRL crop,Y,28.152170882299444
+CBSD68,23.png,37,50,Restormer,clipped uint8,full,RGB,24.79504481559456
+CBSD68,23.png,37,50,Restormer,clipped uint8,GRL crop,RGB,24.802861796243825
+CBSD68,24.png,38,50,Restormer,float,full,RGB,28.14134111074734
+CBSD68,24.png,38,50,Restormer,float,GRL crop,RGB,28.14069997601415
+CBSD68,24.png,38,50,Restormer,float,full,Y,29.87274818568473
+CBSD68,24.png,38,50,Restormer,float,GRL crop,Y,29.87299659519237
+CBSD68,24.png,38,50,Restormer,clipped uint8,full,RGB,27.01122074491004
+CBSD68,24.png,38,50,Restormer,clipped uint8,GRL crop,RGB,27.00836647873555
+CBSD68,25.png,39,50,Restormer,float,full,RGB,28.023756730444266
+CBSD68,25.png,39,50,Restormer,float,GRL crop,RGB,28.063951337433103
+CBSD68,25.png,39,50,Restormer,float,full,Y,29.42355766730723
+CBSD68,25.png,39,50,Restormer,float,GRL crop,Y,29.464529745166
+CBSD68,25.png,39,50,Restormer,clipped uint8,full,RGB,25.1611707670884
+CBSD68,25.png,39,50,Restormer,clipped uint8,GRL crop,RGB,25.17613447277626
+CBSD68,26.png,40,50,Restormer,float,full,RGB,28.77768037854354
+CBSD68,26.png,40,50,Restormer,float,GRL crop,RGB,28.76698476428948
+CBSD68,26.png,40,50,Restormer,float,full,Y,30.22665835446301
+CBSD68,26.png,40,50,Restormer,float,GRL crop,Y,30.21568101099512
+CBSD68,26.png,40,50,Restormer,clipped uint8,full,RGB,27.133323526611697
+CBSD68,26.png,40,50,Restormer,clipped uint8,GRL crop,RGB,27.124206755833065
+CBSD68,27.png,41,50,Restormer,float,full,RGB,29.22907917971437
+CBSD68,27.png,41,50,Restormer,float,GRL crop,RGB,29.228854868107085
+CBSD68,27.png,41,50,Restormer,float,full,Y,30.9815555992989
+CBSD68,27.png,41,50,Restormer,float,GRL crop,Y,30.980178881741427
+CBSD68,27.png,41,50,Restormer,clipped uint8,full,RGB,26.963903877032568
+CBSD68,27.png,41,50,Restormer,clipped uint8,GRL crop,RGB,26.981958831657323
+CBSD68,28.png,42,50,Restormer,float,full,RGB,32.651600187942584
+CBSD68,28.png,42,50,Restormer,float,GRL crop,RGB,32.653484829987526
+CBSD68,28.png,42,50,Restormer,float,full,Y,34.22665892546706
+CBSD68,28.png,42,50,Restormer,float,GRL crop,Y,34.229400080161135
+CBSD68,28.png,42,50,Restormer,clipped uint8,full,RGB,23.80342657633947
+CBSD68,28.png,42,50,Restormer,clipped uint8,GRL crop,RGB,23.80445744302517
+CBSD68,29.png,43,50,Restormer,float,full,RGB,29.126077101420705
+CBSD68,29.png,43,50,Restormer,float,GRL crop,RGB,29.12748004570961
+CBSD68,29.png,43,50,Restormer,float,full,Y,30.715660744916484
+CBSD68,29.png,43,50,Restormer,float,GRL crop,Y,30.71615143460031
+CBSD68,29.png,43,50,Restormer,clipped uint8,full,RGB,28.531097401764185
+CBSD68,29.png,43,50,Restormer,clipped uint8,GRL crop,RGB,28.54870523431676
+CBSD68,30.png,44,50,Restormer,float,full,RGB,25.86959784033807
+CBSD68,30.png,44,50,Restormer,float,GRL crop,RGB,25.88177051068888
+CBSD68,30.png,44,50,Restormer,float,full,Y,27.41237411491582
+CBSD68,30.png,44,50,Restormer,float,GRL crop,Y,27.424374766844327
+CBSD68,30.png,44,50,Restormer,clipped uint8,full,RGB,25.61591699949057
+CBSD68,30.png,44,50,Restormer,clipped uint8,GRL crop,RGB,25.62583060952753
+CBSD68,31.png,45,50,Restormer,float,full,RGB,27.359029772024336
+CBSD68,31.png,45,50,Restormer,float,GRL crop,RGB,27.349446945379366
+CBSD68,31.png,45,50,Restormer,float,full,Y,28.78054612615372
+CBSD68,31.png,45,50,Restormer,float,GRL crop,Y,28.7705900051273
+CBSD68,31.png,45,50,Restormer,clipped uint8,full,RGB,26.32817449509379
+CBSD68,31.png,45,50,Restormer,clipped uint8,GRL crop,RGB,26.34056142382211
+CBSD68,32.png,46,50,Restormer,float,full,RGB,27.40951225910485
+CBSD68,32.png,46,50,Restormer,float,GRL crop,RGB,27.4115036165102
+CBSD68,32.png,46,50,Restormer,float,full,Y,28.754004648918325
+CBSD68,32.png,46,50,Restormer,float,GRL crop,Y,28.75604123155496
+CBSD68,32.png,46,50,Restormer,clipped uint8,full,RGB,27.354039803774715
+CBSD68,32.png,46,50,Restormer,clipped uint8,GRL crop,RGB,27.35595840408683
+CBSD68,33.png,47,50,Restormer,float,full,RGB,28.145133157995534
+CBSD68,33.png,47,50,Restormer,float,GRL crop,RGB,28.176711630647485
+CBSD68,33.png,47,50,Restormer,float,full,Y,29.635967947630974
+CBSD68,33.png,47,50,Restormer,float,GRL crop,Y,29.668268276677416
+CBSD68,33.png,47,50,Restormer,clipped uint8,full,RGB,27.11489242657902
+CBSD68,33.png,47,50,Restormer,clipped uint8,GRL crop,RGB,27.1371528776082
+CBSD68,34.png,48,50,Restormer,float,full,RGB,27.48549423569809
+CBSD68,34.png,48,50,Restormer,float,GRL crop,RGB,27.50285216468196
+CBSD68,34.png,48,50,Restormer,float,full,Y,28.920462679547995
+CBSD68,34.png,48,50,Restormer,float,GRL crop,Y,28.94020110631331
+CBSD68,34.png,48,50,Restormer,clipped uint8,full,RGB,25.02401057582378
+CBSD68,34.png,48,50,Restormer,clipped uint8,GRL crop,RGB,25.0325399878114
+CBSD68,35.png,49,50,Restormer,float,full,RGB,29.15093645071636
+CBSD68,35.png,49,50,Restormer,float,GRL crop,RGB,29.155978389502877
+CBSD68,35.png,49,50,Restormer,float,full,Y,30.627849949016177
+CBSD68,35.png,49,50,Restormer,float,GRL crop,Y,30.632702386951983
+CBSD68,35.png,49,50,Restormer,clipped uint8,full,RGB,28.35519265385516
+CBSD68,35.png,49,50,Restormer,clipped uint8,GRL crop,RGB,28.36596862920825
+CBSD68,36.png,50,50,Restormer,float,full,RGB,29.55819869501074
+CBSD68,36.png,50,50,Restormer,float,GRL crop,RGB,29.580055281554117
+CBSD68,36.png,50,50,Restormer,float,full,Y,31.34295155840234
+CBSD68,36.png,50,50,Restormer,float,GRL crop,Y,31.36838635623128
+CBSD68,36.png,50,50,Restormer,clipped uint8,full,RGB,27.39399464306144
+CBSD68,36.png,50,50,Restormer,clipped uint8,GRL crop,RGB,27.412357188841625
+CBSD68,37.png,51,50,Restormer,float,full,RGB,27.87229081266388
+CBSD68,37.png,51,50,Restormer,float,GRL crop,RGB,27.886429244212344
+CBSD68,37.png,51,50,Restormer,float,full,Y,29.319513122417952
+CBSD68,37.png,51,50,Restormer,float,GRL crop,Y,29.333014002434
+CBSD68,37.png,51,50,Restormer,clipped uint8,full,RGB,26.875626219913983
+CBSD68,37.png,51,50,Restormer,clipped uint8,GRL crop,RGB,26.893948335328712
+CBSD68,38.png,52,50,Restormer,float,full,RGB,25.828926975274737
+CBSD68,38.png,52,50,Restormer,float,GRL crop,RGB,25.826795307747645
+CBSD68,38.png,52,50,Restormer,float,full,Y,27.290291455113582
+CBSD68,38.png,52,50,Restormer,float,GRL crop,Y,27.287735198432305
+CBSD68,38.png,52,50,Restormer,clipped uint8,full,RGB,24.95667248735824
+CBSD68,38.png,52,50,Restormer,clipped uint8,GRL crop,RGB,24.956937092398984
+CBSD68,39.png,53,50,Restormer,float,full,RGB,25.79832473649887
+CBSD68,39.png,53,50,Restormer,float,GRL crop,RGB,25.80538161882665
+CBSD68,39.png,53,50,Restormer,float,full,Y,27.40395705090155
+CBSD68,39.png,53,50,Restormer,float,GRL crop,Y,27.40976024058202
+CBSD68,39.png,53,50,Restormer,clipped uint8,full,RGB,25.64617789379255
+CBSD68,39.png,53,50,Restormer,clipped uint8,GRL crop,RGB,25.65296792592404
+CBSD68,40.png,54,50,Restormer,float,full,RGB,31.06026846663532
+CBSD68,40.png,54,50,Restormer,float,GRL crop,RGB,31.083578602287385
+CBSD68,40.png,54,50,Restormer,float,full,Y,32.57389006446587
+CBSD68,40.png,54,50,Restormer,float,GRL crop,Y,32.59647547924267
+CBSD68,40.png,54,50,Restormer,clipped uint8,full,RGB,26.65991388293841
+CBSD68,40.png,54,50,Restormer,clipped uint8,GRL crop,RGB,26.66297587139857
+CBSD68,41.png,55,50,Restormer,float,full,RGB,26.29766778510536
+CBSD68,41.png,55,50,Restormer,float,GRL crop,RGB,26.30966570041359
+CBSD68,41.png,55,50,Restormer,float,full,Y,27.78582286035602
+CBSD68,41.png,55,50,Restormer,float,GRL crop,Y,27.7975693903091
+CBSD68,41.png,55,50,Restormer,clipped uint8,full,RGB,24.71861076124739
+CBSD68,41.png,55,50,Restormer,clipped uint8,GRL crop,RGB,24.72126414466624
+CBSD68,42.png,56,50,Restormer,float,full,RGB,28.136462273653912
+CBSD68,42.png,56,50,Restormer,float,GRL crop,RGB,28.13201580627385
+CBSD68,42.png,56,50,Restormer,float,full,Y,29.59740042111324
+CBSD68,42.png,56,50,Restormer,float,GRL crop,Y,29.592953167326662
+CBSD68,42.png,56,50,Restormer,clipped uint8,full,RGB,27.500188511180653
+CBSD68,42.png,56,50,Restormer,clipped uint8,GRL crop,RGB,27.493670239952127
+CBSD68,43.png,57,50,Restormer,float,full,RGB,31.782679783236336
+CBSD68,43.png,57,50,Restormer,float,GRL crop,RGB,31.79908185941879
+CBSD68,43.png,57,50,Restormer,float,full,Y,33.251689066643586
+CBSD68,43.png,57,50,Restormer,float,GRL crop,Y,33.26989385057052
+CBSD68,43.png,57,50,Restormer,clipped uint8,full,RGB,26.38228136317028
+CBSD68,43.png,57,50,Restormer,clipped uint8,GRL crop,RGB,26.37639163697058
+CBSD68,44.png,58,50,Restormer,float,full,RGB,30.915800101481278
+CBSD68,44.png,58,50,Restormer,float,GRL crop,RGB,30.930881867157147
+CBSD68,44.png,58,50,Restormer,float,full,Y,32.293126051858295
+CBSD68,44.png,58,50,Restormer,float,GRL crop,Y,32.30810155127307
+CBSD68,44.png,58,50,Restormer,clipped uint8,full,RGB,30.220695601816825
+CBSD68,44.png,58,50,Restormer,clipped uint8,GRL crop,RGB,30.232355899796797
+CBSD68,45.png,59,50,Restormer,float,full,RGB,23.1887353240665
+CBSD68,45.png,59,50,Restormer,float,GRL crop,RGB,23.19421881846741
+CBSD68,45.png,59,50,Restormer,float,full,Y,24.76246650372771
+CBSD68,45.png,59,50,Restormer,float,GRL crop,Y,24.768030958773664
+CBSD68,45.png,59,50,Restormer,clipped uint8,full,RGB,22.78787367688007
+CBSD68,45.png,59,50,Restormer,clipped uint8,GRL crop,RGB,22.791298140560087
+CBSD68,46.png,60,50,Restormer,float,full,RGB,27.568104998627195
+CBSD68,46.png,60,50,Restormer,float,GRL crop,RGB,27.57214205465687
+CBSD68,46.png,60,50,Restormer,float,full,Y,29.147579057672463
+CBSD68,46.png,60,50,Restormer,float,GRL crop,Y,29.151455658736744
+CBSD68,46.png,60,50,Restormer,clipped uint8,full,RGB,26.63309670671533
+CBSD68,46.png,60,50,Restormer,clipped uint8,GRL crop,RGB,26.637455525611657
+CBSD68,47.png,61,50,Restormer,float,full,RGB,30.473447792281306
+CBSD68,47.png,61,50,Restormer,float,GRL crop,RGB,30.48746322955256
+CBSD68,47.png,61,50,Restormer,float,full,Y,31.96766655933277
+CBSD68,47.png,61,50,Restormer,float,GRL crop,Y,31.98201057133316
+CBSD68,47.png,61,50,Restormer,clipped uint8,full,RGB,30.376981529862206
+CBSD68,47.png,61,50,Restormer,clipped uint8,GRL crop,RGB,30.390833529527068
+CBSD68,48.png,62,50,Restormer,float,full,RGB,29.91962439388913
+CBSD68,48.png,62,50,Restormer,float,GRL crop,RGB,29.960073248180134
+CBSD68,48.png,62,50,Restormer,float,full,Y,31.43938581012078
+CBSD68,48.png,62,50,Restormer,float,GRL crop,Y,31.477978775673527
+CBSD68,48.png,62,50,Restormer,clipped uint8,full,RGB,29.268559076192208
+CBSD68,48.png,62,50,Restormer,clipped uint8,GRL crop,RGB,29.303497368859883
+CBSD68,49.png,63,50,Restormer,float,full,RGB,30.5893564214973
+CBSD68,49.png,63,50,Restormer,float,GRL crop,RGB,30.587004167446462
+CBSD68,49.png,63,50,Restormer,float,full,Y,32.13045504456542
+CBSD68,49.png,63,50,Restormer,float,GRL crop,Y,32.12772178811261
+CBSD68,49.png,63,50,Restormer,clipped uint8,full,RGB,30.33665812628068
+CBSD68,49.png,63,50,Restormer,clipped uint8,GRL crop,RGB,30.336558200192325
+CBSD68,50.png,64,50,Restormer,float,full,RGB,29.594103985191712
+CBSD68,50.png,64,50,Restormer,float,GRL crop,RGB,29.587063340602462
+CBSD68,50.png,64,50,Restormer,float,full,Y,31.11065492770101
+CBSD68,50.png,64,50,Restormer,float,GRL crop,Y,31.103236422006304
+CBSD68,50.png,64,50,Restormer,clipped uint8,full,RGB,28.25191702922709
+CBSD68,50.png,64,50,Restormer,clipped uint8,GRL crop,RGB,28.284428158479503
+CBSD68,51.png,65,50,Restormer,float,full,RGB,25.701834665164384
+CBSD68,51.png,65,50,Restormer,float,GRL crop,RGB,25.713043899117302
+CBSD68,51.png,65,50,Restormer,float,full,Y,27.24042607349775
+CBSD68,51.png,65,50,Restormer,float,GRL crop,Y,27.251829240517587
+CBSD68,51.png,65,50,Restormer,clipped uint8,full,RGB,24.866033271458736
+CBSD68,51.png,65,50,Restormer,clipped uint8,GRL crop,RGB,24.873817676572884
+CBSD68,52.png,66,50,Restormer,float,full,RGB,27.969515923276543
+CBSD68,52.png,66,50,Restormer,float,GRL crop,RGB,27.98308815975167
+CBSD68,52.png,66,50,Restormer,float,full,Y,29.749834095648545
+CBSD68,52.png,66,50,Restormer,float,GRL crop,Y,29.76330370147669
+CBSD68,52.png,66,50,Restormer,clipped uint8,full,RGB,24.748744696106776
+CBSD68,52.png,66,50,Restormer,clipped uint8,GRL crop,RGB,24.75758142527484
+CBSD68,53.png,67,50,Restormer,float,full,RGB,25.452550465548185
+CBSD68,53.png,67,50,Restormer,float,GRL crop,RGB,25.452493822578543
+CBSD68,53.png,67,50,Restormer,float,full,Y,26.867265540847622
+CBSD68,53.png,67,50,Restormer,float,GRL crop,Y,26.866836539859733
+CBSD68,53.png,67,50,Restormer,clipped uint8,full,RGB,22.846244363676156
+CBSD68,53.png,67,50,Restormer,clipped uint8,GRL crop,RGB,22.842828559684527
+Kodak24,0.png,0,50,Restormer,float,full,RGB,31.34389450505982
+Kodak24,0.png,0,50,Restormer,float,GRL crop,RGB,31.73731214990209
+Kodak24,0.png,0,50,Restormer,float,full,Y,33.26299995207454
+Kodak24,0.png,0,50,Restormer,float,GRL crop,Y,33.606749310222874
+Kodak24,0.png,0,50,Restormer,clipped uint8,full,RGB,29.807328929128087
+Kodak24,0.png,0,50,Restormer,clipped uint8,GRL crop,RGB,30.021092709503183
+Kodak24,1.png,1,50,Restormer,float,full,RGB,32.30527988270233
+Kodak24,1.png,1,50,Restormer,float,GRL crop,RGB,32.993066977542576
+Kodak24,1.png,1,50,Restormer,float,full,Y,33.79421510464108
+Kodak24,1.png,1,50,Restormer,float,GRL crop,Y,34.59963900578831
+Kodak24,1.png,1,50,Restormer,clipped uint8,full,RGB,31.68054111348737
+Kodak24,1.png,1,50,Restormer,clipped uint8,GRL crop,RGB,32.109570730817026
+Kodak24,2.png,2,50,Restormer,float,full,RGB,32.35357292092283
+Kodak24,2.png,2,50,Restormer,float,GRL crop,RGB,32.81312963409736
+Kodak24,2.png,2,50,Restormer,float,full,Y,33.95117643471017
+Kodak24,2.png,2,50,Restormer,float,GRL crop,Y,34.48891942293755
+Kodak24,2.png,2,50,Restormer,clipped uint8,full,RGB,31.39470903178109
+Kodak24,2.png,2,50,Restormer,clipped uint8,GRL crop,RGB,31.939336470426625
+Kodak24,3.png,3,50,Restormer,float,full,RGB,30.965946185799908
+Kodak24,3.png,3,50,Restormer,float,GRL crop,RGB,30.03349941930896
+Kodak24,3.png,3,50,Restormer,float,full,Y,32.493850238265715
+Kodak24,3.png,3,50,Restormer,float,GRL crop,Y,31.539850292464397
+Kodak24,3.png,3,50,Restormer,clipped uint8,full,RGB,27.87635497283361
+Kodak24,3.png,3,50,Restormer,clipped uint8,GRL crop,RGB,28.111159776974333
+Kodak24,4.png,4,50,Restormer,float,full,RGB,27.512901264843745
+Kodak24,4.png,4,50,Restormer,float,GRL crop,RGB,27.63403379555565
+Kodak24,4.png,4,50,Restormer,float,full,Y,29.03168242788113
+Kodak24,4.png,4,50,Restormer,float,GRL crop,Y,29.206122528416397
+Kodak24,4.png,4,50,Restormer,clipped uint8,full,RGB,26.2300212059992
+Kodak24,4.png,4,50,Restormer,clipped uint8,GRL crop,RGB,26.37629746083723
+Kodak24,5.png,5,50,Restormer,float,full,RGB,30.27709777125093
+Kodak24,5.png,5,50,Restormer,float,GRL crop,RGB,30.53386175483194
+Kodak24,5.png,5,50,Restormer,float,full,Y,31.730492302657535
+Kodak24,5.png,5,50,Restormer,float,GRL crop,Y,32.02798753371467
+Kodak24,5.png,5,50,Restormer,clipped uint8,full,RGB,29.15543477163866
+Kodak24,5.png,5,50,Restormer,clipped uint8,GRL crop,RGB,29.14831216359934
+Kodak24,6.png,6,50,Restormer,float,full,RGB,29.124208110622565
+Kodak24,6.png,6,50,Restormer,float,GRL crop,RGB,29.52384196866996
+Kodak24,6.png,6,50,Restormer,float,full,Y,30.88076382394565
+Kodak24,6.png,6,50,Restormer,float,GRL crop,Y,31.274311020769456
+Kodak24,6.png,6,50,Restormer,clipped uint8,full,RGB,28.43192862967592
+Kodak24,6.png,6,50,Restormer,clipped uint8,GRL crop,RGB,28.65709743100063
+Kodak24,7.png,7,50,Restormer,float,full,RGB,33.16460393126691
+Kodak24,7.png,7,50,Restormer,float,GRL crop,RGB,32.33089885144654
+Kodak24,7.png,7,50,Restormer,float,full,Y,35.40535696914961
+Kodak24,7.png,7,50,Restormer,float,GRL crop,Y,34.48963568170848
+Kodak24,7.png,7,50,Restormer,clipped uint8,full,RGB,30.49428509994067
+Kodak24,7.png,7,50,Restormer,clipped uint8,GRL crop,RGB,29.5946562775751
+Kodak24,8.png,8,50,Restormer,float,full,RGB,28.04810539814948
+Kodak24,8.png,8,50,Restormer,float,GRL crop,RGB,28.91908349704293
+Kodak24,8.png,8,50,Restormer,float,full,Y,29.688115951803304
+Kodak24,8.png,8,50,Restormer,float,GRL crop,Y,30.57705236274524
+Kodak24,8.png,8,50,Restormer,clipped uint8,full,RGB,26.716370707827608
+Kodak24,8.png,8,50,Restormer,clipped uint8,GRL crop,RGB,27.870878391022305
+Kodak24,9.png,9,50,Restormer,float,full,RGB,27.19415855652372
+Kodak24,9.png,9,50,Restormer,float,GRL crop,RGB,26.75816894495796
+Kodak24,9.png,9,50,Restormer,float,full,Y,28.521048800651894
+Kodak24,9.png,9,50,Restormer,float,GRL crop,Y,28.06585264871584
+Kodak24,9.png,9,50,Restormer,clipped uint8,full,RGB,26.78520689893919
+Kodak24,9.png,9,50,Restormer,clipped uint8,GRL crop,RGB,26.4340289067778
+Kodak24,10.png,10,50,Restormer,float,full,RGB,31.334230158153265
+Kodak24,10.png,10,50,Restormer,float,GRL crop,RGB,30.88294560678206
+Kodak24,10.png,10,50,Restormer,float,full,Y,33.42959704370792
+Kodak24,10.png,10,50,Restormer,float,GRL crop,Y,32.90097527612596
+Kodak24,10.png,10,50,Restormer,clipped uint8,full,RGB,27.836113961121463
+Kodak24,10.png,10,50,Restormer,clipped uint8,GRL crop,RGB,27.595549512464643
+Kodak24,11.png,11,50,Restormer,float,full,RGB,33.05666656874684
+Kodak24,11.png,11,50,Restormer,float,GRL crop,RGB,33.5132315598926
+Kodak24,11.png,11,50,Restormer,float,full,Y,34.65475523327482
+Kodak24,11.png,11,50,Restormer,float,GRL crop,Y,35.25897841923908
+Kodak24,11.png,11,50,Restormer,clipped uint8,full,RGB,30.693778567529755
+Kodak24,11.png,11,50,Restormer,clipped uint8,GRL crop,RGB,30.624134139018725
+Kodak24,12.png,12,50,Restormer,float,full,RGB,27.722141766567763
+Kodak24,12.png,12,50,Restormer,float,GRL crop,RGB,27.417725484565125
+Kodak24,12.png,12,50,Restormer,float,full,Y,29.303700559910936
+Kodak24,12.png,12,50,Restormer,float,GRL crop,Y,28.9914729451222
+Kodak24,12.png,12,50,Restormer,clipped uint8,full,RGB,26.361339962369044
+Kodak24,12.png,12,50,Restormer,clipped uint8,GRL crop,RGB,26.025083448938645
+Kodak24,13.png,13,50,Restormer,float,full,RGB,28.42178669400884
+Kodak24,13.png,13,50,Restormer,float,GRL crop,RGB,28.287957402475943
+Kodak24,13.png,13,50,Restormer,float,full,Y,29.803863781213124
+Kodak24,13.png,13,50,Restormer,float,GRL crop,Y,29.68255550027488
+Kodak24,13.png,13,50,Restormer,clipped uint8,full,RGB,26.972140377953423
+Kodak24,13.png,13,50,Restormer,clipped uint8,GRL crop,RGB,26.77279350489263
+Kodak24,14.png,14,50,Restormer,float,full,RGB,32.08588351653718
+Kodak24,14.png,14,50,Restormer,float,GRL crop,RGB,32.07385812978177
+Kodak24,14.png,14,50,Restormer,float,full,Y,33.80736179026803
+Kodak24,14.png,14,50,Restormer,float,GRL crop,Y,33.810652890980776
+Kodak24,14.png,14,50,Restormer,clipped uint8,full,RGB,30.58574591821236
+Kodak24,14.png,14,50,Restormer,clipped uint8,GRL crop,RGB,30.7483195903492
+Kodak24,15.png,15,50,Restormer,float,full,RGB,28.02950962250234
+Kodak24,15.png,15,50,Restormer,float,GRL crop,RGB,27.93523979576956
+Kodak24,15.png,15,50,Restormer,float,full,Y,29.586029015260344
+Kodak24,15.png,15,50,Restormer,float,GRL crop,Y,29.492882013300363
+Kodak24,15.png,15,50,Restormer,clipped uint8,full,RGB,26.634012786102197
+Kodak24,15.png,15,50,Restormer,clipped uint8,GRL crop,RGB,26.441388834211978
+Kodak24,16.png,16,50,Restormer,float,full,RGB,29.340814947413957
+Kodak24,16.png,16,50,Restormer,float,GRL crop,RGB,28.643697494967405
+Kodak24,16.png,16,50,Restormer,float,full,Y,30.90843147105713
+Kodak24,16.png,16,50,Restormer,float,GRL crop,Y,30.201020954511613
+Kodak24,16.png,16,50,Restormer,clipped uint8,full,RGB,27.82313218184685
+Kodak24,16.png,16,50,Restormer,clipped uint8,GRL crop,RGB,27.461000669476785
+Kodak24,17.png,17,50,Restormer,float,full,RGB,32.16576283522771
+Kodak24,17.png,17,50,Restormer,float,GRL crop,RGB,31.64883331131286
+Kodak24,17.png,17,50,Restormer,float,full,Y,33.75336542081299
+Kodak24,17.png,17,50,Restormer,float,GRL crop,Y,33.289123086177575
+Kodak24,17.png,17,50,Restormer,clipped uint8,full,RGB,30.40944616461523
+Kodak24,17.png,17,50,Restormer,clipped uint8,GRL crop,RGB,29.562117756728185
+Kodak24,18.png,18,50,Restormer,float,full,RGB,25.057361113574892
+Kodak24,18.png,18,50,Restormer,float,GRL crop,RGB,25.004680905817413
+Kodak24,18.png,18,50,Restormer,float,full,Y,26.41574944277328
+Kodak24,18.png,18,50,Restormer,float,GRL crop,Y,26.36520500487084
+Kodak24,18.png,18,50,Restormer,clipped uint8,full,RGB,24.442774104176795
+Kodak24,18.png,18,50,Restormer,clipped uint8,GRL crop,RGB,24.330596673127317
+Kodak24,19.png,19,50,Restormer,float,full,RGB,28.099195424683067
+Kodak24,19.png,19,50,Restormer,float,GRL crop,RGB,27.66223886053492
+Kodak24,19.png,19,50,Restormer,float,full,Y,29.75526465945062
+Kodak24,19.png,19,50,Restormer,float,GRL crop,Y,29.374788619489685
+Kodak24,19.png,19,50,Restormer,clipped uint8,full,RGB,27.028188157830904
+Kodak24,19.png,19,50,Restormer,clipped uint8,GRL crop,RGB,26.788025809461587
+Kodak24,20.png,20,50,Restormer,float,full,RGB,31.552612489312768
+Kodak24,20.png,20,50,Restormer,float,GRL crop,RGB,30.378545073258397
+Kodak24,20.png,20,50,Restormer,float,full,Y,33.39245368199481
+Kodak24,20.png,20,50,Restormer,float,GRL crop,Y,32.1923934543687
+Kodak24,20.png,20,50,Restormer,clipped uint8,full,RGB,26.991084434273525
+Kodak24,20.png,20,50,Restormer,clipped uint8,GRL crop,RGB,26.9798224904185
+Kodak24,21.png,21,50,Restormer,float,full,RGB,30.403033471173377
+Kodak24,21.png,21,50,Restormer,float,GRL crop,RGB,30.253172435748247
+Kodak24,21.png,21,50,Restormer,float,full,Y,31.762642098117183
+Kodak24,21.png,21,50,Restormer,float,GRL crop,Y,31.6298347291199
+Kodak24,21.png,21,50,Restormer,clipped uint8,full,RGB,29.5550929330588
+Kodak24,21.png,21,50,Restormer,clipped uint8,GRL crop,RGB,29.482903973500022
+Kodak24,22.png,22,50,Restormer,float,full,RGB,32.093591543103216
+Kodak24,22.png,22,50,Restormer,float,GRL crop,RGB,32.26697194113505
+Kodak24,22.png,22,50,Restormer,float,full,Y,33.748167107514924
+Kodak24,22.png,22,50,Restormer,float,GRL crop,Y,33.909102657381496
+Kodak24,22.png,22,50,Restormer,clipped uint8,full,RGB,24.480862348388005
+Kodak24,22.png,22,50,Restormer,clipped uint8,GRL crop,RGB,24.405454027195308
+Kodak24,23.png,23,50,Restormer,float,full,RGB,28.732735805220194
+Kodak24,23.png,23,50,Restormer,float,GRL crop,RGB,28.592975066871155
+Kodak24,23.png,23,50,Restormer,float,full,Y,30.199669929189906
+Kodak24,23.png,23,50,Restormer,float,GRL crop,Y,30.068987619842726
+Kodak24,23.png,23,50,Restormer,clipped uint8,full,RGB,28.00571344329281
+Kodak24,23.png,23,50,Restormer,clipped uint8,GRL crop,RGB,27.84141917001293
+McMaster,1.tif,0,50,Restormer,float,full,RGB,26.49047727890407
+McMaster,1.tif,0,50,Restormer,float,GRL crop,RGB,26.47011459831227
+McMaster,1.tif,0,50,Restormer,float,full,Y,29.12751210881857
+McMaster,1.tif,0,50,Restormer,float,GRL crop,Y,29.11163262318258
+McMaster,1.tif,0,50,Restormer,clipped uint8,full,RGB,24.41957257387417
+McMaster,1.tif,0,50,Restormer,clipped uint8,GRL crop,RGB,24.39871281573023
+McMaster,2.tif,1,50,Restormer,float,full,RGB,29.4091970439073
+McMaster,2.tif,1,50,Restormer,float,GRL crop,RGB,29.45280151350852
+McMaster,2.tif,1,50,Restormer,float,full,Y,32.07337889208037
+McMaster,2.tif,1,50,Restormer,float,GRL crop,Y,32.11063081296418
+McMaster,2.tif,1,50,Restormer,clipped uint8,full,RGB,25.535287986910586
+McMaster,2.tif,1,50,Restormer,clipped uint8,GRL crop,RGB,25.557833645531147
+McMaster,3.tif,2,50,Restormer,float,full,RGB,27.416139685347737
+McMaster,3.tif,2,50,Restormer,float,GRL crop,RGB,27.406674396086984
+McMaster,3.tif,2,50,Restormer,float,full,Y,29.54182553922402
+McMaster,3.tif,2,50,Restormer,float,GRL crop,Y,29.53289106445036
+McMaster,3.tif,2,50,Restormer,clipped uint8,full,RGB,25.764720696583005
+McMaster,3.tif,2,50,Restormer,clipped uint8,GRL crop,RGB,25.74376404485429
+McMaster,4.tif,3,50,Restormer,float,full,RGB,31.27081727259985
+McMaster,4.tif,3,50,Restormer,float,GRL crop,RGB,31.24988865886728
+McMaster,4.tif,3,50,Restormer,float,full,Y,33.67325205012324
+McMaster,4.tif,3,50,Restormer,float,GRL crop,Y,33.64649537632073
+McMaster,4.tif,3,50,Restormer,clipped uint8,full,RGB,27.326765466210688
+McMaster,4.tif,3,50,Restormer,clipped uint8,GRL crop,RGB,27.323632778388905
+McMaster,5.tif,4,50,Restormer,float,full,RGB,29.1857108750953
+McMaster,5.tif,4,50,Restormer,float,GRL crop,RGB,29.20639442908369
+McMaster,5.tif,4,50,Restormer,float,full,Y,32.081811775687584
+McMaster,5.tif,4,50,Restormer,float,GRL crop,Y,32.11170141397763
+McMaster,5.tif,4,50,Restormer,clipped uint8,full,RGB,27.71105185411484
+McMaster,5.tif,4,50,Restormer,clipped uint8,GRL crop,RGB,27.73488140443885
+McMaster,6.tif,5,50,Restormer,float,full,RGB,30.18441543300414
+McMaster,6.tif,5,50,Restormer,float,GRL crop,RGB,30.23217193553629
+McMaster,6.tif,5,50,Restormer,float,full,Y,32.92875318183127
+McMaster,6.tif,5,50,Restormer,float,GRL crop,Y,32.97484284248387
+McMaster,6.tif,5,50,Restormer,clipped uint8,full,RGB,28.312989261859386
+McMaster,6.tif,5,50,Restormer,clipped uint8,GRL crop,RGB,28.32809391609912
+McMaster,7.tif,6,50,Restormer,float,full,RGB,28.90643871408325
+McMaster,7.tif,6,50,Restormer,float,GRL crop,RGB,28.93888495347671
+McMaster,7.tif,6,50,Restormer,float,full,Y,30.480629207751026
+McMaster,7.tif,6,50,Restormer,float,GRL crop,Y,30.51649545126393
+McMaster,7.tif,6,50,Restormer,clipped uint8,full,RGB,26.26989594623045
+McMaster,7.tif,6,50,Restormer,clipped uint8,GRL crop,RGB,26.27450334790209
+McMaster,8.tif,7,50,Restormer,float,full,RGB,31.467022256817376
+McMaster,8.tif,7,50,Restormer,float,GRL crop,RGB,31.57157288482853
+McMaster,8.tif,7,50,Restormer,float,full,Y,33.2501608982298
+McMaster,8.tif,7,50,Restormer,float,GRL crop,Y,33.35945415604476
+McMaster,8.tif,7,50,Restormer,clipped uint8,full,RGB,23.92664618411292
+McMaster,8.tif,7,50,Restormer,clipped uint8,GRL crop,RGB,23.93369119562116
+McMaster,9.tif,8,50,Restormer,float,full,RGB,30.76460654064033
+McMaster,9.tif,8,50,Restormer,float,GRL crop,RGB,30.845300414927944
+McMaster,9.tif,8,50,Restormer,float,full,Y,33.22886352929353
+McMaster,9.tif,8,50,Restormer,float,GRL crop,Y,33.30661435582694
+McMaster,9.tif,8,50,Restormer,clipped uint8,full,RGB,26.987539026836483
+McMaster,9.tif,8,50,Restormer,clipped uint8,GRL crop,RGB,27.001058902469445
+McMaster,10.tif,9,50,Restormer,float,full,RGB,30.90786242161921
+McMaster,10.tif,9,50,Restormer,float,GRL crop,RGB,30.920586944788656
+McMaster,10.tif,9,50,Restormer,float,full,Y,33.44287208690095
+McMaster,10.tif,9,50,Restormer,float,GRL crop,Y,33.44641641815755
+McMaster,10.tif,9,50,Restormer,clipped uint8,full,RGB,25.704450973346177
+McMaster,10.tif,9,50,Restormer,clipped uint8,GRL crop,RGB,25.711658894768945
+McMaster,11.tif,10,50,Restormer,float,full,RGB,31.30175455689041
+McMaster,11.tif,10,50,Restormer,float,GRL crop,RGB,31.313940399576083
+McMaster,11.tif,10,50,Restormer,float,full,Y,33.15226830532363
+McMaster,11.tif,10,50,Restormer,float,GRL crop,Y,33.16230726033895
+McMaster,11.tif,10,50,Restormer,clipped uint8,full,RGB,24.79643584803021
+McMaster,11.tif,10,50,Restormer,clipped uint8,GRL crop,RGB,24.7966351411654
+McMaster,12.tif,11,50,Restormer,float,full,RGB,32.370290825971374
+McMaster,12.tif,11,50,Restormer,float,GRL crop,RGB,32.41707973758206
+McMaster,12.tif,11,50,Restormer,float,full,Y,34.39081016531974
+McMaster,12.tif,11,50,Restormer,float,GRL crop,Y,34.41981487459438
+McMaster,12.tif,11,50,Restormer,clipped uint8,full,RGB,29.0032451585571
+McMaster,12.tif,11,50,Restormer,clipped uint8,GRL crop,RGB,29.015884033712247
+McMaster,13.tif,12,50,Restormer,float,full,RGB,35.51537095801309
+McMaster,13.tif,12,50,Restormer,float,GRL crop,RGB,35.56420155163056
+McMaster,13.tif,12,50,Restormer,float,full,Y,38.43811468593711
+McMaster,13.tif,12,50,Restormer,float,GRL crop,Y,38.4986151199793
+McMaster,13.tif,12,50,Restormer,clipped uint8,full,RGB,33.84970134341245
+McMaster,13.tif,12,50,Restormer,clipped uint8,GRL crop,RGB,33.8698064029
+McMaster,14.tif,13,50,Restormer,float,full,RGB,32.96286153216092
+McMaster,14.tif,13,50,Restormer,float,GRL crop,RGB,32.98045605443574
+McMaster,14.tif,13,50,Restormer,float,full,Y,35.8473937952374
+McMaster,14.tif,13,50,Restormer,float,GRL crop,Y,35.86181569541422
+McMaster,14.tif,13,50,Restormer,clipped uint8,full,RGB,26.96895801911849
+McMaster,14.tif,13,50,Restormer,clipped uint8,GRL crop,RGB,26.96979879062785
+McMaster,15.tif,14,50,Restormer,float,full,RGB,32.67268749595418
+McMaster,15.tif,14,50,Restormer,float,GRL crop,RGB,32.76695801915992
+McMaster,15.tif,14,50,Restormer,float,full,Y,35.65023633469573
+McMaster,15.tif,14,50,Restormer,float,GRL crop,Y,35.778777156847646
+McMaster,15.tif,14,50,Restormer,clipped uint8,full,RGB,25.49742545523278
+McMaster,15.tif,14,50,Restormer,clipped uint8,GRL crop,RGB,25.489637686061343
+McMaster,16.tif,15,50,Restormer,float,full,RGB,27.231219368742423
+McMaster,16.tif,15,50,Restormer,float,GRL crop,RGB,27.2560743473899
+McMaster,16.tif,15,50,Restormer,float,full,Y,28.53968015241556
+McMaster,16.tif,15,50,Restormer,float,GRL crop,Y,28.56161906532323
+McMaster,16.tif,15,50,Restormer,clipped uint8,full,RGB,24.144461103307144
+McMaster,16.tif,15,50,Restormer,clipped uint8,GRL crop,RGB,24.157462689158564
+McMaster,17.tif,16,50,Restormer,float,full,RGB,27.53003549744754
+McMaster,17.tif,16,50,Restormer,float,GRL crop,RGB,27.536700896945018
+McMaster,17.tif,16,50,Restormer,float,full,Y,30.696091170188208
+McMaster,17.tif,16,50,Restormer,float,GRL crop,Y,30.703644539485957
+McMaster,17.tif,16,50,Restormer,clipped uint8,full,RGB,24.55054016897147
+McMaster,17.tif,16,50,Restormer,clipped uint8,GRL crop,RGB,24.557344838941688
+McMaster,18.tif,17,50,Restormer,float,full,RGB,29.41812932056216
+McMaster,18.tif,17,50,Restormer,float,GRL crop,RGB,29.424267162307032
+McMaster,18.tif,17,50,Restormer,float,full,Y,30.62850387762264
+McMaster,18.tif,17,50,Restormer,float,GRL crop,Y,30.632624295697628
+McMaster,18.tif,17,50,Restormer,clipped uint8,full,RGB,25.70447316367289
+McMaster,18.tif,17,50,Restormer,clipped uint8,GRL crop,RGB,25.689029940459285
