@@ -8,6 +8,11 @@ of the two experiments:
 * `experiments/sequence_classification/sentiment/`
 * `experiments/language_modeling/recurrent_generation/`
 
+A detailed, self-contained HTML report (Vietnamese, interactive charts and 3-D
+surfaces, works offline) is [`report.html`](report.html); rebuild it with
+`python analysis/build_report.py`. Every number in it is computed from the
+files in this directory.
+
 Configuration shared by both tasks: 3 cells × 3 seeds, identical data,
 optimiser (AdamW), cosine schedule, batch size and optimizer-step budget. The
 embedding and the cell are sized by solving
@@ -26,11 +31,11 @@ RNN at the same total parameter count.
 split), 1 500 optimizer steps, batch 64,
 max length 64. Test set: the 872-example SST-2 dev split.
 
-| cell | hidden | parameters | accuracy (mean ± std) | NLL | gradient slope |
+| cell | hidden | parameters | accuracy (mean ± std) | NLL | gradient slope λ (seed 0) |
 |---|---:|---:|---:|---:|---:|
-| RNN | 1158 | 2,000,190 | 0.6743 ± 0.0105 | 0.7486 | −0.13333 |
-| GRU | 655 | 1,998,557 | **0.7393 ± 0.0037** | 0.6985 | −0.12982 |
-| LSTM | 563 | 1,998,116 | **0.7393 ± 0.0134** | 0.7162 | −0.12789 |
+| RNN | 1158 | 2,000,190 | 0.6743 ± 0.0105 | 0.7486 | −0.1106 |
+| GRU | 655 | 1,998,557 | **0.7393 ± 0.0037** | 0.6985 | −0.0551 |
+| LSTM | 563 | 1,998,116 | **0.7393 ± 0.0134** | 0.7162 | −0.0399 |
 
 Per-seed accuracy:
 
@@ -55,15 +60,16 @@ Pairwise tests:
 **Reading.** Gated cells beat the vanilla RNN by 6.5 accuracy points; every
 interval excludes zero. GRU and LSTM are indistinguishable: their difference is
 exactly zero on the seed average, both the example-level and seed-level
-intervals include zero, and McNemar agrees. The advantage is concentrated in
-longer sentences:
+intervals include zero, and McNemar agrees. The gap appears in every length
+bucket:
 
 ![accuracy by length](sentiment/accuracy_by_length.png)
 
-The RNN loses about 4 points between the 8–16 and 32–64 token buckets; GRU and
-LSTM stay within 1–2 points. That is consistent with gates helping when the
-label depends on a longer span, but this experiment does not isolate which gate
-does the work.
+From the 8–15 to the 32–64 token bucket (seed-averaged, per example) the RNN
+loses 10.3 points, the GRU 7.6 and the LSTM 6.0. All three degrade on long
+sentences and the RNN degrades fastest, but the longest bucket holds only 125
+sentences (0.8 points each), so this is a trend, not a test. This experiment
+does not isolate which gate does the work.
 
 Full report: [`sentiment/report.md`](sentiment/report.md).
 
@@ -73,11 +79,11 @@ Full report: [`sentiment/report.md`](sentiment/report.md).
 block 128), character vocabulary of 65. Metric: bits per character on the
 validation tail; lower is better.
 
-| cell | hidden | parameters | validation BPC (mean ± std) | gradient slope |
+| cell | hidden | parameters | validation BPC (mean ± std) | gradient slope λ (seed 0) |
 |---|---:|---:|---:|---:|
-| RNN | 1159 | 1,499,335 | **2.3842 ± 0.0075** | −0.01148 |
-| GRU | 664 | 1,501,545 | 2.4065 ± 0.0055 | −0.01138 |
-| LSTM | 572 | 1,501,149 | 2.5463 ± 0.0149 | −0.01128 |
+| RNN | 1159 | 1,499,335 | **2.3842 ± 0.0075** | −0.0863 |
+| GRU | 664 | 1,501,545 | 2.4065 ± 0.0055 | −0.1015 |
+| LSTM | 572 | 1,501,149 | 2.5463 ± 0.0149 | −0.0750 |
 
 Per-seed BPC:
 
@@ -91,9 +97,11 @@ Pairwise tests (negative Δ BPC favours the first cell):
 
 | pair | Δ BPC | 95 % window-bootstrap CI | bootstrap p | 95 % seed-level t CI |
 |---|---:|---|---:|---|
-| RNN − GRU | −0.0223 | [−0.0254, −0.0192] | 0 | [−0.0468, +0.0022] |
-| RNN − LSTM | −0.1622 | [−0.1674, −0.1570] | 0 | [−0.2175, −0.1068] |
-| GRU − LSTM | −0.1398 | [−0.1434, −0.1361] | 0 | [−0.1809, −0.0988] |
+| RNN − GRU | −0.0223 | [−0.0254, −0.0192] | < 0.001 | [−0.0468, +0.0022] |
+| RNN − LSTM | −0.1622 | [−0.1674, −0.1570] | < 0.001 | [−0.2175, −0.1068] |
+| GRU − LSTM | −0.1398 | [−0.1434, −0.1361] | < 0.001 | [−0.1809, −0.0988] |
+
+A bootstrap p of exactly 0 over 2 000 resamples only says p < 0.001.
 
 ![final BPC](generation/final_bpc.png)
 
@@ -109,7 +117,7 @@ $$
 = \frac{572}{1159} = 0.494 \approx \frac{1}{2}.
 $$
 
-This is what matching $P pprox mH^2$ forces; it is arithmetic, not a
+This is what matching $P \approx mH^2$ forces; it is arithmetic, not a
 performance theorem.
 
 **Reading.** The RNN reaches the lowest validation BPC, but its lead over the
@@ -143,9 +151,11 @@ $$
 \theta(\alpha,\beta)=\theta_0+\alpha\delta_1+\beta\delta_2
 $$
 
-around one trained checkpoint, with filter-normalised orthogonal random
-directions $\delta_1,\delta_2$ and a 17×17 grid. Loss is cross-entropy on four
-fixed batches.
+around one trained checkpoint (seed 0), with filter-normalised random
+directions $\delta_1,\delta_2$ ($\delta_2$ orthogonalised against $\delta_1$
+per tensor) and a 17×17 grid over $[-1,1]^2$. Loss is cross-entropy (nats) on
+the first four unshuffled batches of the **evaluation** split: 512 SST-2 dev
+sentences, 64 validation windows of 128 characters.
 
 | task | cell | min | centre | max |
 |---|---|---:|---:|---:|
@@ -159,24 +169,32 @@ fixed batches.
 ![sentiment landscape](landscapes/landscape_sentiment.png)
 ![generation landscape](landscapes/landscape_generation.png)
 
-**What this shows.** Every checkpoint sits in a basin whose centre is the local
-minimum on this slice. The LSTM surface is the flattest of the three on
-sentiment (max 1.06 versus 1.32 for GRU and 0.92 for RNN); on generation the
-ordering of maxima is reversed. Sharpness does not order the test metrics, and
-the surface explains neither the 6.5-point sentiment gap nor the BPC gap.
+**What this shows.** On generation every checkpoint is the lowest point of its
+slice. On sentiment it is not for the RNN and GRU (grid minima at
+$(\alpha,\beta)=(-0.125,0)$ and $(0.125,-0.125)$): the loss is measured on the
+evaluation split, not the training split, so the trained point need not be its
+minimum. The rise from the centre to the grid maximum is smallest for the RNN
+on sentiment (0.18 versus 0.38 LSTM and 0.62 GRU) and for the LSTM on
+generation (2.06 versus 2.69 GRU and 3.56 RNN): in both tasks the flattest
+surface belongs to the worst model. Three points per task cannot establish a
+correlation, the rise over a ±1 box is not a curvature, and sharpness changes
+under reparameterisations that leave the function unchanged (Dinh et al.,
+2017), so the surfaces explain neither the 6.5-point sentiment gap nor the BPC
+gap.
 
 **What this cannot show.** A surface is a property of **one trained point** and
 **two random directions**. It is not a statement about the task distribution,
 and no collection of 3-D slices can prove “architecture A generalises better”.
 That would require a bound over a task class, or a counterexample showing the
-ordering flips. The surfaces are diagnostics: they tell us the solutions are
-local minima with different curvature, not that one cell is universally better.
+ordering flips. The surfaces are diagnostics of the local geometry around one
+solution, not evidence that one cell is universally better.
 
 ## 4. Context sweep: does the ordering change with regime?
 
-The generation checkpoints were trained at 128 characters. Evaluating the same
-checkpoints on windows of 32, 64, 128 and 256 characters (32 batches × 16
-windows, token-weighted BPC) gives:
+The generation checkpoints were trained at 128 characters. Evaluating the seed-0
+checkpoints on the first non-overlapping validation windows of 32, 64, 128 and
+256 characters (up to 32 batches × 16 windows; at 256 that is the whole
+validation split, 435 windows; BPC per character) gives:
 
 | context | RNN | GRU | LSTM |
 |---:|---:|---:|---:|
@@ -188,11 +206,13 @@ windows, token-weighted BPC) gives:
 ![context sweep](contexts/context_sweep.png)
 
 The RNN < GRU < LSTM ordering is stable over this range at the shared parameter
-budget. Two boundary conditions matter: the models were trained at 128, so 256
-is extrapolation; and “context” here is evaluation window length, not a
-different training budget. This is stronger evidence than a single point, but
-still evidence for one corpus, one budget and one training length — not a
-general theorem.
+budget. Within a row the three cells see identical characters; across rows both
+the length and the text change (16,384 to 111,360 characters), so the column
+trend mixes the two. Two further boundary conditions matter: the models were
+trained at 128, so 256 is extrapolation; and “context” here is evaluation window
+length, not a different training budget. This is stronger evidence than a
+single point, but still evidence for one corpus, one budget and one training
+length — not a general theorem.
 
 ### What a general proof would require
 
@@ -212,24 +232,57 @@ comparison (same $H$ rather than same $P$) and training at each context length
 (not only evaluating at it). If LSTM still loses at width-matched, long-context
 training, the explanation is incomplete.
 
-## 5. Gradient reach does not explain the ordering
+## 5. Gradient reach: what the corrected probe shows
 
-The probe measures `||∂L/∂h_t||` for `L = ||h_last||^2` and fits a log-linear
-slope from the final step backwards:
+> **Correction.** The first version of this section reported slopes of
+> −0.133 / −0.130 / −0.128 (sentiment) and −0.0115 / −0.0114 / −0.0113
+> (generation) and concluded that reach does not order the cells. Those numbers
+> came from a broken probe: it differentiated with respect to a stacked copy of
+> the outputs that is not connected to earlier hidden states, so every timestep
+> but the last had zero gradient and the "slope" only reflected the sequence
+> length. The probe now differentiates with respect to the inputs of unpadded
+> sequences and is tested against the analytic slope of a linear RNN.
+> Accuracy, BPC and every statistical test are unaffected.
 
-* sentiment: RNN −0.13333, GRU −0.12982, LSTM −0.12789;
-* generation: RNN −0.01148, GRU −0.01138, LSTM −0.01128.
+`analysis/gradient_reach.py` measures $g(k)=\mathbb{E}\,\lVert\partial\lVert h_T\rVert^2/\partial x_{T-k}\rVert$
+on the seed-0 checkpoints (sentiment: 128 dev sentences cut to 24 tokens;
+generation: 64 validation windows of 128 characters) and fits
+$\log g(k)\approx a+\lambda k$. The carry factor is what multiplies the gradient
+on the direct path each step: $\tanh'$ for the RNN, $z$ for the GRU, $f$ for the
+LSTM.
 
-![gradient decay sentiment](sentiment/gradient_decay.png)
-![gradient decay generation](generation/gradient_decay.png)
+| task | cell | λ | $e^{\lambda}$ per step | g(8)/g(0) | g(16)/g(0) | mean carry factor | carry > 0.9 |
+|---|---|---:|---:|---:|---:|---:|---:|
+| sentiment | RNN | −0.1106 | 0.895 | 0.130 | 0.067 | 0.663 | 30.2 % |
+| sentiment | GRU | −0.0551 | 0.946 | 0.288 | 0.211 | 0.487 | 0.31 % |
+| sentiment | LSTM | −0.0399 | 0.961 | 0.681 | 0.464 | 0.505 | 0.074 % |
+| generation | RNN | −0.0863 | 0.917 | 0.063 | 0.022 | 0.426 | 15.6 % |
+| generation | GRU | −0.1015 | 0.903 | 0.050 | 0.018 | 0.142 | 4.0 % |
+| generation | LSTM | −0.0750 | 0.928 | 0.128 | 0.069 | 0.535 | 15.7 % |
 
-The slopes differ by less than 0.006 in both tasks, and the ordering does not
-track performance: the RNN has the steepest measured decay yet wins BPC, while
-the LSTM has the shallowest and loses. At these sequence lengths (≤64 tokens for
-sentiment, 128 for generation) the vanishing-gradient story is not the
-dominant explanatory variable. The classification gap is better explained by
-the presence of multiplicative gates; the generation gap by parameter
-allocation across gate matrices.
+![gradient reach sentiment](reach/reach_sentiment.png)
+![gradient reach generation](reach/reach_generation.png)
+
+* **Sentiment:** the gated cells keep the final state sensitive to inputs much
+  further back (LSTM > GRU > RNN), consistent with their accuracy advantage,
+  although GRU and LSTM tie on accuracy despite different reach.
+* **Generation:** the LSTM reaches furthest but has the worst BPC, and after
+  64 characters every cell retains under 0.2 % of its sensitivity. Reach does not
+  explain this ordering; capacity allocation (1159 / 664 / 572 hidden units)
+  remains the more plausible explanation.
+* **Theory versus measurement:** the trained RNNs have
+  $\sigma_{\max}(W_{hh})$ = 2.57 and 4.18, so the sufficient condition for
+  vanishing gradients ($\sigma_{\max}<1$) does not hold, yet sensitivity still
+  falls 8–11 % per step.
+* **Gates are not near 1:** mean forget/update gates sit near 0.5. A counting
+  bound shows that for a direct carry path to retain at least $e^{\lambda}$ per
+  step, the gate must exceed 0.9 on at least a $1-\lambda/\ln 0.9$ fraction of
+  steps; with the observed fractions, at most 0.12 % (LSTM) and 0.67 % (GRU) of
+  (unit, sentence) pairs on sentiment can do so. Most long-lag sensitivity must
+  therefore travel through the recurrent matrices, unless it concentrates on
+  those few pairs. On generation the bound is too loose to conclude anything.
+  The models were trained without a forget-gate bias of 1, a confound for the
+  next experiment.
 
 ## 6. What is and is not established
 
@@ -240,7 +293,8 @@ Established, conditional on this data, budget and seeds:
 * at 1.5 M parameters and a 128-character context, a parameter-matched RNN
   achieves lower validation BPC than a GRU or LSTM, but only the LSTM gap is
   stable across seeds;
-* measured gradient reach does not order the cells on either task.
+* measured gradient reach (seed 0) orders the cells as gated > RNN on
+  sentiment, matching accuracy, but does not explain the generation ordering.
 
 Not established:
 
@@ -260,9 +314,16 @@ python experiments/sequence_classification/sentiment/run.py --tier development -
 python experiments/language_modeling/recurrent_generation/run.py --tier development --device cuda
 
 # post-hoc analysis of the checkpoints
-python analysis/loss_landscape.py --task sentiment --run-directory runs/sequence_classification/sentiment/development --output-directory results/recurrent_comparison/landscapes
-python analysis/loss_landscape.py --task generation --run-directory runs/language_modeling/recurrent_generation/development --output-directory results/recurrent_comparison/landscapes
+python -m pip install -e ".[analysis]"
+python analysis/gradient_reach.py --task sentiment --run-directory runs/sequence_classification/sentiment/development --output-directory results/recurrent_comparison/reach
+python analysis/gradient_reach.py --task generation --run-directory runs/language_modeling/recurrent_generation/development --output-directory results/recurrent_comparison/reach
+# random directions depend on the device's generator; these surfaces were computed on CUDA
+python analysis/loss_landscape.py --task sentiment --run-directory runs/sequence_classification/sentiment/development --output-directory results/recurrent_comparison/landscapes --device cuda --extra-seeds 1 2 3 4
+python analysis/loss_landscape.py --task generation --run-directory runs/language_modeling/recurrent_generation/development --output-directory results/recurrent_comparison/landscapes --device cuda --extra-seeds 1 2 3 4
 python analysis/context_sweep.py --run-directory runs/language_modeling/recurrent_generation/development --output-directory results/recurrent_comparison/contexts
+
+# the HTML report (Python 3.12+)
+python analysis/build_report.py
 ```
 
 or run [`notebooks/recurrent_comparison.ipynb`](../../notebooks/recurrent_comparison.ipynb)

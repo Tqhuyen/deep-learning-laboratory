@@ -78,8 +78,14 @@
     }
   ],
   "gradient_slopes": {
-    "rnn": -0.011475908276089188,
-    "gru": -0.01137664096630201,
-    "lstm": -0.011275723504345192
+    "rnn": -0.08629986013276335,
+    "gru": -0.10149880127945528,
+    "lstm": -0.07498846185714214
+  },
+  "gradient_probe": {
+    "source": "analysis/gradient_reach.py on the seed-0 checkpoints",
+    "length": 128,
+    "sequences": 64,
+    "quantity": "mean over sequences of || d ||h_T||^2 / d x_t ||"
   }
 }

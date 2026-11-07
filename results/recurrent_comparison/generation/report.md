@@ -9,9 +9,9 @@ hidden size is solved for the shared budget. BPC = CE / ln 2.
 
 | cell | hidden | parameters | validation BPC (mean ± std) | gradient slope |
 |---|---:|---:|---:|---:|
-| rnn | 1159 | 1,499,335 | 2.3842 ± 0.0075 | -0.01148 |
-| gru | 664 | 1,501,545 | 2.4065 ± 0.0055 | -0.01138 |
-| lstm | 572 | 1,501,149 | 2.5463 ± 0.0149 | -0.01128 |
+| rnn | 1159 | 1,499,335 | 2.3842 ± 0.0075 | -0.08630 |
+| gru | 664 | 1,501,545 | 2.4065 ± 0.0055 | -0.10150 |
+| lstm | 572 | 1,501,149 | 2.5463 ± 0.0149 | -0.07499 |
 
 | cell | seed 0 | seed 1 | seed 2 |
 |---|---:|---:|---:|
@@ -31,3 +31,14 @@ narrower than run-to-run spread; the per-seed table is the stricter check.
 CIs quantify uncertainty on this corpus, not a universal ordering.
 
 Samples are in `samples.txt` (same prompt, same sampling seed per cell).
+
+Gradient slope: least-squares slope of log || d ||h_T||^2 / d x_t || against
+lag on unpadded validation windows of 128 characters, averaged
+over the probed seeds; exp(slope) is the average per-step retention.
+
+Correction: the probe in the Kaggle run (commit 4bc2e00) differentiated a
+stacked copy of the outputs and measured nothing before the final step.
+The gradient slopes above were recomputed with analysis/gradient_reach.py
+on the seed-0 checkpoints only (64 unpadded sequences of
+128 tokens). Accuracy, BPC and every statistical test are
+unaffected: the probe ran after training and does not touch the weights.

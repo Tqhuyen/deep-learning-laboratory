@@ -17,8 +17,9 @@ Design:
 * Statistics: mean ± std across seeds, paired bootstrap over test examples
   (seed-averaged correctness) and exact McNemar on the seed-0 predictions,
   Holm-corrected across the three pairs.
-* Mechanism: gradient norm of ``||h_last||^2`` with respect to each hidden
-  timestep, which measures how far back the final state can see.
+* Mechanism: ``|| d ||h_T||^2 / d x_t ||`` for every input position ``t`` of
+  unpadded test sentences truncated to ``probe_length`` tokens, i.e. how
+  strongly the final state still depends on each earlier input.
 
 Run:
 
@@ -50,6 +51,7 @@ from laboratory import (
     cosine_warmup,
     count_parameters,
     decay_slope,
+    fixed_length_sequences,
     get_device,
     holm_adjust,
     make_optimizer,
@@ -97,6 +99,8 @@ PRESETS = {
         val_fraction=0.2,
         length_buckets=(0, 8, 16, 24),
         bootstrap_repetitions=400,
+        probe_length=8,
+        probe_examples=16,
     ),
     "smoke": dict(
         source="fixture",
@@ -114,6 +118,8 @@ PRESETS = {
         val_fraction=0.2,
         length_buckets=(0, 8, 16, 32),
         bootstrap_repetitions=1000,
+        probe_length=12,
+        probe_examples=32,
     ),
     "development": dict(
         source="sst2",
@@ -132,6 +138,8 @@ PRESETS = {
         val_fraction=0.1,
         length_buckets=(0, 8, 16, 32, 64),
         bootstrap_repetitions=2000,
+        probe_length=24,
+        probe_examples=128,
     ),
     "full": dict(
         source="sst2",
@@ -150,6 +158,8 @@ PRESETS = {
         val_fraction=0.05,
         length_buckets=(0, 8, 16, 32, 64),
         bootstrap_repetitions=3000,
+        probe_length=24,
+        probe_examples=256,
     ),
 }
 
@@ -310,11 +320,15 @@ def train_one(cell: str, seed: int, tokenizer, loaders, config, device, checkpoi
     test_accuracy = float(correctness.mean())
     print(f"{cell} seed={seed} test_accuracy={test_accuracy:.4f}")
 
-    # Mechanism probe: how far back can the final hidden state see?
-    probe_batch = next(iter(test_loader))
-    probe_inputs = probe_batch["inputs"].to(device)
+    # Mechanism probe on unpadded sentences: the final timestep must be a real
+    # token, otherwise "h_T" is the state after the padding.
+    probe_inputs = fixed_length_sequences(
+        [ids for ids, _ in test_dataset.items],
+        config["probe_length"],
+        config["probe_examples"],
+    ).to(device)
     model.eval()
-    embeddings = model.embedding(probe_inputs)
+    embeddings = model.embedding(probe_inputs).detach()
     gradient_norms = timestep_gradient_norms(model.recurrent, embeddings).numpy()
 
     if checkpoint_path is not None:
@@ -414,7 +428,13 @@ def accuracy_by_length(results: dict[str, list[dict]], config: dict):
     return series, counts, edges
 
 
-def write_report(run_directory: Path, summary: dict, config: dict, tier: str) -> None:
+def write_report(
+    run_directory: Path,
+    summary: dict,
+    config: dict,
+    tier: str,
+    notes: tuple[str, ...] = (),
+) -> None:
     lines = [
         "# Sentiment classification: RNN vs GRU vs LSTM",
         "",
@@ -461,6 +481,11 @@ def write_report(run_directory: Path, summary: dict, config: dict, tier: str) ->
         "Holm-corrected McNemar p < 0.05 support a difference on this test set;",
         "neither establishes a universal ordering.",
         "",
+        "Gradient slope: least-squares slope of log || d ||h_T||^2 / d x_t || against",
+        f"lag on unpadded test sentences of {config['probe_length']} tokens, averaged over",
+        "the probed seeds; exp(slope) is the average per-step retention.",
+        "",
+        *notes,
     ]
     (run_directory / "report.md").write_text("\n".join(lines), encoding="utf-8")
 

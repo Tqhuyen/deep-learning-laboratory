@@ -5,6 +5,11 @@ script evaluates the same checkpoints on validation windows of 32, 64, 128 and
 256 characters. It is a regime check, not a proof: a model trained at 128 is
 in-distribution below that length and extrapolating above it.
 
+Each context length uses the first ``batches x batch_size`` non-overlapping
+validation windows, so longer contexts cover more text. Within one context the
+three cells see identical characters; across contexts both the length and the
+text change. The defaults reproduce ``results/recurrent_comparison/contexts``.
+
     python analysis/context_sweep.py \
         --run-directory runs/language_modeling/recurrent_generation/development \
         --output-directory results/recurrent_comparison/contexts
@@ -41,7 +46,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--run-directory", type=Path, required=True)
     parser.add_argument("--output-directory", type=Path, required=True)
     parser.add_argument("--contexts", type=int, nargs="+", default=[32, 64, 128, 256])
-    parser.add_argument("--batches", type=int, default=8)
+    parser.add_argument("--batches", type=int, default=32)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--device", default="auto")
     return parser.parse_args()
@@ -62,6 +67,7 @@ def main() -> None:
     _, validation_ids = train_val_split(ids, val_fraction=0.1)
 
     results: dict[str, dict[str, float]] = {cell: {} for cell in CELLS}
+    characters: dict[str, int] = {}
     for context in args.contexts:
         dataset = LanguageModelDataset(validation_ids, context)
         loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False)
@@ -101,6 +107,7 @@ def main() -> None:
                     total_tokens += targets.numel()
             bpc = total_loss / total_tokens / math.log(2.0)
             results[cell][str(context)] = bpc
+            characters[str(context)] = total_tokens
             print(
                 f"{cell} context={context} hidden={hidden} "
                 f"parameters={count_parameters(model):,} bpc={bpc:.4f}"
@@ -112,6 +119,9 @@ def main() -> None:
             {
                 "trained_context": config["block_size"],
                 "contexts": args.contexts,
+                "batches": args.batches,
+                "batch_size": args.batch_size,
+                "evaluated_characters": characters,
                 "results": results,
             },
             indent=2,

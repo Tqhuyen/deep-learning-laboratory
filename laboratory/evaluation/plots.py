@@ -86,14 +86,20 @@ def plot_gradient_decay(
     *,
     title: str = "Gradient reach of the final hidden state",
 ) -> Path:
-    """Log-scale norm of dL/dh_t against distance from the final timestep."""
+    """Log-scale ``||d||h_T||^2 / d x_t||`` against lag from the final timestep.
+
+    Values below ``1e-12`` of a curve's maximum are float underflow, not signal,
+    and are left out of the plot instead of being drawn as a cliff.
+    """
     plt = _pyplot()
     figure, axis = plt.subplots(figsize=(7.5, 4.5))
     for name, values in curves.items():
+        values = np.asarray(values, dtype=float)
         lags = np.arange(len(values) - 1, -1, -1)
-        axis.semilogy(lags, np.asarray(values, dtype=float), linewidth=1.6, label=name)
+        visible = np.where(values > values.max() * 1e-12, values, np.nan)
+        axis.semilogy(lags, visible, linewidth=1.6, label=name)
     axis.set_xlabel("lag from the final timestep")
-    axis.set_ylabel("mean ||dL/dh_t||  (log scale)")
+    axis.set_ylabel("mean ||d ||h_T||^2 / d x_t||  (log scale)")
     axis.set_title(title)
     axis.grid(alpha=0.25)
     axis.legend(frameon=False)

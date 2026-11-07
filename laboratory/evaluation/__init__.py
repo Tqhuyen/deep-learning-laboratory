@@ -5,7 +5,12 @@ training loop. Add task-specific evaluators (BLEU, retrieval recall) as their ow
 module once a second experiment needs them.
 """
 
-from .diagnostics import decay_slope, timestep_gradient_norms
+from .diagnostics import (
+    decay_slope,
+    fixed_length_sequences,
+    retention,
+    timestep_gradient_norms,
+)
 from .landscape import (
     filter_normalized_direction,
     loss_surface,
@@ -27,6 +32,7 @@ __all__ = [
     "decay_slope",
     "exact_match",
     "filter_normalized_direction",
+    "fixed_length_sequences",
     "holm_adjust",
     "loss_surface",
     "mcnemar_exact",
@@ -34,6 +40,7 @@ __all__ = [
     "paired_bootstrap_difference",
     "paired_bootstrap_p_value",
     "perplexity",
+    "retention",
     "shifted_state_dict",
     "timestep_gradient_norms",
 ]

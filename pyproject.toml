@@ -17,6 +17,8 @@ dependencies = [
 
 [project.optional-dependencies]
 development = ["pytest>=8", "matplotlib>=3.8"]
+# post-hoc analysis scripts and the HTML report (analysis/build_report.py needs Python 3.12+)
+analysis = ["matplotlib>=3.8", "scipy>=1.11", "latex2mathml>=3.77"]
 
 [tool.setuptools.packages.find]
 include = ["laboratory*"]

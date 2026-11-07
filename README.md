@@ -115,12 +115,15 @@ deep-learning-laboratory/
 │   ├── unit/               mirrors laboratory/: one directory per stage
 │   └── smoke/              every experiment at the tiny tier
 ├── analysis/               post-hoc tools over trained checkpoints
+│   ├── trained_models.py   rebuilds the trained comparison models and data
+│   ├── gradient_reach.py   how far back the final state stays sensitive
 │   ├── loss_landscape.py   3-D filter-normalised surfaces
-│   └── context_sweep.py    BPC versus evaluation context
+│   ├── context_sweep.py    BPC versus evaluation context
+│   └── build_report.py     self-contained HTML report of the comparison
 ├── notebooks/
 │   └── recurrent_comparison.ipynb  Kaggle GPU run of both comparison studies
 ├── results/
-│   └── recurrent_comparison/  reports, per-seed tables and figures
+│   └── recurrent_comparison/  reports, figures and report.html
 ├── data/                   tiny Shakespeare, SST-2 fixture, prepare_sst2.py
 │   ├── free_models.json    snapshot of free chat models (37 providers)
 │   ├── agent_tasks.json    fictional-world tasks for agent experiments
@@ -202,8 +205,9 @@ steps**, and is the difference larger than seed and test noise?
   schedule, batch size and steps;
 * reports include 95 % paired bootstrap intervals, exact McNemar tests with
   Holm correction (classification) and paired bootstrap p-values (generation);
-* the mechanism is probed by measuring `||dL/dh_t||` for `L = ||h_last||^2`,
-  i.e. how far back the final state can see, plus gate-free gradient slopes;
+* the mechanism is probed by measuring `||d ||h_T||^2 / d x_t||` on unpadded
+  sequences, i.e. how far back the final state still depends on its inputs,
+  and fitting its per-step decay;
 * figures: validation curves, final metrics with error bars, gradient decay,
   and accuracy by sequence length.
 
@@ -219,11 +223,14 @@ Measured results (development tier, 3 seeds, Kaggle GPU):
 
 The full per-seed tables, confidence intervals, statistical tests, figures and
 interpretation are in
-[`results/recurrent_comparison/README.md`](results/recurrent_comparison/README.md).
-That report also contains the 3-D loss surfaces and a 32–256 character context
-sweep: the surfaces are local diagnostics, and the sweep shows the ordering is
-stable across evaluation contexts but remains conditional on the corpus,
-parameter budget and training context.
+[`results/recurrent_comparison/README.md`](results/recurrent_comparison/README.md),
+and as a detailed self-contained HTML report (Vietnamese, interactive charts,
+3-D surfaces, proofs separated from evidence) in
+[`results/recurrent_comparison/report.html`](results/recurrent_comparison/report.html).
+They also contain the gradient-reach probe, the 3-D loss surfaces and a 32–256
+character context sweep: the surfaces are local diagnostics, and the sweep shows
+the ordering is stable across evaluation contexts but remains conditional on
+the corpus, parameter budget and training context.
 
 ### Agents on free models
 

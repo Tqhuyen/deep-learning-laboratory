@@ -5,19 +5,30 @@ Usage (from the repository root, after a Kaggle or local development run):
     python analysis/loss_landscape.py \
         --task sentiment \
         --run-directory runs/sequence_classification/sentiment/development \
-        --output-directory results/recurrent_comparison/landscapes
+        --output-directory results/recurrent_comparison/landscapes \
+        --extra-seeds 1 2 3 4
 
-The script rebuilds the training-time data pipeline from ``config.json``,
-loads ``checkpoints/<cell>.pt``, and evaluates
+The script rebuilds the training-time data pipeline from ``config.json`` (see
+``trained_models.py``), loads ``checkpoints/<cell>.pt``, and evaluates
 
     theta(alpha, beta) = theta_0 + alpha * delta_1 + beta * delta_2
 
-on a grid, with filter-normalised orthogonal directions. It writes one JSON
-with the raw surfaces and one 3-D PNG with three panels.
+on a grid, with filter-normalised directions; the second direction is
+orthogonalised against the first per tensor and rescaled to its tensor norm.
+The loss is measured on fixed batches of the **evaluation** split the
+experiment reported on, so the trained point need not be the minimum of a
+slice. It writes one JSON with the raw surfaces and one 3-D PNG with three
+panels.
+
+``--extra-seeds`` repeats the slice with other random direction pairs and stores
+only their summaries (minimum, centre, maximum, location of the minimum). They
+show how much a reading such as "which surface is flattest" depends on the two
+directions that happened to be drawn. Random directions depend on the device's
+generator, so a surface reproduces only on the same device type (CPU or CUDA).
 
 A surface is a local object: it describes the neighbourhood of one trained
-solution. It is not evidence of generalisation and cannot prove an ordering
-between architectures.
+solution along two random directions. It is not evidence of generalisation and
+cannot prove an ordering between architectures.
 """
 
 from __future__ import annotations
@@ -29,33 +40,15 @@ from pathlib import Path
 
 import numpy as np
 import torch
-import torch.nn.functional as F
-from torch.utils.data import DataLoader
 
 from laboratory import (
-    CharTokenizer,
-    LanguageModelDataset,
-    RecurrentLanguageModel,
-    RecurrentSequenceClassifier,
-    SentimentDataset,
-    WordTokenizer,
-    classification_collate,
-    classification_cross_entropy,
     count_parameters,
     filter_normalized_direction,
     get_device,
     loss_surface,
-    match_classifier_hidden_size,
-    match_language_model_hidden_size,
     orthogonalize,
-    read_sentiment_tsv,
-    stratified_split,
-    train_val_split,
 )
-from laboratory.experiment import data_path, repository_root
-
-CELLS = ("rnn", "gru", "lstm")
-SPECIAL_TOKENS = ("<pad>", "<bos>", "<eos>", "<unk>")
+from trained_models import CELLS, open_comparison
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -66,99 +59,37 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--grid", type=int, default=17, help="points per direction")
     parser.add_argument("--batches", type=int, default=4, help="fixed batches per grid point")
     parser.add_argument("--batch-size", type=int, default=None)
-    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=0, help="direction seed of the stored surface")
+    parser.add_argument(
+        "--extra-seeds",
+        type=int,
+        nargs="*",
+        default=[],
+        help="further direction seeds whose surfaces are summarised, not stored",
+    )
     parser.add_argument("--device", default="auto")
     return parser.parse_args()
 
 
-def load_config(run_directory: Path) -> dict:
-    return json.loads((run_directory / "config.json").read_text(encoding="utf-8"))
+def directions(
+    base_state: dict[str, torch.Tensor], seed: int, device: torch.device
+) -> tuple[dict[str, torch.Tensor], dict[str, torch.Tensor]]:
+    """Filter-normalised direction pair; the second is orthogonal to the first."""
+    generator = torch.Generator(device=device)
+    generator.manual_seed(seed)
+    first = filter_normalized_direction(base_state, generator)
+    return first, orthogonalize(first, filter_normalized_direction(base_state, generator))
 
 
-def sentiment_pipeline(config: dict, device: torch.device, batches: int, batch_size: int):
-    root = repository_root()
-    train_path, dev_path = root / "data/sst2/train.tsv", root / "data/sst2/dev.tsv"
-    if not train_path.exists() or not dev_path.exists():
-        raise FileNotFoundError("run `python data/prepare_sst2.py` first")
-
-    pool = read_sentiment_tsv(train_path)
-    if config["train_limit"] is not None:
-        rng = np.random.default_rng(0)
-        indices = rng.permutation(len(pool))[: config["train_limit"]]
-        pool = [pool[index] for index in sorted(indices)]
-    train_pool, _ = stratified_split(pool, test_fraction=config["val_fraction"], seed=0)
-    tokenizer = WordTokenizer.from_text(
-        " ".join(text for text, _ in train_pool),
-        special_tokens=SPECIAL_TOKENS,
-        min_freq=config["min_frequency"],
-    )
-    if tokenizer.vocab_size != config["vocabulary_size"]:
-        raise RuntimeError("rebuilt vocabulary does not match the checkpoint config")
-
-    dataset = SentimentDataset(read_sentiment_tsv(dev_path), tokenizer, config["max_len"])
-    collate = lambda batch: classification_collate(batch, tokenizer.pad_id)
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_fn=collate)
-    selected = []
-    for index, batch in enumerate(loader):
-        if index >= batches:
-            break
-        selected.append({key: value.to(device) for key, value in batch.items()})
-
-    def build_model(cell: str) -> RecurrentSequenceClassifier:
-        hidden, _ = match_classifier_hidden_size(
-            cell,
-            target_parameters=config["target_parameters"],
-            vocabulary_size=tokenizer.vocab_size,
-            embedding_dim=config["embedding_dim"],
-        )
-        return RecurrentSequenceClassifier(
-            vocabulary_size=tokenizer.vocab_size,
-            embedding_dim=config["embedding_dim"],
-            hidden_size=hidden,
-            cell=cell,
-            pad_id=tokenizer.pad_id,
-        )
-
-    def step(model, batch):
-        logits = model(batch["inputs"], batch["lengths"])
-        return classification_cross_entropy(logits, batch["labels"])
-
-    return build_model, selected, step
-
-
-def generation_pipeline(config: dict, device: torch.device, batches: int, batch_size: int):
-    text = data_path("tiny_shakespeare.txt").read_text(encoding="utf-8")
-    tokenizer = CharTokenizer.from_text(text)
-    ids = torch.tensor(tokenizer.encode(text), dtype=torch.long)
-    _, validation_ids = train_val_split(ids, val_fraction=0.1)
-    dataset = LanguageModelDataset(validation_ids, config["block_size"])
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
-    selected = []
-    for index, (inputs, targets) in enumerate(loader):
-        if index >= batches:
-            break
-        selected.append((inputs.to(device), targets.to(device)))
-
-    def build_model(cell: str) -> RecurrentLanguageModel:
-        hidden, _ = match_language_model_hidden_size(
-            cell,
-            target_parameters=config["target_parameters"],
-            vocabulary_size=tokenizer.vocab_size,
-            embedding_dim=config["embedding_dim"],
-        )
-        return RecurrentLanguageModel(
-            vocabulary_size=tokenizer.vocab_size,
-            embedding_dim=config["embedding_dim"],
-            hidden_size=hidden,
-            cell=cell,
-        )
-
-    def step(model, batch):
-        inputs, targets = batch
-        _, loss = model(inputs, targets)
-        return loss
-
-    return build_model, selected, step
+def summarise(surface: np.ndarray, grid: np.ndarray) -> dict[str, object]:
+    centre = len(grid) // 2
+    row, column = np.unravel_index(int(surface.argmin()), surface.shape)
+    return {
+        "minimum": float(surface.min()),
+        "maximum": float(surface.max()),
+        "centre": float(surface[centre, centre]),
+        "argmin": [float(grid[row]), float(grid[column])],
+    }
 
 
 def plot_surfaces(
@@ -197,49 +128,60 @@ def main() -> None:
         pass
     args = parse_arguments()
     device = get_device(args.device)
-    config = load_config(args.run_directory)
+    comparison = open_comparison(args.task, args.run_directory)
     batch_size = args.batch_size
     if batch_size is None:
         batch_size = 128 if args.task == "sentiment" else 16
-    build_model, batches, step = (
-        sentiment_pipeline(config, device, args.batches, batch_size)
-        if args.task == "sentiment"
-        else generation_pipeline(config, device, args.batches, batch_size)
-    )
+    batches = comparison.evaluation_batches(args.batches, batch_size, device)
 
     grid = np.linspace(-1.0, 1.0, args.grid)
     surfaces: dict[str, np.ndarray] = {}
-    payload = {"task": args.task, "grid": grid.tolist(), "cells": {}}
+    payload = {
+        "task": args.task,
+        "grid": grid.tolist(),
+        "seed": args.seed,
+        "extra_seeds": args.extra_seeds,
+        "device": device.type,
+        "batches": len(batches),
+        "batch_size": batch_size,
+        "cells": {},
+    }
 
     for cell in CELLS:
-        checkpoint_path = args.run_directory / "checkpoints" / f"{cell}.pt"
-        if not checkpoint_path.exists():
-            raise FileNotFoundError(f"missing {checkpoint_path}")
-        checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
-        model = build_model(cell).to(device)
-        model.load_state_dict(checkpoint["model"])
-        model.eval()
+        model = comparison.load(cell, device)
         base_state = {name: value.detach().clone() for name, value in model.state_dict().items()}
 
-        generator = torch.Generator(device=device)
-        generator.manual_seed(args.seed)
-        first = filter_normalized_direction(base_state, generator)
-        second = filter_normalized_direction(base_state, generator)
-        second = orthogonalize(first, second)
-
-        surface = loss_surface(model, base_state, first, second, grid, batches, step)
+        surface = loss_surface(
+            model, base_state, *directions(base_state, args.seed, device), grid, batches, comparison.loss
+        )
         surfaces[cell] = surface
         payload["cells"][cell] = {
             "parameters": count_parameters(model),
-            "minimum": float(surface.min()),
-            "maximum": float(surface.max()),
-            "centre": float(surface[len(grid) // 2, len(grid) // 2]),
+            **summarise(surface, grid),
             "surface": surface.tolist(),
+            "extra_seeds": [
+                {
+                    "seed": seed,
+                    **summarise(
+                        loss_surface(
+                            model,
+                            base_state,
+                            *directions(base_state, seed, device),
+                            grid,
+                            batches,
+                            comparison.loss,
+                        ),
+                        grid,
+                    ),
+                }
+                for seed in args.extra_seeds
+            ],
         }
+        entry = payload["cells"][cell]
+        extra = "".join(f" seed{item['seed']}_max={item['maximum']:.4f}" for item in entry["extra_seeds"])
         print(
-            f"{cell}: parameters={count_parameters(model):,} "
-            f"min={surface.min():.4f} centre={surface[len(grid)//2, len(grid)//2]:.4f} "
-            f"max={surface.max():.4f}"
+            f"{cell}: parameters={entry['parameters']:,} min={entry['minimum']:.4f} "
+            f"centre={entry['centre']:.4f} max={entry['maximum']:.4f}{extra}"
         )
 
     args.output_directory.mkdir(parents=True, exist_ok=True)

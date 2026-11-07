@@ -12,8 +12,9 @@ Design:
   ``development``, five in ``full``.
 * Reported metric: bits per character (BPC = cross-entropy / ln 2). Paired
   bootstrap over validation windows, Holm-corrected across the three pairs.
-* Mechanism: gradient norm of ``||h_last||^2`` with respect to each hidden
-  timestep, plus samples generated from the same prompt and seed.
+* Mechanism: ``|| d ||h_T||^2 / d x_t ||`` for every input position ``t`` of
+  unpadded validation windows (how strongly the final state still depends on
+  each earlier character), plus samples generated from the same prompt and seed.
 
 Run:
 
@@ -334,7 +335,7 @@ def aggregate(results, config):
     return summary
 
 
-def write_report(run_directory, summary, config, tier):
+def write_report(run_directory, summary, config, tier, notes=()):
     lines = [
         "# Recurrent language modelling: RNN vs GRU vs LSTM",
         "",
@@ -384,6 +385,11 @@ def write_report(run_directory, summary, config, tier):
         "",
         "Samples are in `samples.txt` (same prompt, same sampling seed per cell).",
         "",
+        "Gradient slope: least-squares slope of log || d ||h_T||^2 / d x_t || against",
+        f"lag on unpadded validation windows of {config['block_size']} characters, averaged",
+        "over the probed seeds; exp(slope) is the average per-step retention.",
+        "",
+        *notes,
     ]
     (run_directory / "report.md").write_text("\n".join(lines), encoding="utf-8")
 
