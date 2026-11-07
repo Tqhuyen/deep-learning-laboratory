@@ -1,0 +1,39 @@
+{
+ "minutes": {
+  "downloads": 29.907360084851582,
+  "denoising": 83.00138483047485
+ },
+ "chosen_on_dev": {
+  "one step, m=": "one step, m=0.4",
+  "one step \u00d72 (flip), m=": "one step \u00d72 (flip), m=0.4"
+ },
+ "match": {
+  "CC": {
+   "entries": 15,
+   "one_to_one": true,
+   "same_as_index": 15,
+   "min_margin": 100.8715591430664
+  },
+  "PolyU": {
+   "entries": 100,
+   "one_to_one": true,
+   "same_as_index": 100,
+   "min_margin": 27.180572509765625
+  },
+  "FMDD": {
+   "entries": 48,
+   "one_to_one": false,
+   "same_as_index": 45,
+   "min_margin": 1.0
+  }
+ },
+ "eta": 0.85,
+ "samples": 16,
+ "m_one": [
+  0.4,
+  0.55,
+  0.7
+ ],
+ "failed_images": [],
+ "failed_methods": []
+}

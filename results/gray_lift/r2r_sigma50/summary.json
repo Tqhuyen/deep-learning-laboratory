@@ -1,0 +1,35 @@
+{
+ "minutes": {
+  "downloads": 1.4010974764823914,
+  "adaptation": 164.0057419538498
+ },
+ "tests": [
+  {
+   "dataset": "BSD68",
+   "n": 68,
+   "unadapted": 26.753865204537426,
+   "adapted": 26.534450754215214,
+   "gain": -0.21941445032220971,
+   "worse_005": 0.9264705882352942,
+   "p": 0.0,
+   "ptg_rm": 26.91,
+   "p_holm": 0.0,
+   "success": false,
+   "sota": false
+  },
+  {
+   "dataset": "Set12",
+   "n": 12,
+   "unadapted": 28.23067913560463,
+   "adapted": 27.044178778634507,
+   "gain": -1.1865003569701276,
+   "worse_005": 0.9166666666666666,
+   "p": 0.00084,
+   "ptg_rm": 28.37,
+   "p_holm": 0.00084,
+   "success": false,
+   "sota": false
+  }
+ ],
+ "failed": []
+}

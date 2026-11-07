@@ -1,0 +1,35 @@
+{
+ "s1": {
+  "base": 33.92233095922818,
+  "best_lam": 0.6,
+  "gain": 0.6770620385107691,
+  "passed": true
+ },
+ "a3": [
+  {
+   "sigma": 25,
+   "lam": 0.0,
+   "split": "confirm-88",
+   "gain": 0.0,
+   "better": 0.0,
+   "p": 1.0,
+   "n": 88,
+   "dev_gain": 0.0,
+   "p_holm": 1.0
+  },
+  {
+   "sigma": 50,
+   "lam": 0.0,
+   "split": "confirm-88",
+   "gain": 0.0,
+   "better": 0.0,
+   "p": 1.0,
+   "n": 88,
+   "dev_gain": 0.0,
+   "p_holm": 1.0
+  }
+ ],
+ "a3_success": false,
+ "a3_kill": true,
+ "minutes": 99.13976298967997
+}

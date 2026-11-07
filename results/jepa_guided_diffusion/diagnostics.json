@@ -1,0 +1,235 @@
+{
+  "training": {
+    "steps_planned": 3000,
+    "steps_done": 1326,
+    "validation": [
+      {
+        "step": 0,
+        "adm": 0.042050331830978394,
+        "null": 0.042049016803503036,
+        "jepa": 0.04204222187399864,
+        "jepa_minus_null": -6.794929504394531e-06
+      },
+      {
+        "step": 250,
+        "adm": 0.042050331830978394,
+        "null": 0.042019348591566086,
+        "jepa": 0.04202718660235405,
+        "jepa_minus_null": 7.838010787963867e-06
+      },
+      {
+        "step": 500,
+        "adm": 0.042050331830978394,
+        "null": 0.04204563423991203,
+        "jepa": 0.042049117386341095,
+        "jepa_minus_null": 3.4831464290618896e-06
+      },
+      {
+        "step": 750,
+        "adm": 0.042050331830978394,
+        "null": 0.04200221225619316,
+        "jepa": 0.0421428382396698,
+        "jepa_minus_null": 0.0001406259834766388
+      },
+      {
+        "step": 1000,
+        "adm": 0.042050331830978394,
+        "null": 0.042006514966487885,
+        "jepa": 0.04210870712995529,
+        "jepa_minus_null": 0.00010219216346740723
+      },
+      {
+        "step": 1250,
+        "adm": 0.042050331830978394,
+        "null": 0.04201192408800125,
+        "jepa": 0.042022909969091415,
+        "jepa_minus_null": 1.0985881090164185e-05
+      }
+    ]
+  },
+  "schedule": {
+    "start": {
+      "gaussian 0.1": {
+        "noise_level": 0.1,
+        "start_step": 57,
+        "signal_to_noise": 25.313815085526375
+      },
+      "gaussian 0.2": {
+        "noise_level": 0.2,
+        "start_step": 117,
+        "signal_to_noise": 6.204590130466084
+      },
+      "gaussian 0.3": {
+        "noise_level": 0.3,
+        "start_step": 170,
+        "signal_to_noise": 2.7829326615170085
+      },
+      "real camera: Canon80D_8_8_3200_ball_1": {
+        "noise_level": 0.023735220485150962,
+        "start_step": 10,
+        "signal_to_noise": 454.9074797671889
+      },
+      "real camera: Canon5D2_5_160_6400_bicycle_10": {
+        "noise_level": 0.02046022401347952,
+        "start_step": 8,
+        "signal_to_noise": 617.8244257653054
+      },
+      "real camera: NikonD800_5_100_4000_flower_15": {
+        "noise_level": 0.02053756558930982,
+        "start_step": 8,
+        "signal_to_noise": 617.8244257653054
+      },
+      "real camera: Sony_4-5_125_3200_plant_13": {
+        "noise_level": 0.03279646216871813,
+        "start_step": 16,
+        "signal_to_noise": 226.2699770120332
+      }
+    },
+    "validation_signal_to_noise": {
+      "30": 80.36974828381021,
+      "60": 22.993132065511652,
+      "120": 5.8886012950470255,
+      "200": 1.909912080094787,
+      "300": 0.6501953041845803,
+      "500": 0.0843595494103264,
+      "700": 0.00691577838505717,
+      "900": 0.00027031757140047555
+    },
+    "reverse_over_tweedie_mse": {
+      "gaussian 0.1": {
+        "geometric_mean": 1.7680944440490307,
+        "minimum": 1.419544364100685,
+        "maximum": 1.9812136661700832
+      },
+      "gaussian 0.2": {
+        "geometric_mean": 1.4132331151579396,
+        "minimum": 1.1221843864240175,
+        "maximum": 1.6762513487138775
+      },
+      "gaussian 0.3": {
+        "geometric_mean": 1.092308554481886,
+        "minimum": 0.9996153790054959,
+        "maximum": 1.2076377303634793
+      },
+      "real camera": {
+        "geometric_mean": 1.0576038221135078,
+        "minimum": 1.0422162657549752,
+        "maximum": 1.0840636704574405
+      }
+    }
+  },
+  "adapter": {
+    "parameters": 20721664,
+    "adam_displacement_bound": 0.1326,
+    "layers": {
+      "block 9": {
+        "output_weight_rms": 0.004009392112493515,
+        "output_bias_rms": 0.004157408606261015,
+        "group_norm_scale_change_rms": 0.003535168943926692,
+        "group_norm_shift_rms": 0.002485188888385892,
+        "default_initialisation_weight_rms": 0.025515518153991442
+      },
+      "block 12": {
+        "output_weight_rms": 0.003537885844707489,
+        "output_bias_rms": 0.0036518124397844076,
+        "group_norm_scale_change_rms": 0.0024354862980544567,
+        "group_norm_shift_rms": 0.0025674246717244387,
+        "default_initialisation_weight_rms": 0.025515518153991442
+      },
+      "block 15": {
+        "output_weight_rms": 0.003150020958855748,
+        "output_bias_rms": 0.003519579069688916,
+        "group_norm_scale_change_rms": 0.0022282481659203768,
+        "group_norm_shift_rms": 0.0020706725772470236,
+        "default_initialisation_weight_rms": 0.018042195912175808
+      },
+      "time embedding": {
+        "output_weight_rms": 0.0028701270930469036,
+        "output_bias_rms": 0.005272191949188709,
+        "default_initialisation_weight_rms": 0.018042195912175808
+      }
+    },
+    "null_latents": {
+      "block 9": {
+        "rms": 0.27131927013397217,
+        "interior_spatial_std": 0.0
+      },
+      "block 12": {
+        "rms": 0.6091012358665466,
+        "interior_spatial_std": 0.0
+      },
+      "block 15": {
+        "rms": 2.110651969909668,
+        "interior_spatial_std": 0.0
+      },
+      "time embedding": {
+        "rms": 0.007575306575745344
+      }
+    },
+    "latent_sensitivity": {
+      "independent tokens": {
+        "block 9": {
+          "change_rms": 0.19722232222557068,
+          "relative_to_null": 0.726901270699225,
+          "between_latents_rms": 0.1738106906414032
+        },
+        "block 12": {
+          "change_rms": 0.25520607829093933,
+          "relative_to_null": 0.41898795021794155,
+          "between_latents_rms": 0.10136818140745163
+        },
+        "block 15": {
+          "change_rms": 0.8570770621299744,
+          "relative_to_null": 0.4060721873377617,
+          "between_latents_rms": 0.23337216675281525
+        },
+        "time embedding": {
+          "change_rms": 0.002259913831949234,
+          "relative_to_null": 0.2983263857841791
+        }
+      },
+      "smooth field": {
+        "block 9": {
+          "change_rms": 0.22893041372299194,
+          "relative_to_null": 0.8437676159527872,
+          "between_latents_rms": 0.23639222979545593
+        },
+        "block 12": {
+          "change_rms": 0.3033381998538971,
+          "relative_to_null": 0.4980094966025617,
+          "between_latents_rms": 0.25543275475502014
+        },
+        "block 15": {
+          "change_rms": 0.9349918365478516,
+          "relative_to_null": 0.4429872143193117,
+          "between_latents_rms": 0.41336721181869507
+        },
+        "time embedding": {
+          "change_rms": 0.010960851795971394,
+          "relative_to_null": 1.4469185750271687
+        }
+      },
+      "one token everywhere": {
+        "block 9": {
+          "change_rms": 0.24275396764278412,
+          "relative_to_null": 0.8947170155769508,
+          "between_latents_rms": 0.17972686886787415
+        },
+        "block 12": {
+          "change_rms": 0.28332075476646423,
+          "relative_to_null": 0.465145591706761,
+          "between_latents_rms": 0.20253698527812958
+        },
+        "block 15": {
+          "change_rms": 0.9106780290603638,
+          "relative_to_null": 0.431467642246741,
+          "between_latents_rms": 0.5936846137046814
+        },
+        "time embedding": {
+          "change_rms": 0.0663795992732048,
+          "relative_to_null": 8.762628760892575
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1355 @@
+{
+ "f_hat": {
+  "15": 1.0029191930809784,
+  "25": 1.0023701630955753,
+  "50": 1.0017661120980235
+ },
+ "m_hat": 0.9820586379020495,
+ "w_hat": {
+  "Restormer 15": 0.8,
+  "Restormer 25": 0.8,
+  "Restormer 50": 0.9,
+  "SwinIR 15": 0.7,
+  "SwinIR 25": 0.8,
+  "SwinIR 50": 0.9
+ },
+ "m_clip_hat": 1.0855876077316204,
+ "fp16_gap_db": {
+  "mean": -6.476874303951163e-05,
+  "max_abs": 0.0003140561844077183
+ },
+ "attention_gap": 0.003402233123779297,
+ "minutes": {
+  "downloads": 1.5273375391960144,
+  "calibration": 23.40161948998769,
+  "benchmarks": 67.66919113397599,
+  "DMID outputs": 0.38378268480300903,
+  "clipped cases": 2.770973289012909
+ },
+ "devices": [
+  "Tesla T4",
+  "Tesla T4"
+ ],
+ "mean": [
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM blind \u00d71",
+   "psnr": 34.33972147854373,
+   "ssim": 0.9323925084753261,
+   "lpips": 0.05769772970062845
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM one step, DMID t",
+   "psnr": 34.45212331535444,
+   "ssim": 0.9359623077610717,
+   "lpips": 0.05237097975195331
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 34.452096124622024,
+   "ssim": 0.9360057703808913,
+   "lpips": 0.051719140836640316
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 34.42876546724507,
+   "ssim": 0.936230820998133,
+   "lpips": 0.04457487693220815
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM-cal \u00d71",
+   "psnr": 34.45211007901054,
+   "ssim": 0.9359600759931093,
+   "lpips": 0.05240768640685607
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM-cal \u00d72",
+   "psnr": 34.46174623484543,
+   "ssim": 0.9360407064704246,
+   "lpips": 0.052362943670767194
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM-cal \u00d74",
+   "psnr": 34.464170209479086,
+   "ssim": 0.9360215719149971,
+   "lpips": 0.052533692899434006
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "ADM-cal \u00d78",
+   "psnr": 34.46303822345042,
+   "ssim": 0.9360024294648923,
+   "lpips": 0.052767801509403134
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "DMID-d (released outputs)",
+   "psnr": 34.45246175134407,
+   "ssim": 0.9362332581753927,
+   "lpips": 0.05187204545911621
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "DRUNet",
+   "psnr": 34.183671245579006,
+   "ssim": 0.9340696645336326,
+   "lpips": 0.05561576079686775
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 34.07087919112434,
+   "ssim": 0.9298978614811099,
+   "lpips": 0.07214867844081976
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "Restormer",
+   "psnr": 34.391265255861455,
+   "ssim": 0.9353832675048285,
+   "lpips": 0.05436956605819218
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "Restormer blind",
+   "psnr": 34.375008404733336,
+   "ssim": 0.9351907383608459,
+   "lpips": 0.05509973985745626
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "SCUNet",
+   "psnr": 34.25253318860603,
+   "ssim": 0.9351437336706939,
+   "lpips": 0.055131654255092144
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "SwinIR",
+   "psnr": 34.40342635920303,
+   "ssim": 0.9354122203056662,
+   "lpips": 0.05268230960320901
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.8)",
+   "psnr": 34.46550515961839,
+   "ssim": 0.9360202570581491,
+   "lpips": 0.05303356108967872
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.7)",
+   "psnr": 34.4709094508882,
+   "ssim": 0.936061813730637,
+   "lpips": 0.05262562251814148
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "noisy input",
+   "psnr": 24.83432069843801,
+   "ssim": 0.5728322087713421,
+   "lpips": 0.26685110545333696
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM blind \u00d71",
+   "psnr": 31.811324450461854,
+   "ssim": 0.8935000674270173,
+   "lpips": 0.08740100954823635
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM one step, DMID t",
+   "psnr": 31.845033802733177,
+   "ssim": 0.8952711423405406,
+   "lpips": 0.08814357812790309
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 31.845689460753466,
+   "ssim": 0.8951878128919517,
+   "lpips": 0.08945518299279843
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 31.83171042806823,
+   "ssim": 0.8957597578264866,
+   "lpips": 0.0802474908037659
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM-cal \u00d71",
+   "psnr": 31.8456167556489,
+   "ssim": 0.8950736571354467,
+   "lpips": 0.09062354376210886
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM-cal \u00d72",
+   "psnr": 31.857778501317664,
+   "ssim": 0.895240825579484,
+   "lpips": 0.09046012059073238
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM-cal \u00d74",
+   "psnr": 31.859640130053542,
+   "ssim": 0.895163965793614,
+   "lpips": 0.09063710568144041
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "ADM-cal \u00d78",
+   "psnr": 31.856809204030508,
+   "ssim": 0.8951232938619736,
+   "lpips": 0.09118734820581534
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "DMID-d (released outputs)",
+   "psnr": 31.86028062557692,
+   "ssim": 0.8957420983279265,
+   "lpips": 0.08942100548130624
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "DRUNet",
+   "psnr": 31.496379034578293,
+   "ssim": 0.8917245123704669,
+   "lpips": 0.0970145862768678
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 31.46272781098319,
+   "ssim": 0.8888018303443935,
+   "lpips": 0.10879128157873363
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "Restormer",
+   "psnr": 31.764410961096747,
+   "ssim": 0.8938616660254037,
+   "lpips": 0.09486626877504237
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "Restormer blind",
+   "psnr": 31.752337531393824,
+   "ssim": 0.8936553134451668,
+   "lpips": 0.0953282441067345
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "SCUNet",
+   "psnr": 31.54865468350369,
+   "ssim": 0.8934173271861674,
+   "lpips": 0.09632607428904842
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "SwinIR",
+   "psnr": 31.75421095669438,
+   "ssim": 0.8936361682589835,
+   "lpips": 0.09220049815142856
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.8)",
+   "psnr": 31.857294265809657,
+   "ssim": 0.895123410150469,
+   "lpips": 0.09176767113454201
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.8)",
+   "psnr": 31.859942785417534,
+   "ssim": 0.8951602636537208,
+   "lpips": 0.09115478347110398
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "noisy input",
+   "psnr": 20.5341742343575,
+   "ssim": 0.39461720943124157,
+   "lpips": 0.4852161554290968
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM blind \u00d71",
+   "psnr": 28.626563269490187,
+   "ssim": 0.8128983135216385,
+   "lpips": 0.1440484753316816
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM one step, DMID t",
+   "psnr": 28.686289811927796,
+   "ssim": 0.8156475838434932,
+   "lpips": 0.16581989780944936
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 28.68739150846294,
+   "ssim": 0.8154079354677651,
+   "lpips": 0.16917878318139734
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 28.682065952058487,
+   "ssim": 0.8163588109587988,
+   "lpips": 0.1574876368703211
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM-cal \u00d71",
+   "psnr": 28.687437188262322,
+   "ssim": 0.8152129326779527,
+   "lpips": 0.17103626414695206
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM-cal \u00d72",
+   "psnr": 28.70348937008233,
+   "ssim": 0.8155453475819567,
+   "lpips": 0.17055144511601505
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM-cal \u00d74",
+   "psnr": 28.70149961377065,
+   "ssim": 0.8151727856212412,
+   "lpips": 0.17153421745580785
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "ADM-cal \u00d78",
+   "psnr": 28.69248587680551,
+   "ssim": 0.8149306472700084,
+   "lpips": 0.17300867738530917
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "DMID-d (released outputs)",
+   "psnr": 28.722459552385647,
+   "ssim": 0.8166284142099568,
+   "lpips": 0.16878696432446733
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "DRUNet",
+   "psnr": 28.148249748533456,
+   "ssim": 0.8080404873349342,
+   "lpips": 0.1850830091382651
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 28.137409725769142,
+   "ssim": 0.8070724314597073,
+   "lpips": 0.18230370141784935
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "Restormer",
+   "psnr": 28.569356226652495,
+   "ssim": 0.8120933061008975,
+   "lpips": 0.18322772291653297
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "Restormer blind",
+   "psnr": 28.563767788175856,
+   "ssim": 0.8121053070099661,
+   "lpips": 0.18202470012885683
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "SCUNet",
+   "psnr": 28.181736701665844,
+   "ssim": 0.8108690908767009,
+   "lpips": 0.18431761773193583
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "SwinIR",
+   "psnr": 28.52238196824419,
+   "ssim": 0.8109642501114434,
+   "lpips": 0.1794018715291339
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.9)",
+   "psnr": 28.693787150211612,
+   "ssim": 0.8149311701172881,
+   "lpips": 0.17373319474213264
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.9)",
+   "psnr": 28.693105220650818,
+   "ssim": 0.8149208201394349,
+   "lpips": 0.17314317614278374
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "noisy input",
+   "psnr": 14.997263423194864,
+   "ssim": 0.19940774576496467,
+   "lpips": 0.898853467667804
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM blind \u00d71",
+   "psnr": 35.4531862508854,
+   "ssim": 0.9288685297741179,
+   "lpips": 0.07546194984267156
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM one step, DMID t",
+   "psnr": 35.512979324303274,
+   "ssim": 0.9309940052511169,
+   "lpips": 0.06969842120694618
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 35.51351102947793,
+   "ssim": 0.9310609388937564,
+   "lpips": 0.0687750029998521
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 35.48805014696767,
+   "ssim": 0.9312798091961237,
+   "lpips": 0.059913294933115445
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM-cal \u00d71",
+   "psnr": 35.512961083686875,
+   "ssim": 0.9309906214608761,
+   "lpips": 0.0697450569520394
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM-cal \u00d71, 256-px tiles",
+   "psnr": 35.498967377032166,
+   "ssim": 0.9310415123582124,
+   "lpips": 0.06859076418913901
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM-cal \u00d72",
+   "psnr": 35.52205017883016,
+   "ssim": 0.9310562513404358,
+   "lpips": 0.06984549155458808
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM-cal \u00d74",
+   "psnr": 35.51979765475494,
+   "ssim": 0.9310074529703503,
+   "lpips": 0.07023175549693406
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "ADM-cal \u00d78",
+   "psnr": 35.518198708386876,
+   "ssim": 0.9309754441307775,
+   "lpips": 0.07035468278142314
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "DMID-d (released outputs)",
+   "psnr": 35.50606003036257,
+   "ssim": 0.9310847768079609,
+   "lpips": 0.07117996535574396
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "DRUNet",
+   "psnr": 35.31054481083941,
+   "ssim": 0.9290802881090595,
+   "lpips": 0.07072417763993144
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 35.214627134512355,
+   "ssim": 0.92573932725663,
+   "lpips": 0.08825151373942693
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "Restormer",
+   "psnr": 35.47293443883047,
+   "ssim": 0.9307146798899352,
+   "lpips": 0.06818608210111658
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "Restormer blind",
+   "psnr": 35.43651533476706,
+   "ssim": 0.9302685868857276,
+   "lpips": 0.0720994829510649
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "SCUNet",
+   "psnr": 35.464468956669684,
+   "ssim": 0.9305857902594404,
+   "lpips": 0.07041431241668761
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "SwinIR",
+   "psnr": 35.460340013703394,
+   "ssim": 0.930350190415184,
+   "lpips": 0.06801654716643195
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.8)",
+   "psnr": 35.528995132295826,
+   "ssim": 0.9310980502538303,
+   "lpips": 0.06994730319517355
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.7)",
+   "psnr": 35.53521761195485,
+   "ssim": 0.9311051393255424,
+   "lpips": 0.06953571550548077
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "noisy input",
+   "psnr": 24.75767084680864,
+   "ssim": 0.5077945695199831,
+   "lpips": 0.32079667908449966
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM blind \u00d71",
+   "psnr": 33.09488596007431,
+   "ssim": 0.8939561697103224,
+   "lpips": 0.10437397581214707
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM one step, DMID t",
+   "psnr": 33.10807559556661,
+   "ssim": 0.8948753185986891,
+   "lpips": 0.10310851798082392
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 33.108560385976034,
+   "ssim": 0.8947999401833967,
+   "lpips": 0.1046646333610018
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 33.09237719525395,
+   "ssim": 0.8952120921206853,
+   "lpips": 0.09465068066492677
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM-cal \u00d71",
+   "psnr": 33.10796240050496,
+   "ssim": 0.8946878675976347,
+   "lpips": 0.10598365077748895
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM-cal \u00d71, 256-px tiles",
+   "psnr": 33.075451091040286,
+   "ssim": 0.8946435218726911,
+   "lpips": 0.10626167291775346
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM-cal \u00d72",
+   "psnr": 33.117402049391494,
+   "ssim": 0.894788740281402,
+   "lpips": 0.10603798755134146
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM-cal \u00d74",
+   "psnr": 33.11240451559568,
+   "ssim": 0.894641617742579,
+   "lpips": 0.10664674872532487
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "ADM-cal \u00d78",
+   "psnr": 33.10874746228023,
+   "ssim": 0.89452694878301,
+   "lpips": 0.10701244184747338
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "DMID-d (released outputs)",
+   "psnr": 33.117157118620376,
+   "ssim": 0.8953132699122769,
+   "lpips": 0.10635277287413676
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "DRUNet",
+   "psnr": 32.89456131308125,
+   "ssim": 0.8916214788429654,
+   "lpips": 0.11075214218969147
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 32.85918194787907,
+   "ssim": 0.8891612041908314,
+   "lpips": 0.12408511231963833
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "Restormer",
+   "psnr": 33.04436771374885,
+   "ssim": 0.8938154736469768,
+   "lpips": 0.10875937808305025
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "Restormer blind",
+   "psnr": 33.021340531747136,
+   "ssim": 0.8934252113656812,
+   "lpips": 0.11111177705849211
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "SCUNet",
+   "psnr": 33.045615635555656,
+   "ssim": 0.8937787724863498,
+   "lpips": 0.11044916169097026
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "SwinIR",
+   "psnr": 33.00511652432588,
+   "ssim": 0.8930450875544577,
+   "lpips": 0.10621011552090447
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.8)",
+   "psnr": 33.11777240216495,
+   "ssim": 0.8946480151183459,
+   "lpips": 0.10725036651516955
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.8)",
+   "psnr": 33.118978659909644,
+   "ssim": 0.8946527213120398,
+   "lpips": 0.10655329888686538
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "noisy input",
+   "psnr": 20.439165549351106,
+   "ssim": 0.328899540282602,
+   "lpips": 0.5635713885227839
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM blind \u00d71",
+   "psnr": 30.101717548200455,
+   "ssim": 0.8247428803529216,
+   "lpips": 0.1555131853868564
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM one step, DMID t",
+   "psnr": 30.12672023279247,
+   "ssim": 0.826060199165236,
+   "lpips": 0.17181731015443802
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 30.12762126190952,
+   "ssim": 0.8259195876085261,
+   "lpips": 0.17542760912328959
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 30.12139642959858,
+   "ssim": 0.8265155958203051,
+   "lpips": 0.1638479040314754
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM-cal \u00d71",
+   "psnr": 30.127306566271887,
+   "ssim": 0.8257674136355916,
+   "lpips": 0.1772900903597474
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM-cal \u00d71, 256-px tiles",
+   "psnr": 30.054995425996353,
+   "ssim": 0.8255108108929724,
+   "lpips": 0.17974939104169607
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM-cal \u00d72",
+   "psnr": 30.137811677641576,
+   "ssim": 0.8259453703448387,
+   "lpips": 0.1770260836929083
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM-cal \u00d74",
+   "psnr": 30.125288114707057,
+   "ssim": 0.8254122502237738,
+   "lpips": 0.17872376615802446
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "ADM-cal \u00d78",
+   "psnr": 30.117544323798082,
+   "ssim": 0.8250957945472467,
+   "lpips": 0.179687876564761
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "DMID-d (released outputs)",
+   "psnr": 30.139153576165494,
+   "ssim": 0.8269169326336806,
+   "lpips": 0.17930827227731547
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "DRUNet",
+   "psnr": 29.87709701310764,
+   "ssim": 0.8204888552655681,
+   "lpips": 0.188606814481318
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 29.87136185082416,
+   "ssim": 0.8193988950889066,
+   "lpips": 0.19366461876779795
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "Restormer",
+   "psnr": 30.016046631008887,
+   "ssim": 0.8233903895364589,
+   "lpips": 0.1882699839770794
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "Restormer blind",
+   "psnr": 30.005749864466196,
+   "ssim": 0.8230619417409578,
+   "lpips": 0.18770819095273814
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "SCUNet",
+   "psnr": 30.028128738394617,
+   "ssim": 0.8237826009434924,
+   "lpips": 0.18776421466221413
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "SwinIR",
+   "psnr": 29.93821239393355,
+   "ssim": 0.8216466589310146,
+   "lpips": 0.18526011115560928
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.9)",
+   "psnr": 30.122966275199403,
+   "ssim": 0.8252137677964796,
+   "lpips": 0.18030748857806125
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.9)",
+   "psnr": 30.121838615722893,
+   "ssim": 0.825183779351326,
+   "lpips": 0.17979577276855707
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "noisy input",
+   "psnr": 14.866665109741248,
+   "ssim": 0.15485792634757112,
+   "lpips": 0.9676717147231102
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM blind \u00d71",
+   "psnr": 35.689997867026264,
+   "ssim": 0.9350411246017349,
+   "lpips": 0.05028869159933594
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM one step, DMID t",
+   "psnr": 35.71666509647747,
+   "ssim": 0.9359465630725425,
+   "lpips": 0.048886819949580565
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 35.71805996196534,
+   "ssim": 0.9360152520265621,
+   "lpips": 0.04817625600844622
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 35.69521614327374,
+   "ssim": 0.9360303983580118,
+   "lpips": 0.04191213380545378
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM-cal \u00d71",
+   "psnr": 35.71654970854505,
+   "ssim": 0.9359422655422655,
+   "lpips": 0.04892729202078448
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM-cal \u00d72",
+   "psnr": 35.73353212077225,
+   "ssim": 0.9360743030850845,
+   "lpips": 0.0489114730929335
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM-cal \u00d74",
+   "psnr": 35.74204185389863,
+   "ssim": 0.9361069348582203,
+   "lpips": 0.04899751063850191
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "ADM-cal \u00d78",
+   "psnr": 35.74823740599191,
+   "ssim": 0.9361461736301782,
+   "lpips": 0.04901956984152397
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "DMID-d (released outputs)",
+   "psnr": 35.715953518180235,
+   "ssim": 0.936000740138989,
+   "lpips": 0.04959777815060483
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "DRUNet",
+   "psnr": 35.33664496789737,
+   "ssim": 0.9323586215562573,
+   "lpips": 0.05108065623790026
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 35.28934421958084,
+   "ssim": 0.9308225803976181,
+   "lpips": 0.059923899877402514
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "Restormer",
+   "psnr": 35.59659559244435,
+   "ssim": 0.9347142448418464,
+   "lpips": 0.048796318367951445
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "Restormer blind",
+   "psnr": 35.53995891986033,
+   "ssim": 0.9338586264797016,
+   "lpips": 0.052153326157066554
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "SCUNet",
+   "psnr": 35.48932929167015,
+   "ssim": 0.9343303031059106,
+   "lpips": 0.050991894470320806
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "SwinIR",
+   "psnr": 35.60526446951987,
+   "ssim": 0.9345335622460299,
+   "lpips": 0.04774289298802614
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.8)",
+   "psnr": 35.74656937354834,
+   "ssim": 0.9361544823408491,
+   "lpips": 0.048986604540712304
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.7)",
+   "psnr": 35.750484294242995,
+   "ssim": 0.9361422827363614,
+   "lpips": 0.04864915946705474
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "noisy input",
+   "psnr": 25.11101104920399,
+   "ssim": 0.5201331875230512,
+   "lpips": 0.26073043503695065
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM blind \u00d71",
+   "psnr": 33.460961168341825,
+   "ssim": 0.9081159251835886,
+   "lpips": 0.07055300205118126
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM one step, DMID t",
+   "psnr": 33.47223905415879,
+   "ssim": 0.9085359223360595,
+   "lpips": 0.07238858275943333
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 33.47259300666024,
+   "ssim": 0.9085036861004282,
+   "lpips": 0.07347509327034156
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 33.458803854728075,
+   "ssim": 0.9085711629564028,
+   "lpips": 0.06683112101422416
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM-cal \u00d71",
+   "psnr": 33.47200242180464,
+   "ssim": 0.9084322240193037,
+   "lpips": 0.07436434738337994
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM-cal \u00d72",
+   "psnr": 33.4927098249986,
+   "ssim": 0.9086636541240528,
+   "lpips": 0.07436167407366964
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM-cal \u00d74",
+   "psnr": 33.501858602213915,
+   "ssim": 0.9086904834122256,
+   "lpips": 0.07459012336201137
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "ADM-cal \u00d78",
+   "psnr": 33.50755648106642,
+   "ssim": 0.9087606775141263,
+   "lpips": 0.07468032692041662
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "DMID-d (released outputs)",
+   "psnr": 33.49062567839291,
+   "ssim": 0.9089536237582251,
+   "lpips": 0.07483056642942959
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "DRUNet",
+   "psnr": 33.02521073004778,
+   "ssim": 0.902750486169945,
+   "lpips": 0.07987822033464909
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 33.01460702604787,
+   "ssim": 0.9019545309369256,
+   "lpips": 0.08559116100271542
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "Restormer",
+   "psnr": 33.32681317149252,
+   "ssim": 0.9063129626336013,
+   "lpips": 0.07724075764417648
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "Restormer blind",
+   "psnr": 33.29307592633221,
+   "ssim": 0.9057031237341684,
+   "lpips": 0.07973415466646354
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "SCUNet",
+   "psnr": 33.15840535433105,
+   "ssim": 0.9059125713894982,
+   "lpips": 0.07836971804499626
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "SwinIR",
+   "psnr": 33.30594649111814,
+   "ssim": 0.9056482280126033,
+   "lpips": 0.07534287952714497
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.8)",
+   "psnr": 33.50307663959925,
+   "ssim": 0.908712532574214,
+   "lpips": 0.07513616006407473
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.8)",
+   "psnr": 33.50777004105064,
+   "ssim": 0.9087325858574654,
+   "lpips": 0.07477802017496692
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "noisy input",
+   "psnr": 20.88603927809611,
+   "ssim": 0.34447275265070854,
+   "lpips": 0.4617520206504398
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM blind \u00d71",
+   "psnr": 30.429833990142484,
+   "ssim": 0.8533632650606257,
+   "lpips": 0.11082322688566314
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM one step, DMID t",
+   "psnr": 30.46494707110066,
+   "ssim": 0.8553032660434825,
+   "lpips": 0.12485329599844085
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM one step, t(\u03c3)",
+   "psnr": 30.4657116302137,
+   "ssim": 0.8552787937274934,
+   "lpips": 0.1271774098277092
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM-cal two steps (\u03b7=0)",
+   "psnr": 30.46001155820861,
+   "ssim": 0.8554363850558059,
+   "lpips": 0.11955072813563877
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM-cal \u00d71",
+   "psnr": 30.465456478872024,
+   "ssim": 0.855211876549998,
+   "lpips": 0.12841346197658116
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM-cal \u00d72",
+   "psnr": 30.487325154233545,
+   "ssim": 0.8555755647739409,
+   "lpips": 0.12852006488376194
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM-cal \u00d74",
+   "psnr": 30.493038277536414,
+   "ssim": 0.8555599823459787,
+   "lpips": 0.12897607684135437
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "ADM-cal \u00d78",
+   "psnr": 30.496880893007813,
+   "ssim": 0.8556135641279378,
+   "lpips": 0.1291880528959963
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "DMID-d (released outputs)",
+   "psnr": 30.500338030737932,
+   "ssim": 0.8559456178115691,
+   "lpips": 0.12899373927050167
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "DRUNet",
+   "psnr": 29.861591419582325,
+   "ssim": 0.8446145242570816,
+   "lpips": 0.14084285042352146
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "DRUNet (\u03c3\u0302)",
+   "psnr": 29.86056019406702,
+   "ssim": 0.8444728009039622,
+   "lpips": 0.1412796841727363
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "Restormer",
+   "psnr": 30.278059021276746,
+   "ssim": 0.851765674387998,
+   "lpips": 0.13570432075195843
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "Restormer blind",
+   "psnr": 30.270737613420366,
+   "ssim": 0.8517543654220142,
+   "lpips": 0.13574212458398607
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "SCUNet",
+   "psnr": 29.960009282364737,
+   "ssim": 0.8500856762854779,
+   "lpips": 0.13660512243707976
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "SwinIR",
+   "psnr": 30.19253391576256,
+   "ssim": 0.8490253538507821,
+   "lpips": 0.13620390825801426
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "blend ADM-cal \u00d78 + Restormer (w=0.9)",
+   "psnr": 30.496451342237176,
+   "ssim": 0.8556690401760688,
+   "lpips": 0.12973487004637718
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "blend ADM-cal \u00d78 + SwinIR (w=0.9)",
+   "psnr": 30.495639542679285,
+   "ssim": 0.8555993619497005,
+   "lpips": 0.12966394258870018
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "noisy input",
+   "psnr": 15.365737717594767,
+   "ssim": 0.16757907713604894,
+   "lpips": 0.8462021549542745
+  }
+ ]
+}

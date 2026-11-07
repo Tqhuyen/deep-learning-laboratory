@@ -1,0 +1,73 @@
+{
+  "spectra": {
+    "block 9": {
+      "effective_rank": 17.89356347807959,
+      "energy_top1": 0.38323297208409085,
+      "energy_top5": 0.6470013948946143,
+      "energy_top20": 0.8616085612978742,
+      "null_offset_on_top5": 0.910641481341121,
+      "null_offset_cosine_top1": 0.8434907413194126
+    },
+    "block 12": {
+      "effective_rank": 12.825740034740239,
+      "energy_top1": 0.5082262174746646,
+      "energy_top5": 0.7209303635315502,
+      "energy_top20": 0.8664777838727712,
+      "null_offset_on_top5": 0.958251818563782,
+      "null_offset_cosine_top1": 0.85872364966598
+    },
+    "block 15": {
+      "effective_rank": 14.631842803743009,
+      "energy_top1": 0.49166565598967027,
+      "energy_top5": 0.7132925882728768,
+      "energy_top20": 0.8553653867701128,
+      "null_offset_on_top5": 0.9825456191702708,
+      "null_offset_cosine_top1": 0.9473001008028703
+    },
+    "glob": {
+      "effective_rank": 40.90835800109335,
+      "energy_top1": 0.24275876647094988,
+      "energy_top5": 0.49750539106560454,
+      "energy_top20": 0.7278641347203482,
+      "null_offset_on_top5": 0.9244125192724099,
+      "null_offset_cosine_top1": 0.9061551277816556
+    }
+  },
+  "glob": {
+    "common_share": 0.873966542253817,
+    "sigma 0.1": {
+      "null_offset_timestep_shift": -0.00850616419782266,
+      "timestep_shift_mean": -0.5483361151323419,
+      "timestep_shift_min": -1.4347779840507224,
+      "timestep_shift_max": 0.589159168169818,
+      "share_on_tangent": 0.000545420546582859,
+      "corr_shift_kept": -0.20005029952295783
+    },
+    "sigma 0.2": {
+      "null_offset_timestep_shift": 0.043166230989520944,
+      "timestep_shift_mean": -0.12680208012861233,
+      "timestep_shift_min": -0.848373786438561,
+      "timestep_shift_max": 0.5909898369737194,
+      "share_on_tangent": 0.00043456565271223326,
+      "corr_shift_kept": -0.009103980883397257
+    },
+    "r2_sigma_only": 0.005641266021723101,
+    "r2_sigma_and_pcs": {
+      "1": 0.038248088032161176,
+      "3": 0.1052172799474903,
+      "6": 0.129303908836777
+    },
+    "ridge_leave_one_image_out_corr": 0.14060209512995933,
+    "edits": {
+      "e2_null_change": 0.0,
+      "e3_null_change": 6.938893903907228e-18,
+      "e3_relative_update": 0.3370715967086821,
+      "e3_v_dot_h_mean": 0.9999487884589641,
+      "e3_v_dot_h_std": 0.0005080014992034593,
+      "common_offset_rms_before": 0.04848850674445304,
+      "common_offset_rms_after_in_sample": 2.483171152912101e-06,
+      "common_offset_rms_held_out_half_before": 0.04715389810661054,
+      "common_offset_rms_held_out_half_after": 0.008894475125023654
+    }
+  }
+}

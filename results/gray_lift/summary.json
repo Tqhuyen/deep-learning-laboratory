@@ -1,0 +1,73 @@
+{
+ "minutes": {
+  "downloads": 1.5756739258766175,
+  "denoising": 28.501438053448997
+ },
+ "verdict": [
+  {
+   "index": "BSD68 \u03c315",
+   "ours": 32.032494254557406,
+   "best": 32.0,
+   "margin": 0.032494254557406066,
+   "restormer_rerun_seed0": 31.96471584530735,
+   "restormer_published": 31.96,
+   "rerun_gap": 0.004715845307348587,
+   "paired_vs_restormer": 0.07487921648797866
+  },
+  {
+   "index": "BSD68 \u03c325",
+   "ours": 29.616448420305268,
+   "best": 29.55,
+   "margin": 0.06644842030526732,
+   "restormer_rerun_seed0": 29.524467742001114,
+   "restormer_published": 29.52,
+   "rerun_gap": 0.004467742001114772,
+   "paired_vs_restormer": 0.09967087851218491
+  },
+  {
+   "index": "BSD68 \u03c350",
+   "ours": 26.746807207330168,
+   "best": 26.65,
+   "margin": 0.09680720733016912,
+   "restormer_rerun_seed0": 26.61685795388443,
+   "restormer_published": 26.62,
+   "rerun_gap": -0.0031420461155704515,
+   "paired_vs_restormer": 0.13821619084710954
+  },
+  {
+   "index": "Set12 \u03c315",
+   "ours": 33.49983144477099,
+   "best": 33.48,
+   "margin": 0.0198314447709933,
+   "restormer_rerun_seed0": 33.41598270939577,
+   "restormer_published": 33.42,
+   "rerun_gap": -0.004017290604231505,
+   "paired_vs_restormer": 0.08719211864251007
+  },
+  {
+   "index": "Set12 \u03c325",
+   "ours": 31.21806103728616,
+   "best": 31.19,
+   "margin": 0.028061037286157386,
+   "restormer_rerun_seed0": 31.076705018591237,
+   "restormer_published": 31.08,
+   "rerun_gap": -0.003294981408760833,
+   "paired_vs_restormer": 0.13905751443381614
+  },
+  {
+   "index": "Set12 \u03c350",
+   "ours": 28.229534126109613,
+   "best": 28.15,
+   "margin": 0.07953412610961408,
+   "restormer_rerun_seed0": 27.99985167546266,
+   "restormer_published": 28.0,
+   "rerun_gap": -0.00014832453733859552,
+   "paired_vs_restormer": 0.23044772207295694
+  }
+ ],
+ "valid": true,
+ "success": true,
+ "kill": false,
+ "failed_jobs": [],
+ "failed_methods": []
+}

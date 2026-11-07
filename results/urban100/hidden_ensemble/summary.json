@@ -1,0 +1,39 @@
+{
+ "tests": [
+  {
+   "sigma": 15,
+   "n": 88,
+   "frac_single": 0.4194320217062997,
+   "gain_all": 0.05253527151367366,
+   "gain_single": 0.044295300530258944,
+   "gain_multi": 0.05783149218577062,
+   "share": 0.8431535472074214,
+   "single_better": 83,
+   "p_single": 0.0
+  },
+  {
+   "sigma": 25,
+   "n": 88,
+   "frac_single": 0.4194320217062997,
+   "gain_all": 0.08728100809193225,
+   "gain_single": 0.07614275922038605,
+   "gain_multi": 0.09442427141043654,
+   "share": 0.8723863402240452,
+   "single_better": 88,
+   "p_single": 0.0
+  },
+  {
+   "sigma": 50,
+   "n": 88,
+   "frac_single": 0.4194320217062997,
+   "gain_all": 0.14728783633317774,
+   "gain_single": 0.12984619303338493,
+   "gain_multi": 0.1582405437285228,
+   "share": 0.881581237568469,
+   "single_better": 88,
+   "p_single": 0.0
+  }
+ ],
+ "survives": true,
+ "max_consistency_gap": 0.0009335680261104429
+}

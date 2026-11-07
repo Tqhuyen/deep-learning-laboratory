@@ -37,7 +37,7 @@ feed-forward are shared by every architecture and are not duplicated per model.
 | `laboratory/preprocessing/` | character/word/BPE tokenizers, padding, teacher forcing | tokenization and batching |
 | `laboratory/models/` | transformer (GPT, seq2seq), RNN/LSTM/GRU | model architectures |
 | `laboratory/losses/` | token cross-entropy with `ignore_index` | objectives |
-| `laboratory/optimization/` | AdamW/Adam/SGD factory, warmup/cosine, Noam | optimisation ablations |
+| `laboratory/optimization/` | Muon (default; AdamW for embeddings, heads, biases, gains), AdamW/Adam/SGD factory, warmup/cosine, Noam | optimisation ablations |
 | `laboratory/training/` | loop, clipping, mixed precision, checkpoints | every experiment |
 | `laboratory/evaluation/` | metrics, statistics, diagnostics, loss landscapes | reported results and mechanism checks |
 | `laboratory/inference/` | temperature/top-k sampling, greedy decoding | generation |
@@ -119,11 +119,60 @@ deep-learning-laboratory/
 │   ├── gradient_reach.py   how far back the final state stays sensitive
 │   ├── loss_landscape.py   3-D filter-normalised surfaces
 │   ├── context_sweep.py    BPC versus evaluation context
-│   └── build_report.py     self-contained HTML report of the comparison
+│   ├── build_report.py     self-contained HTML report of the comparison
+│   ├── jepa_guided_diffusion.py  paired tests and adapter diagnostics for a Kaggle run
+│   ├── jepa_adapter_weights.py   reads the JEPA adapter's weights and probe results for hand edits
+│   ├── diffusion_tweedie_benchmark.py  paired tests for one-step ADM on CBSD68 / Kodak24 / McMaster
+│   └── adm_tweedie_finetune.py  paired tests for ADM fine-tuned on the denoising steps
 ├── notebooks/
-│   └── recurrent_comparison.ipynb  Kaggle GPU run of both comparison studies
+│   ├── recurrent_comparison.ipynb  Kaggle GPU run of both comparison studies
+│   ├── jepa_denoise_comparison.ipynb  JEPA-guided ADM vs BM3D / DRUNet / Restormer / SCUNet on Kaggle
+│   ├── jepa_guided_diffusion_matched.ipynb  adapter retraining with matched conditioning (prepared, not run)
+│   ├── adm_noise_level_and_averaging.ipynb  ADM start step from the image's noise, mean of K samples
+│   ├── jepa_adapter_weight_probe.ipynb  forward-pass probes of the adapter's paths
+│   ├── jepa_adapter_weight_edits.ipynb  hand edits of the adapter's weights, scored on the 52 cases
+│   ├── diffusion_tweedie_benchmark.ipynb  one-step ADM vs DMID-d and supervised denoisers, standard benchmarks
+│   ├── adm_tweedie_finetune.ipynb  fine-tuning ADM on the denoising steps (DIV2K); pilot and long run
+│   ├── diffusion_prior_ensembles.ipynb  class-mixture posterior means and ensembles of pretrained ADMs
+│   ├── real_noise_zero_shot.ipynb  real noise (CC / PolyU / FMDD): pixel-shuffle + one-step ADM, baselines, DMID rescored
+│   ├── real_noise_round2.ipynb  real noise round 2: PD ceiling, one step on DMID's noise-transformed images
+│   ├── real_noise_round3.ipynb  real noise round 3: DMID's chain with few flip-balanced samples, deterministic chain
+│   ├── gray_lift_kill_test.ipynb  gray Set12 / BSD68 with the RGB prior via an isotropic chroma-noise lift
+│   ├── gray_lift_r2r.ipynb  gray σ 50: the lift plus per-image R2R adaptation (settings frozen from Urban100 dev-12)
+│   ├── gray_baselines_cpu.ipynb  CPU: released SCUNet / DRUNet gray models on the lift's identical noise draws
+│   ├── gray_sota_rerun_xformer.ipynb  CPU: released Xformer gray models on the same draws (seed 0)
+│   ├── gray_sota_rerun_grl.ipynb  CPU: released GRL-B gray models on the same draws (seed 0, σ 50 first)
+│   ├── gray_draw_check.ipynb  CPU: checks that the lift job's two-thread noise draws equal single-threaded draws (seed 0)
+│   ├── gray_draw_check_seeds12.ipynb  CPU: the same check for seeds 1 and 2
+│   ├── urban100_one_step.ipynb  Urban100 colour, round 1: one step, Restormer on identical noise
+│   ├── urban100_tiles.ipynb  Urban100 colour, round 2: whole image vs 384/512/768-px tiles, attention scaling
+│   ├── urban100_hidden_ensemble.ipynb  CPU: tile gain on pixels without overlap averaging (saved pilots)
+│   ├── urban100_nonlocal_wiener.ipynb  CPU: BM3D Wiener stage with the ADM pilot (oracle gate, then dev-chosen blend)
+│   ├── urban100_full.ipynb  frozen tiles + R2R pipeline: all 100 at σ 15, dev-12 at σ 25 / 50 (4 h 39 min)
+│   ├── urban100_seed_replication_1.ipynb  Urban100 confirm-88 at σ 50 on a second noise draw, same pipeline
+│   ├── urban100_seed_replication_2.ipynb  the same on a third draw (3-seed standard)
+│   ├── tile_rule_colour.ipynb  384-px tile rule on CBSD68 / Kodak24 / McMaster at every σ, plus DMID's 3-evaluation chain
+│   ├── denoise_protocol_effects.ipynb  CPU: one denoiser rescored under every protocol; DMID-d vs GRL-B on the same pixels
+│   ├── grl_outputs_audit.ipynb  CPU: rescoring GRL-B's released denoising outputs on our test copies
+│   ├── grl_outputs_audit_kodak.ipynb  CPU: locating GRL's 496×496 Kodak24 regions and the rotated CBSD68 image
+│   ├── r2r_capacity_dev.ipynb  shelved: R2R parameter subsets on DIV2K crops (cannot separate size from content)
+│   ├── adaptation_gate_urban100.ipynb  per-image gain tuning of ADM: oracles, R2R, transfer probe (4 images)
+│   ├── adaptation_dev12.ipynb  R2R gain tuning on the 12 Urban100 dev images, σ 25 / 50, 30–90 steps
+│   └── adaptation_confirm.ipynb  R2R gain tuning with frozen settings: Urban100 confirm-88, Kodak24 / McMaster σ 50
 ├── results/
-│   └── recurrent_comparison/  reports, figures and report.html
+│   ├── recurrent_comparison/  reports, figures and report.html
+│   ├── jepa_guided_diffusion/ JEPA-conditioned ADM denoising: report, paired tests, comparisons, noise level, weight edits
+│   ├── diffusion_benchmark/   one-step diffusion posterior mean on CBSD68 / Kodak24 / McMaster: report, tables, figures
+│   ├── adm_finetune/          fine-tuning pilot: report, paired tests, validation curve
+│   ├── prior_ensembles/       class-mixture posterior means and multi-network ensembles: report, scores
+│   ├── real_noise/            zero-shot real-noise denoising: report, scores of all three rounds
+│   ├── gray_lift/             gray Gaussian denoising with the chroma-noise lift: report, scores
+│   ├── urban100/              Urban100 colour, whole image vs tiles: report, scores, paired tests
+│   │   ├── full100/           Urban100 full 100 images, frozen pipeline, paired against GRL-B's released outputs
+│   │   └── seed_replication/  the σ 50 result on two further noise draws (three-draw standard)
+│   ├── measurement_audit/     rescoring released outputs and the cost of the scoring protocol: report, rescored tables
+│   ├── adaptation/            per-image R2R adaptation of the one-step denoiser: report, gate scores
+│   └── paper/                 draft, claims.md (every claim with its evidence and falsification condition), prior_art.md
 ├── data/                   tiny Shakespeare, SST-2 fixture, prepare_sst2.py
 │   ├── free_models.json    snapshot of free chat models (37 providers)
 │   ├── agent_tasks.json    fictional-world tasks for agent experiments

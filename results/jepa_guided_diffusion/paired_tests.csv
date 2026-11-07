@@ -1,0 +1,76 @@
+contrast,condition,metric,n,mean_difference,median_difference,ci_low,ci_high,first_better,p_sign_flip,p_holm
+JEPA reverse - null reverse,gaussian 0.1,psnr,16,-0.149506,-0.00657802,-0.495941,0.043743,8,0.715546,1
+JEPA reverse - null reverse,gaussian 0.1,ssim,16,-0.00999935,9.4685e-05,-0.0325711,0.00209728,8,0.794159,1
+JEPA reverse - null reverse,gaussian 0.1,lpips,16,0.010181,3.44776e-05,-0.00112101,0.0317811,8,0.786804,1
+JEPA reverse - null reverse,gaussian 0.2,psnr,16,-0.138263,0.017644,-0.480674,0.0461322,10,0.970978,1
+JEPA reverse - null reverse,gaussian 0.2,ssim,16,-0.0119701,0.00052315,-0.0395024,0.00257565,9,0.978424,1
+JEPA reverse - null reverse,gaussian 0.2,lpips,16,0.0131927,0.000333559,-0.000780892,0.038412,7,0.242645,1
+JEPA reverse - null reverse,gaussian 0.3,psnr,16,-0.0270958,0.0193543,-0.123775,0.0256612,13,0.999786,1
+JEPA reverse - null reverse,gaussian 0.3,ssim,16,-0.00707888,0.000438905,-0.0219797,0.000575069,11,0.90274,1
+JEPA reverse - null reverse,gaussian 0.3,lpips,16,0.0104947,0.00202852,0.00149995,0.0223037,5,0.0596924,0.895386
+JEPA reverse - null reverse,real camera,psnr,4,-0.0510519,-0.053138,-0.0921244,-0.00789323,1,0.25,1
+JEPA reverse - null reverse,real camera,ssim,4,-0.000853355,-0.000941795,-0.0017371,7.85775e-05,1,0.375,1
+JEPA reverse - null reverse,real camera,lpips,4,0.000515391,4.3679e-06,-0.0017407,0.00328251,1,0.625,1
+JEPA reverse - null reverse,"gaussian, per-image mean",psnr,16,-0.104955,0.00647392,-0.36498,0.0354776,8,0.954529,1
+JEPA reverse - null reverse,"gaussian, per-image mean",ssim,16,-0.00968277,0.000458862,-0.0312831,0.00165782,10,0.947937,1
+JEPA reverse - null reverse,"gaussian, per-image mean",lpips,16,0.0112895,0.00198201,0.000234998,0.0306444,5,0.0827026,1
+null reverse - ADM reverse,gaussian 0.1,psnr,16,0.0522606,0.0270313,0.0228511,0.106029,16,3.05176e-05,0.000457764
+null reverse - ADM reverse,gaussian 0.1,ssim,16,0.00240433,0.00089718,0.000801849,0.00536688,16,3.05176e-05,0.000457764
+null reverse - ADM reverse,gaussian 0.1,lpips,16,0.000462803,0.000225071,-0.000132989,0.00127247,5,0.25592,1
+null reverse - ADM reverse,gaussian 0.2,psnr,16,0.00982545,0.010567,0.00263428,0.0172087,12,0.0171204,0.171204
+null reverse - ADM reverse,gaussian 0.2,ssim,16,0.000803638,0.000822305,0.000407142,0.00121404,12,0.00128174,0.0140991
+null reverse - ADM reverse,gaussian 0.2,lpips,16,0.000851148,0.000932697,0.000225855,0.00143799,3,0.0208435,0.187592
+null reverse - ADM reverse,gaussian 0.3,psnr,16,0.00599416,0.00207788,0.000684789,0.0114078,10,0.0606384,0.424469
+null reverse - ADM reverse,gaussian 0.3,ssim,16,0.000470142,0.000573395,7.2021e-05,0.000868609,10,0.0450134,0.360107
+null reverse - ADM reverse,gaussian 0.3,lpips,16,-0.00258436,-0.000273451,-0.00709164,0.00103328,10,0.296082,1
+null reverse - ADM reverse,real camera,psnr,4,0.0118365,0.00666031,0.00548609,0.0233631,4,0.125,0.75
+null reverse - ADM reverse,real camera,ssim,4,0.000303632,0.000342765,0.000183132,0.000385,4,0.125,0.75
+null reverse - ADM reverse,real camera,lpips,4,-6.53206e-05,1.16276e-05,-0.000444038,0.000301283,2,0.875,1
+null reverse - ADM reverse,"gaussian, per-image mean",psnr,16,0.0226934,0.0155749,0.0119732,0.0408098,16,3.05176e-05,0.000457764
+null reverse - ADM reverse,"gaussian, per-image mean",ssim,16,0.00122604,0.000691693,0.000619125,0.00223605,16,3.05176e-05,0.000457764
+null reverse - ADM reverse,"gaussian, per-image mean",lpips,16,-0.000423469,0.000193877,-0.00214728,0.000969997,7,0.668732,1
+JEPA reverse - ADM reverse,gaussian 0.1,psnr,16,-0.0972459,0.0306769,-0.469797,0.130199,9,0.973022,1
+JEPA reverse - ADM reverse,gaussian 0.1,ssim,16,-0.00759502,0.00123456,-0.0315936,0.00665982,11,0.987091,1
+JEPA reverse - ADM reverse,gaussian 0.1,lpips,16,0.0106438,0.000164513,-0.000892541,0.0323222,6,0.501678,1
+JEPA reverse - ADM reverse,gaussian 0.2,psnr,16,-0.128437,0.0299039,-0.470103,0.0554139,12,0.991211,1
+JEPA reverse - ADM reverse,gaussian 0.2,ssim,16,-0.0111664,0.00165359,-0.0387938,0.00345288,11,0.996094,1
+JEPA reverse - ADM reverse,gaussian 0.2,lpips,16,0.0140438,0.00135785,4.63178e-05,0.0394966,3,0.0794067,1
+JEPA reverse - ADM reverse,gaussian 0.3,psnr,16,-0.0211016,0.0290331,-0.120394,0.0344554,13,0.999573,1
+JEPA reverse - ADM reverse,gaussian 0.3,ssim,16,-0.00660873,0.00091225,-0.0217712,0.00131797,11,0.97406,1
+JEPA reverse - ADM reverse,gaussian 0.3,lpips,16,0.00791038,0.00105589,-0.00123227,0.0213046,7,0.196716,1
+JEPA reverse - ADM reverse,real camera,psnr,4,-0.0392154,-0.0355277,-0.0869163,0.00479792,1,0.25,1
+JEPA reverse - ADM reverse,real camera,ssim,4,-0.000549723,-0.000677295,-0.0015112,0.000411755,1,0.375,1
+JEPA reverse - ADM reverse,real camera,lpips,4,0.00045007,1.59955e-05,-0.00218474,0.00351896,2,0.75,1
+JEPA reverse - ADM reverse,"gaussian, per-image mean",psnr,16,-0.0822616,0.0224351,-0.350214,0.0683985,11,0.99588,1
+JEPA reverse - ADM reverse,"gaussian, per-image mean",ssim,16,-0.00845673,0.00122304,-0.0305886,0.00358066,12,0.997681,1
+JEPA reverse - ADM reverse,"gaussian, per-image mean",lpips,16,0.010866,0.000958742,-0.000305132,0.0307146,7,0.154419,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.1,psnr,16,-0.0309162,-0.00322461,-0.0940202,0.00363153,5,0.461548,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.1,ssim,16,-0.00172093,-0.0002184,-0.00508066,0.000108891,4,0.269165,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.1,lpips,16,0.00117939,0.000648241,0.000333391,0.00207996,5,0.0177612,0.266418
+JEPA Tweedie - ADM Tweedie,gaussian 0.2,psnr,16,-0.00016553,0.00976572,-0.0266005,0.0180802,11,0.996735,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.2,ssim,16,0.000481036,0.000802975,-0.0018189,0.00259176,10,0.754517,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.2,lpips,16,-0.000312415,0.000803689,-0.00392405,0.00242283,5,0.922485,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.3,psnr,16,-0.000934326,0.0177362,-0.0413957,0.0230208,13,0.999573,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.3,ssim,16,0.00119144,0.00109597,-0.00553461,0.00671742,12,0.730713,1
+JEPA Tweedie - ADM Tweedie,gaussian 0.3,lpips,16,0.000763522,0.00100894,-0.00275376,0.0037449,4,0.674225,1
+JEPA Tweedie - ADM Tweedie,real camera,psnr,4,0.0138437,0.00642877,-0.0178286,0.0455159,2,0.625,1
+JEPA Tweedie - ADM Tweedie,real camera,ssim,4,0.000390385,0.00031905,-0.000363755,0.00114453,2,0.5,1
+JEPA Tweedie - ADM Tweedie,real camera,lpips,4,0.000313601,-0.000551099,-0.00165111,0.00314302,3,1,1
+JEPA Tweedie - ADM Tweedie,"gaussian, per-image mean",psnr,16,-0.010672,0.00752885,-0.0534491,0.0133929,13,0.997925,1
+JEPA Tweedie - ADM Tweedie,"gaussian, per-image mean",ssim,16,-1.61506e-05,0.000660033,-0.0041513,0.00310063,11,0.996796,1
+JEPA Tweedie - ADM Tweedie,"gaussian, per-image mean",lpips,16,0.0005435,0.000742885,-0.000976953,0.00178411,5,0.499695,1
+ADM Tweedie - ADM reverse,gaussian 0.1,psnr,16,2.47505,2.47771,2.31474,2.62542,16,3.05176e-05,0.000457764
+ADM Tweedie - ADM reverse,gaussian 0.1,ssim,16,0.0516909,0.0567077,0.0423635,0.0617875,16,3.05176e-05,0.000457764
+ADM Tweedie - ADM reverse,gaussian 0.1,lpips,16,0.00916644,0.0090676,0.00483245,0.0138532,2,0.000732422,0.00448608
+ADM Tweedie - ADM reverse,gaussian 0.2,psnr,16,1.50214,1.50011,1.29483,1.71019,16,3.05176e-05,0.000457764
+ADM Tweedie - ADM reverse,gaussian 0.2,ssim,16,0.0366005,0.0396857,0.021275,0.0516651,13,0.00112915,0.00564575
+ADM Tweedie - ADM reverse,gaussian 0.2,lpips,16,0.0493727,0.0558944,0.0373462,0.0605495,1,6.10352e-05,0.000610352
+ADM Tweedie - ADM reverse,gaussian 0.3,psnr,16,0.383453,0.452617,0.271008,0.50295,15,6.10352e-05,0.000610352
+ADM Tweedie - ADM reverse,gaussian 0.3,ssim,16,-0.0400495,-0.0340697,-0.0601579,-0.0215443,1,0.000640869,0.00448608
+ADM Tweedie - ADM reverse,gaussian 0.3,lpips,16,0.0637375,0.0574382,0.0393673,0.0910351,2,0.000183105,0.00146484
+ADM Tweedie - ADM reverse,real camera,psnr,4,0.24323,0.221397,0.180408,0.30822,4,0.125,0.375
+ADM Tweedie - ADM reverse,real camera,ssim,4,0.00341271,0.00384623,0.00136441,0.00546101,4,0.125,0.375
+ADM Tweedie - ADM reverse,real camera,lpips,4,-0.0112634,-0.0115016,-0.0246081,0.0020814,3,0.375,0.375
+ADM Tweedie - ADM reverse,"gaussian, per-image mean",psnr,16,1.45355,1.49409,1.30557,1.59579,16,3.05176e-05,0.000457764
+ADM Tweedie - ADM reverse,"gaussian, per-image mean",ssim,16,0.0160806,0.0210456,0.00198862,0.0295611,11,0.0458984,0.183594
+ADM Tweedie - ADM reverse,"gaussian, per-image mean",lpips,16,0.0407589,0.0408478,0.0303758,0.0517684,0,3.05176e-05,0.000457764

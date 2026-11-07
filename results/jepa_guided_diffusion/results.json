@@ -1,0 +1,239 @@
+{
+ "config": {
+  "STEPS": 3000,
+  "BS": 8,
+  "LR": 0.0001,
+  "P_DROP": 0.1,
+  "T_FOCUS": 300,
+  "P_FOCUS": 0.5,
+  "steps_done": 1326,
+  "inject": {
+   "9": [
+    32,
+    512
+   ],
+   "12": [
+    16,
+    512
+   ],
+   "15": [
+    8,
+    1024
+   ]
+  }
+ },
+ "summary": [
+  {
+   "noise": "gaussian 0.1",
+   "method": "noisy input",
+   "psnr": 20.322,
+   "ssim": 0.45899999141693115,
+   "lpips": 0.424
+  },
+  {
+   "noise": "gaussian 0.1",
+   "method": "ADM Tweedie",
+   "psnr": 31.038,
+   "ssim": 0.9070000052452087,
+   "lpips": 0.061
+  },
+  {
+   "noise": "gaussian 0.1",
+   "method": "ADM reverse",
+   "psnr": 28.563,
+   "ssim": 0.8550000190734863,
+   "lpips": 0.052
+  },
+  {
+   "noise": "gaussian 0.1",
+   "method": "adapter null: reverse",
+   "psnr": 28.615,
+   "ssim": 0.8569999933242798,
+   "lpips": 0.052
+  },
+  {
+   "noise": "gaussian 0.1",
+   "method": "adapter JEPA: Tweedie",
+   "psnr": 31.007,
+   "ssim": 0.9049999713897705,
+   "lpips": 0.062
+  },
+  {
+   "noise": "gaussian 0.1",
+   "method": "adapter JEPA: reverse",
+   "psnr": 28.466,
+   "ssim": 0.847000002861023,
+   "lpips": 0.062
+  },
+  {
+   "noise": "gaussian 0.2",
+   "method": "noisy input",
+   "psnr": 14.832,
+   "ssim": 0.2409999966621399,
+   "lpips": 0.849
+  },
+  {
+   "noise": "gaussian 0.2",
+   "method": "ADM Tweedie",
+   "psnr": 26.395,
+   "ssim": 0.777999997138977,
+   "lpips": 0.173
+  },
+  {
+   "noise": "gaussian 0.2",
+   "method": "ADM reverse",
+   "psnr": 24.893,
+   "ssim": 0.7409999966621399,
+   "lpips": 0.124
+  },
+  {
+   "noise": "gaussian 0.2",
+   "method": "adapter null: reverse",
+   "psnr": 24.903,
+   "ssim": 0.7419999837875366,
+   "lpips": 0.125
+  },
+  {
+   "noise": "gaussian 0.2",
+   "method": "adapter JEPA: Tweedie",
+   "psnr": 26.395,
+   "ssim": 0.777999997138977,
+   "lpips": 0.173
+  },
+  {
+   "noise": "gaussian 0.2",
+   "method": "adapter JEPA: reverse",
+   "psnr": 24.764,
+   "ssim": 0.7300000190734863,
+   "lpips": 0.138
+  },
+  {
+   "noise": "gaussian 0.3",
+   "method": "noisy input",
+   "psnr": 11.984,
+   "ssim": 0.14900000393390656,
+   "lpips": 1.133
+  },
+  {
+   "noise": "gaussian 0.3",
+   "method": "ADM Tweedie",
+   "psnr": 22.772,
+   "ssim": 0.6079999804496765,
+   "lpips": 0.307
+  },
+  {
+   "noise": "gaussian 0.3",
+   "method": "ADM reverse",
+   "psnr": 22.388,
+   "ssim": 0.6480000019073486,
+   "lpips": 0.243
+  },
+  {
+   "noise": "gaussian 0.3",
+   "method": "adapter null: reverse",
+   "psnr": 22.394,
+   "ssim": 0.6480000019073486,
+   "lpips": 0.241
+  },
+  {
+   "noise": "gaussian 0.3",
+   "method": "adapter JEPA: Tweedie",
+   "psnr": 22.771,
+   "ssim": 0.609000027179718,
+   "lpips": 0.308
+  },
+  {
+   "noise": "gaussian 0.3",
+   "method": "adapter JEPA: reverse",
+   "psnr": 22.367,
+   "ssim": 0.640999972820282,
+   "lpips": 0.251
+  },
+  {
+   "noise": "real camera",
+   "method": "noisy input",
+   "psnr": 32.427,
+   "ssim": 0.9120000004768372,
+   "lpips": 0.131
+  },
+  {
+   "noise": "real camera",
+   "method": "ADM Tweedie",
+   "psnr": 33.185,
+   "ssim": 0.9359999895095825,
+   "lpips": 0.075
+  },
+  {
+   "noise": "real camera",
+   "method": "ADM reverse",
+   "psnr": 32.941,
+   "ssim": 0.9330000281333923,
+   "lpips": 0.086
+  },
+  {
+   "noise": "real camera",
+   "method": "adapter null: reverse",
+   "psnr": 32.953,
+   "ssim": 0.9330000281333923,
+   "lpips": 0.086
+  },
+  {
+   "noise": "real camera",
+   "method": "adapter JEPA: Tweedie",
+   "psnr": 33.199,
+   "ssim": 0.9369999766349792,
+   "lpips": 0.075
+  },
+  {
+   "noise": "real camera",
+   "method": "adapter JEPA: reverse",
+   "psnr": 32.902,
+   "ssim": 0.9319999814033508,
+   "lpips": 0.087
+  }
+ ],
+ "validation": [
+  {
+   "step": 0,
+   "loss": 0.06483732163906097,
+   "adm": 0.042050331830978394,
+   "null": 0.042049016803503036,
+   "jepa": 0.04204222187399864
+  },
+  {
+   "step": 250,
+   "loss": 0.021609250456094742,
+   "adm": 0.042050331830978394,
+   "null": 0.042019348591566086,
+   "jepa": 0.04202718660235405
+  },
+  {
+   "step": 500,
+   "loss": 0.017978427931666374,
+   "adm": 0.042050331830978394,
+   "null": 0.04204563423991203,
+   "jepa": 0.042049117386341095
+  },
+  {
+   "step": 750,
+   "loss": 0.011048301123082638,
+   "adm": 0.042050331830978394,
+   "null": 0.04200221225619316,
+   "jepa": 0.0421428382396698
+  },
+  {
+   "step": 1000,
+   "loss": 0.017342016100883484,
+   "adm": 0.042050331830978394,
+   "null": 0.042006514966487885,
+   "jepa": 0.04210870712995529
+  },
+  {
+   "step": 1250,
+   "loss": 0.017762765288352966,
+   "adm": 0.042050331830978394,
+   "null": 0.04201192408800125,
+   "jepa": 0.042022909969091415
+  }
+ ]
+}

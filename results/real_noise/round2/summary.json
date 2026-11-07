@@ -1,0 +1,47 @@
+{
+ "minutes": {
+  "downloads": 11.290160139401754,
+  "denoising": 31.667791299025218
+ },
+ "chosen_on_dev": {
+  "ADM PD4, m=": "ADM PD4, m=1.75",
+  "ADM PD8, m=": "ADM PD8, m=1",
+  "ADM full (\u03c3\u0302 PD4), m=": "ADM full (\u03c3\u0302 PD4), m=3",
+  "NT + one step, m=": "NT + one step, m=0.7"
+ },
+ "grids": {
+  "pd4": [
+   1.25,
+   1.5,
+   1.75,
+   2.0,
+   2.5
+  ],
+  "pd8": [
+   1.0,
+   1.25,
+   1.5,
+   2.0
+  ],
+  "full": [
+   1.5,
+   2.0,
+   2.5,
+   3.0
+  ],
+  "nt": [
+   0.7,
+   0.85,
+   1.0,
+   1.15,
+   1.3,
+   1.5
+  ],
+  "refine": [
+   0.3,
+   0.5
+  ]
+ },
+ "failed_images": [],
+ "failed_methods": []
+}

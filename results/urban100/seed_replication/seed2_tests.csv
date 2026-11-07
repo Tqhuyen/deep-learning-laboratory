@@ -1,0 +1,2 @@
+dataset,sigma,mode,split,primary,n,unadapted,adapted,gain,worse_005,p,is_test,p_holm,success,published_best
+Urban100,50,tiles-384,confirm-88,True,88,30.434936851361623,30.58644792475927,0.15151107339764902,0.0,0.0,True,0.0,True,30.64

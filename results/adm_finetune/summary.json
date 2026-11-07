@@ -1,0 +1,277 @@
+{
+ "config": {
+  "test_mode": false,
+  "guided_diffusion": "/tmp/cache/guided-diffusion",
+  "adm_checkpoint": "/tmp/cache/adm.pt",
+  "data_file": "/tmp/cache/div2k_train.u8",
+  "data_index": "/tmp/cache/div2k_train.json",
+  "val_file": "/tmp/cache/val.pt",
+  "crop": 256,
+  "scale_min": 0.25,
+  "sigma_min": 5.0,
+  "sigma_max": 60.0,
+  "micro_batch": 2,
+  "accum": 2,
+  "lr": 2e-05,
+  "lr_floor": 0.1,
+  "warmup": 100,
+  "ema_every": 10,
+  "ema_half_life": 150,
+  "log_every": 50,
+  "val_every": 400,
+  "measure_steps": 20,
+  "train_minutes": 100,
+  "out_weights": "outputs/adm_ft_ema.pt",
+  "out_log": "outputs/train_log.json"
+ },
+ "minutes": {
+  "downloads": 2.0978841106096904,
+  "data": 0.7617050846417744,
+  "training": 108.43945027589798,
+  "evaluation": 7.10660278002421
+ },
+ "train_log": [
+  {
+   "step": 0,
+   "minutes": 0.0,
+   "val_psnr_15": 33.90206271647799,
+   "val_psnr_25": 31.337933305602785,
+   "val_psnr_50": 28.161375394162214,
+   "loss": NaN
+  },
+  {
+   "step": 400,
+   "minutes": 25.33998861312866,
+   "val_psnr_15": 33.91339990427816,
+   "val_psnr_25": 31.348604502882303,
+   "val_psnr_50": 28.168239436529838,
+   "loss": 0.029737934470176697
+  },
+  {
+   "step": 800,
+   "minutes": 50.83627835909525,
+   "val_psnr_15": 33.91506694001373,
+   "val_psnr_25": 31.34928076380612,
+   "val_psnr_50": 28.169249610254525,
+   "loss": 0.03450634330511093
+  },
+  {
+   "step": 1200,
+   "minutes": 76.13765983184179,
+   "val_psnr_15": 33.91531758322161,
+   "val_psnr_25": 31.348569922902612,
+   "val_psnr_50": 28.16880317450824,
+   "loss": 0.016343211755156517
+  },
+  {
+   "step": 1600,
+   "minutes": 101.46369335651397,
+   "val_psnr_15": 33.91599152777642,
+   "val_psnr_25": 31.34952486250243,
+   "val_psnr_50": 28.169759597284877,
+   "loss": 0.040099430829286575
+  },
+  {
+   "step": 1678,
+   "minutes": 106.82743852535883,
+   "val_psnr_15": 33.916110219553204,
+   "val_psnr_25": 31.349746351849337,
+   "val_psnr_50": 28.16979039847204,
+   "loss": 0.08643071353435516
+  }
+ ],
+ "mean": [
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "base \u00d71",
+   "psnr": 34.452094626518125,
+   "ssim": 0.9360057238544497,
+   "lpips": 0.051719528568141604
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 15,
+   "method": "fine-tuned \u00d71",
+   "psnr": 34.4445601264871,
+   "ssim": 0.9359324878470231,
+   "lpips": 0.05163058019517099
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "base \u00d71",
+   "psnr": 31.84568977772987,
+   "ssim": 0.8951878241846768,
+   "lpips": 0.08945526664747912
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 25,
+   "method": "fine-tuned \u00d71",
+   "psnr": 31.84074651839303,
+   "ssim": 0.8951147082300477,
+   "lpips": 0.08960003819426193
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "base \u00d71",
+   "psnr": 28.687391237426112,
+   "ssim": 0.8154079188790588,
+   "lpips": 0.1691787630210028
+  },
+  {
+   "dataset": "CBSD68",
+   "sigma": 50,
+   "method": "fine-tuned \u00d71",
+   "psnr": 28.68383908720212,
+   "ssim": 0.8151818025281329,
+   "lpips": 0.16993775043417425
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "base \u00d71",
+   "psnr": 35.513512174032066,
+   "ssim": 0.9310609467412688,
+   "lpips": 0.06877535139210522
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 15,
+   "method": "fine-tuned \u00d71",
+   "psnr": 35.52259644440205,
+   "ssim": 0.9311760702777109,
+   "lpips": 0.06878759114382167
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "base \u00d71",
+   "psnr": 33.10855902131654,
+   "ssim": 0.8947998997149135,
+   "lpips": 0.10466450561458866
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 25,
+   "method": "fine-tuned \u00d71",
+   "psnr": 33.118811309557806,
+   "ssim": 0.8949273501988585,
+   "lpips": 0.10536762109647195
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "base \u00d71",
+   "psnr": 30.127620693030163,
+   "ssim": 0.8259195959691898,
+   "lpips": 0.17542761750519276
+  },
+  {
+   "dataset": "Kodak24",
+   "sigma": 50,
+   "method": "fine-tuned \u00d71",
+   "psnr": 30.13342813104182,
+   "ssim": 0.8258896641897518,
+   "lpips": 0.17665700241923332
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "base \u00d71",
+   "psnr": 35.71805828343612,
+   "ssim": 0.9360151976279748,
+   "lpips": 0.04817628280984031
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 15,
+   "method": "fine-tuned \u00d71",
+   "psnr": 35.72172354512898,
+   "ssim": 0.9360652151079135,
+   "lpips": 0.04792360123246908
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "base \u00d71",
+   "psnr": 33.47259263522238,
+   "ssim": 0.9085037022150941,
+   "lpips": 0.07347506264017688
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 25,
+   "method": "fine-tuned \u00d71",
+   "psnr": 33.4761207430419,
+   "ssim": 0.9085490583373628,
+   "lpips": 0.07340321772628361
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "base \u00d71",
+   "psnr": 30.465711350479562,
+   "ssim": 0.8552787703989438,
+   "lpips": 0.1271773986518383
+  },
+  {
+   "dataset": "McMaster",
+   "sigma": 50,
+   "method": "fine-tuned \u00d71",
+   "psnr": 30.46863893550772,
+   "ssim": 0.855405197214115,
+   "lpips": 0.12728048198752934
+  },
+  {
+   "dataset": "Urban100",
+   "sigma": 15,
+   "method": "base \u00d71",
+   "psnr": 34.912191148784295,
+   "ssim": 0.9544197918354892,
+   "lpips": 0.03373848859752927
+  },
+  {
+   "dataset": "Urban100",
+   "sigma": 15,
+   "method": "fine-tuned \u00d71",
+   "psnr": 34.930691360651636,
+   "ssim": 0.9544467168300219,
+   "lpips": 0.033537769956248145
+  },
+  {
+   "dataset": "Urban100",
+   "sigma": 25,
+   "method": "base \u00d71",
+   "psnr": 34.11386558131337,
+   "ssim": 0.9449515361606639,
+   "lpips": 0.056411145720630884
+  },
+  {
+   "dataset": "Urban100",
+   "sigma": 25,
+   "method": "fine-tuned \u00d71",
+   "psnr": 34.13831444162494,
+   "ssim": 0.9450006271325698,
+   "lpips": 0.05668636504560709
+  },
+  {
+   "dataset": "Urban100",
+   "sigma": 50,
+   "method": "base \u00d71",
+   "psnr": 31.016950403808107,
+   "ssim": 0.9048973256387983,
+   "lpips": 0.10816614050418139
+  },
+  {
+   "dataset": "Urban100",
+   "sigma": 50,
+   "method": "fine-tuned \u00d71",
+   "psnr": 31.044482883239564,
+   "ssim": 0.9046586330776053,
+   "lpips": 0.10920314770191908
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "minutes": {
+  "downloads": 18.560546131928763,
+  "denoising": 28.667953407764436
+ },
+ "chosen_on_dev": {
+  "ADM full, m=": "ADM full, m=1.5",
+  "ADM PD2, m=": "ADM PD2, m=1.25",
+  "ADM PD4, m=": "ADM PD4, m=1.25"
+ },
+ "m_full": [
+  0.5,
+  0.75,
+  1.0,
+  1.25,
+  1.5
+ ],
+ "m_pd": [
+  0.8,
+  0.9,
+  1.0,
+  1.1,
+  1.25
+ ],
+ "refine": [
+  0.3,
+  0.5
+ ],
+ "failed_images": [],
+ "failed_methods": []
+}
