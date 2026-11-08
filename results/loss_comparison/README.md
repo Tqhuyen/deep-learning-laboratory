@@ -30,20 +30,24 @@ This study runs it on a denoiser that fits CPU.
 
 Gain over the unadapted baseline, dB:
 
-| set, σ | n | oracle | **r2r** | **sure** | r2r − sure | r2r harmed | sure harmed |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| BSD68 σ 25 | 24 | +0.069 | **+0.036** | −0.100 | **+0.136** | 0 % | 71 % |
-| BSD68 σ 50 | 24 | +0.094 | **−0.070** | −0.135 | **+0.065** | 46 % | 75 % |
-| Urban100 σ 25 | 8 | +0.292 | **+0.225** | −0.012 | **+0.237** | 0 % | 25 % |
-| Urban100 σ 50 | see note | +0.259 | **+0.113** | −0.012 | **+0.125** | 0 % | 14 % |
+| set, σ | n | oracle | **r2r** | **sure** | r2r − sure | r2r / oracle | r2r harmed | sure harmed |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| BSD68 σ 25 | 24 | +0.069 | **+0.036** | −0.100 | **+0.136** | 52 % | 0 % | 71 % |
+| BSD68 σ 50 | 24 | +0.094 | **−0.070** | −0.135 | **+0.065** | −74 % | 46 % | 75 % |
+| Urban100 σ 25 | 12 | +0.342 | **+0.262** | −0.055 | **+0.317** | 77 % | 0 % | 42 % |
+| Urban100 σ 50 | 12 | +0.324 | **+0.183** | +0.003 | **+0.180** | 56 % | 0 % | 17 % |
 
-"Harmed" = worse than the unadapted baseline by more than 0.05 dB.
+72 cases in total. "Harmed" = worse than the unadapted baseline by more than 0.05 dB.
 
-- **The pre-registered rule fires for R2R** in all four cells: it gains more than SURE by 0.065–0.237 dB, far above the
-  0.02 dB threshold, and it harms fewer images.
-- **SURE is not merely worse, it is negative.** With one probe per step the divergence term is a high-variance estimate
-  of a quantity that grows as σ², and the adapted gains drift toward over-smoothing. A quarter to three-quarters of
-  images end up worse than the frozen denoiser.
+- **The pre-registered rule fires for R2R in all four cells:** it gains 0.065–0.317 dB more than SURE, far above the
+  0.02 dB threshold, and it harms fewer images in every cell.
+- **SURE is negative or zero everywhere.** With one probe per step the divergence term is a high-variance estimate of a
+  quantity that grows as σ², and the adapted gains drift toward over-smoothing: 17–75 % of images end up worse than the
+  frozen denoiser.
+- **R2R's behaviour reproduces the ADM pattern on a different architecture.** It gains most on Urban100 (+0.26 / +0.18,
+  56–77 % of the oracle) and loses on BSD68 at σ 50 (−0.070, 46 % of images harmed). That is the same set- and
+  noise-level dependence reported in [`../adaptation`](../adaptation/README.md), where the explanation is the prior's
+  context deficit: Urban100 has one, small high-noise images do not.
 
 ## What this does not settle, and it matters
 

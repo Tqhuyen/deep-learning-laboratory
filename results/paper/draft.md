@@ -528,8 +528,8 @@ Two experiments that a reviewer will ask for were not run, and the paper says so
   work to our adaptation. **Not run on ADM:** Kaggle began rejecting our pushes with "maximum batch GPU session count of
   2 reached" after five batch GPU sessions in two days, and this run needs about 7–10 GPU-hours.
   **Partly answered elsewhere.** On a CPU-sized denoiser at equal budget
-  ([`../loss_comparison`](../loss_comparison/README.md)), R2R gains 0.065–0.237 dB more than a single-probe Monte-Carlo
-  SURE loss in all four cells, and SURE is negative in all four. That is not GainTuning's estimator, which averages over
+  ([`../loss_comparison`](../loss_comparison/README.md)), R2R gains 0.065–0.317 dB more than a single-probe Monte-Carlo
+  SURE loss in all four cells, SURE is negative in three of the four, and the set and σ dependence matches ADM's. That is not GainTuning's estimator, which averages over
   noise realisations and drops its learning rate at step 20, so it does not settle the comparison; what it does show is
   that our loss is not obviously the weak link, and that the harm pattern on small images is not specific to ADM.
 - **A 2025-era released comparator on Urban100.** GRL-B is from 2023. MaIR / MaIR+ (CVPR 2025) publishes checkpoints,
