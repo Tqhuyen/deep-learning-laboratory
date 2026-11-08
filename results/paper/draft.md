@@ -531,8 +531,8 @@ Two experiments that a reviewer will ask for were not run, and the paper says so
 
 - **GainTuning's own loss and parameter set on ADM (§4.3 cites it as the direct prior art).** GainTuning (NeurIPS 2021)
   tunes per-channel gains with a SURE loss and reports that it "does not require early stopping", making it the closest
-  work to our adaptation. **Not run on ADM:** Kaggle began rejecting our pushes with "maximum batch GPU session count of
-  2 reached" after five batch GPU sessions in two days, and this run needs about 7–10 GPU-hours.
+  work to our adaptation. **Not run on ADM:** the week's 30 GPU-hours are spent ("Maximum weekly GPU quota of 30.00 hours reached")
+  after five batch kernels, and this run needs a further 7–10.
   **Partly answered elsewhere.** On a CPU-sized denoiser at equal budget
   ([`../loss_comparison`](../loss_comparison/README.md)), R2R gains 0.065–0.317 dB more than a single-probe Monte-Carlo
   SURE loss in all four cells, SURE is negative in three of the four, and the set and σ dependence matches ADM's. That is not GainTuning's estimator, which averages over
