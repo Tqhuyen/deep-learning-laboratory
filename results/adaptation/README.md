@@ -187,3 +187,31 @@ required a new hyper-parameter.
 
 **What the predictor is not.** It is not a licence to tune the adaptation per σ. It says where adaptation has room, not
 what the best settings are; the settings stay frozen across σ in every result reported here.
+
+### A second mechanism is needed: the same set pattern appears without any context deficit
+
+The predictor above is measured on ADM, where a context deficit exists. [`../loss_comparison`](../loss_comparison/README.md)
+runs the same adaptation on **DnCNN-gray**, a 20-layer convolutional denoiser with no attention, no resolution
+limitation and therefore **no context deficit to speak of**. It shows the same set and noise-level pattern:
+
+| | Urban100 σ 25 | Urban100 σ 50 | BSD68 σ 25 | BSD68 σ 50 |
+|---|---:|---:|---:|---:|
+| R2R gain on DnCNN (dB) | **+0.262** | **+0.183** | +0.036 | **−0.070** |
+
+Urban100 gains substantially, BSD68 at σ 50 loses, and the ordering across σ is the same. Whatever drives adaptation on
+DnCNN, it is not the token count of an attention layer.
+
+**What this means for the claim.** The context deficit is a valid *predictor* within ADM — it was measured on 88 held-out
+images, replicated at three σ and across four set/σ cells — but it cannot be the whole mechanism. At least one other
+axis must contribute, and the data point to two candidates:
+
+1. **Content.** Urban100 is the repetitive set. Adaptation with a self-supervised loss can exploit repeated structure;
+   this was GainTuning's own observation and we could not separate it from size.
+2. **Noise-fitting tax.** The R2R target carries the image's own noise, so the fitted part grows with σ and with the
+   number of parameters relative to pixels. On DnCNN, only 1,217 gains are fitted, yet BSD68 at σ 50 still loses — and
+   BSD68 at σ 25 does not. That is a monotone σ effect with a fixed parameter count, which the tax explains and the
+   context deficit does not.
+
+**How the claim is therefore stated.** The predictor says *where adaptation has room on ADM*; it is not offered as a
+general law of per-image adaptation. The two-mechanism reading is recorded here because a reviewer will run exactly the
+experiment that produced it.

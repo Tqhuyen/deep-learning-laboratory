@@ -43,8 +43,9 @@ ranked.
   0.04 % of the network on the noisy image alone adds +0.15 dB on Urban100, improving all 88 held-out images, and loses
   on Kodak24, McMaster and gray images. Whether it helps is a reproducible property of the *image* (per-image gain
   ranks identically across noise draws, ρ = 0.98) and is predicted before adapting by one measured quantity, the prior's
-  context deficit (ρ = −0.44 to −0.56 within each σ). Deficit and gain rank identically across σ (from −0.082/+0.134 at
-  σ = 15 to −0.187/+0.148 at σ = 50) and across datasets, which also explains the one cell without a win.
+  context deficit (ρ = −0.44 to −0.56 within each σ; deficit and gain rank identically across σ and across datasets).
+  That predictor holds within ADM; the same set and σ pattern also appears on a convolutional denoiser with no context
+  deficit at all, so it is not offered as a general law.
 - **Limit.** A supervised network refined with CLIP features (PTG-RM) remains 0.1–0.3 dB ahead in most cells.
 
 ## 1. Introduction
@@ -285,6 +286,11 @@ the result against the CSVs beside it.
     below 0.03 dB are exactly the two where adaptation loses.
   - **A cheap pre-check.** The deficit costs two forward passes, so whether to adapt can be decided before paying its
     4.3 GPU-minutes.
+  - **But it is not the whole mechanism.** The same adaptation on DnCNN — a convolutional denoiser with no attention and
+    no context deficit — shows the same set and σ pattern: +0.262 / +0.183 dB on Urban100 at σ 25 / 50 against +0.036 /
+    −0.070 on BSD68 ([`../loss_comparison`](../loss_comparison/README.md)). At least one further axis is needed; the data
+    point to content (Urban100 is the repetitive set) and to a noise-fitting tax that grows with σ. The deficit is
+    therefore stated as a predictor *within ADM*, not as a general law of per-image adaptation.
 
 **Tested and rejected: fine-tuning on the denoising steps** ([`../adm_finetune/README.md`](../adm_finetune/README.md)).
 ADM was fine-tuned with its own ε loss on embedded noisy DIV2K crops (σ ~ U[5, 60]/255). By Section 3 this loss is the
