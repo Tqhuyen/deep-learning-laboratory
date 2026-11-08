@@ -202,6 +202,7 @@ deep-learning-laboratory/
 │   ├── urban100/              Urban100 colour, whole image vs tiles: report, scores, paired tests
 │   │   ├── full100/           Urban100 full 100 images, frozen pipeline, paired against GRL-B's released outputs
 │   │   └── seed_replication/  the σ 50 result on two further noise draws (three-draw standard)
+│   ├── loss_comparison/       SURE against R2R at equal budget, on a CPU-sized denoiser: report, scores
 │   ├── measurement_audit/     rescoring released outputs and the cost of the scoring protocol: report, rescored tables
 │   ├── adaptation/            per-image R2R adaptation of the one-step denoiser: report, gate scores
 │   └── paper/                 draft, claims.md (every claim with its evidence and falsification condition), prior_art.md
