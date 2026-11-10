@@ -98,11 +98,12 @@ variables at once:
     and large non-repetitive images (DIV2K-valid at full resolution);
   - GainTuning's own loss and parameter set on ADM, the direct prior-art baseline.
 
-## What predicts whether adaptation helps (replaces the retracted capacity rule)
+## What predicts whether adaptation helps on ADM: the context deficit
 
-The earlier "noisy values per adapted parameter" rule was withdrawn: inside confirm-88 the image size does not predict
-the gain (Spearman −0.10 / −0.12), and the threshold had been drawn after the scores. This section replaces it with a
-predictor that was measured on 88 images, replicated across noise draws, and cross-checked across four set/σ cells.
+The first draft proposed a "noisy values per adapted parameter" rule and withdrew it: inside confirm-88 the image size
+does not predict the gain (Spearman −0.10 / −0.12), and the threshold had been drawn after the scores. What replaces it
+here is a predictor measured on 88 images, replicated across noise draws, and cross-checked across four set/σ cells — and
+the capacity idea itself is later rehabilitated in a *measured* form, at the end of this file.
 
 **The predictor is the context deficit**, measured before any adaptation: `tile gain = PSNR(whole ×1) − PSNR(512-px
 tiles ×2)`. It costs two extra forward passes and says how much the frozen prior's context mismatch costs *this*
@@ -158,7 +159,8 @@ Tiling and adaptation both act on the prior's mismatch with the image, and they 
 2. **The cross-set failure is explained, not unexplained.** Kodak24 and McMaster have a context deficit of 0.02–0.03 dB,
    below the threshold, which is where the adaptation loss lands.
 3. **The gate is free to falsify.** Applied prospectively to a new set, the predictor either ranks the images correctly
-   or it does not. This is the pre-registered test the earlier rule never had.
+   or it does not. This is the pre-registered test the earlier rule never had — and it is exactly the test that the
+   DnCNN experiment at the end of this file then failed, which is why the predictor is scoped to ADM.
 
 **Caveat.** The cross-set check rests on four cells; the within-Urban100 evidence (n = 88, two σ, three draws on the
 gain itself) is what carries the claim. The threshold "0.1 dB" is descriptive of these four cells and is not yet a
@@ -188,30 +190,31 @@ required a new hyper-parameter.
 **What the predictor is not.** It is not a licence to tune the adaptation per σ. It says where adaptation has room, not
 what the best settings are; the settings stay frozen across σ in every result reported here.
 
-### A second mechanism is needed: the same set pattern appears without any context deficit
+### The second mechanism is measured: headroom minus tax
 
 The predictor above is measured on ADM, where a context deficit exists. [`../loss_comparison`](../loss_comparison/README.md)
-runs the same adaptation on **DnCNN-gray**, a 20-layer convolutional denoiser with no attention, no resolution
-limitation and therefore **no context deficit to speak of**. It shows the same set and noise-level pattern:
+then ran the same adaptation on **DnCNN-gray** — no attention, no resolution limit, so no context deficit — and found the
+same set and σ pattern: +0.262 / +0.183 dB on Urban100 at σ 25 / 50 against +0.036 / −0.070 on BSD68. Whatever drives
+adaptation there is not the token count of an attention layer.
 
-| | Urban100 σ 25 | Urban100 σ 50 | BSD68 σ 25 | BSD68 σ 50 |
-|---|---:|---:|---:|---:|
-| R2R gain on DnCNN (dB) | **+0.262** | **+0.183** | +0.036 | **−0.070** |
+[`../capacity_sweep`](../capacity_sweep/README.md) separates the candidates by varying **only the number of fitted
+parameters**, at 100 / 50 / 25 / 10 % of 1,217 gains:
 
-Urban100 gains substantially, BSD68 at σ 50 loses, and the ordering across σ is the same. Whatever drives adaptation on
-DnCNN, it is not the token count of an attention layer.
+| set, σ | 100 % | 50 % | 25 % | 10 % | paired p, 10 % vs 100 % |
+|---|---:|---:|---:|---:|---:|
+| BSD68 σ 50 (harms) | **−0.070** | −0.044 | −0.020 | **−0.006** | 1.5·10⁻⁵, 22/24 better |
+| Urban100 σ 25 (helps) | **+0.262** | +0.226 | +0.190 | +0.141 | 4.7·10⁻⁴, 0/12 better |
+| Urban100 σ 50 (helps) | **+0.183** | +0.160 | +0.130 | +0.100 | 1.3·10⁻² |
 
-**What this means for the claim.** The context deficit is a valid *predictor* within ADM — it was measured on 88 held-out
-images, replicated at three σ and across four set/σ cells — but it cannot be the whole mechanism. At least one other
-axis must contribute, and the data point to two candidates:
+Harm falls from 46 % of BSD68 σ 50 images to 8 % as parameters are removed, while Urban100 gain falls monotonically. **The
+two terms move in opposite directions with capacity**, so the adaptation has:
 
-1. **Content.** Urban100 is the repetitive set. Adaptation with a self-supervised loss can exploit repeated structure;
-   this was GainTuning's own observation and we could not separate it from size.
-2. **Noise-fitting tax.** The R2R target carries the image's own noise, so the fitted part grows with σ and with the
-   number of parameters relative to pixels. On DnCNN, only 1,217 gains are fitted, yet BSD68 at σ 50 still loses — and
-   BSD68 at σ 25 does not. That is a monotone σ effect with a fixed parameter count, which the tax explains and the
-   context deficit does not.
+1. **headroom** — from content the prior cannot capture; largest on repetitive images;
+2. **tax** — from fitting the image's own noise; largest at high σ and high parameter count.
 
-**How the claim is therefore stated.** The predictor says *where adaptation has room on ADM*; it is not offered as a
-general law of per-image adaptation. The two-mechanism reading is recorded here because a reviewer will run exactly the
-experiment that produced it.
+The net gain is their difference. That explains every pattern this project has measured, including the one cell without a
+win: at σ 15 on Urban100 the headroom is smaller, so the net gain is too.
+
+It also resolves the earlier withdrawal. The first draft's "noisy values per adapted parameter" rule was not wrong that
+capacity matters; it was wrong to read one cross-set comparison as a capacity law, because headroom and tax both scale
+with capacity and only an experiment that holds one fixed can separate them.

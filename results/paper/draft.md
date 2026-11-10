@@ -286,11 +286,20 @@ the result against the CSVs beside it.
     below 0.03 dB are exactly the two where adaptation loses.
   - **A cheap pre-check.** The deficit costs two forward passes, so whether to adapt can be decided before paying its
     4.3 GPU-minutes.
-  - **But it is not the whole mechanism.** The same adaptation on DnCNN — a convolutional denoiser with no attention and
-    no context deficit — shows the same set and σ pattern: +0.262 / +0.183 dB on Urban100 at σ 25 / 50 against +0.036 /
-    −0.070 on BSD68 ([`../loss_comparison`](../loss_comparison/README.md)). At least one further axis is needed; the data
-    point to content (Urban100 is the repetitive set) and to a noise-fitting tax that grows with σ. The deficit is
-    therefore stated as a predictor *within ADM*, not as a general law of per-image adaptation.
+  - **And the deficit is not the whole mechanism.** The same adaptation on DnCNN — no attention, no context deficit —
+    shows the same set and σ pattern (+0.262 / +0.183 dB on Urban100 at σ 25 / 50 against +0.036 / −0.070 on BSD68,
+    [`../loss_comparison`](../loss_comparison/README.md)). Varying *only* the share of parameters fitted separates the
+    terms ([`../capacity_sweep`](../capacity_sweep/README.md)):
+
+    | share of 1,217 gains fitted | 100 % | 50 % | 25 % | 10 % |
+    |---|---:|---:|---:|---:|
+    | BSD68 σ 50 (harmful cell) | −0.070 | −0.044 | −0.020 | **−0.006** |
+    | Urban100 σ 25 (helpful cell) | +0.262 | +0.226 | +0.190 | **+0.141** |
+
+    The two move in **opposite directions** with capacity, so the net gain is a **headroom** term (content the prior
+    cannot capture) minus a **noise-fitting tax** (the R2R target carries the image's own noise). The deficit is
+    therefore a predictor *within ADM*, not a general law — and the tax's dose-response curve is what explains why the
+    first draft's capacity rule looked right across sets while failing within one.
 
 **Tested and rejected: fine-tuning on the denoising steps** ([`../adm_finetune/README.md`](../adm_finetune/README.md)).
 ADM was fine-tuned with its own ε loss on embedded noisy DIV2K crops (σ ~ U[5, 60]/255). By Section 3 this loss is the

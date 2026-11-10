@@ -25,6 +25,7 @@ the claims ledger and the prior-art table.
 | [`urban100/full100/`](urban100/full100/README.md) | what does the frozen pipeline reach on all 100 images? | 33.402 / 30.671 dB at σ 25 / 50, **+0.065 / +0.220 dB** over GRL-B's released outputs, paired |
 | [`urban100/seed_replication/`](urban100/seed_replication/README.md) | do those margins survive fresh noise draws? | yes: three draws at σ 50, two at σ 25, 88/88 images better every time |
 | [`adaptation/`](adaptation/README.md) | when does per-image adaptation help? | it is a property of the image (ρ = 0.98 across draws) predicted by one measured deficit (ρ = −0.44…−0.56) |
+| [`capacity_sweep/`](capacity_sweep/README.md) | is the harm a fitting tax or a content effect? | both: varying only the fitted parameter count moves harm and headroom in opposite directions |
 | [`loss_comparison/`](loss_comparison/README.md) | is our loss the weak link against GainTuning's SURE, at equal budget? | R2R beats SURE in all four cells (+0.07…+0.24 dB) on DnCNN; the harm pattern transfers across architectures |
 | [`measurement_audit/`](measurement_audit/README.md) | how much can a published number move without the method changing? | cropping 0.04–0.17 dB, colour channel 1.6–2.8 dB, clipped input up to 3.8 dB; two architectures agree to 0.02 dB |
 | [`real_noise/`](real_noise/README.md) | does any of it transfer to camera noise? | parity with DMID-d only, below the newer bars; reported as analysis, not as a claim |
