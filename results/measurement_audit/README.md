@@ -74,6 +74,39 @@ DMID-d's released full-image outputs are scored under each protocol, so nothing 
   comparable at all.
 
 ## Does the published ordering survive a common protocol?
+## Which protocol axes reorder methods, and which only shift the level
+
+Two questions hide behind "the protocol moves numbers":
+
+1. Does an axis change a method's *level*? All three do, and the previous sections quantify how much.
+2. Does it change the *ordering* between two methods? Only some do, and it is worth separating them because a reviewer
+   will ask whether the whole leaderboard is meaningless or merely imprecise.
+
+DMID-d and Restormer, both measured under each axis, over the nine set–σ cells:
+
+| axis | DMID-d − Restormer, full-image RGB | under the axis | sign changes | largest change in the gap |
+|---|---:|---:|---:|---:|
+| GRL's crop | +0.033 … +0.222 dB | +0.031 … +0.211 dB | **0 / 9** | 0.011 dB |
+| Y channel | +0.033 … +0.222 dB | +0.033 … +0.206 dB | **0 / 9** | 0.023 dB |
+
+**So scoring conventions mostly shift the level, not the ranking.** When a gap is large relative to the axis's shift —
+here 0.03–0.22 dB against a 0.01–0.02 dB effect — the ordering survives. That is a weaker and more accurate statement
+than "leaderboards are meaningless", and it is the right one.
+
+**What did reorder methods was not a scoring convention.** The Kodak24 reversal in the section above came from GRL
+evaluating on the **central 500×500 crop**, 62.6 % of each image — a different set of pixels, not a trimmed border. The
+distinction matters:
+
+- a *convention* (which border, which colour space, which input quantisation) moves levels by 0.01–2.5 dB and largely
+  preserves orderings;
+- a *different evaluation region* changes the underlying data and can reverse them, as it did for DMID-d against GRL-B
+  at σ 15 and σ 25.
+
+**Consequence for this paper.** The claim in C1/C2 is stated on the same pixels for both methods, which is the
+condition under which orderings are reliable. The claim in C10 is about the size of the level shifts, which is where
+the damage is: a 3.8 dB convention difference can promote a method across a leaderboard, and 0.05 dB margins are inside
+the convention noise even when the ordering happens to be right.
+
 
 DMID-d and GRL-B are scored on exactly the same pixels (GRL's crop region; each on its own noise draws):
 

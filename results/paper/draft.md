@@ -466,6 +466,16 @@ effect belongs to the protocol, not to the model:
 Two architectures agree on the first two axes to within 0.02 dB over nine cells, so the effect belongs to the protocol
 rather than to the model.
 
+**Conventions shift the level; they mostly preserve the ordering.** Comparing DMID-d with Restormer under each axis, the
+gap changes sign in **none of nine cells** and moves by only 0.011 dB under the crop and 0.023 dB under the colour-space
+choice. A gap of 0.03–0.22 dB therefore survives a convention. That is a narrower statement than "leaderboards are
+meaningless" and the correct one.
+
+**What did reorder two methods was a different evaluation region.** The Kodak24 reversal earlier in this section comes
+from GRL scoring the central 500×500 crop — 62.6 % of each image — rather than from a trimmed border. A convention moves
+levels; a different set of pixels changes the data, and can reverse the order. Our own claims are made on identical
+pixels, which is the condition under which orderings are reliable.
+
 The third row is new and is the largest axis of the three. Feeding the *same* method a clipped, quantised copy of the
 same noisy image costs 0.48 dB on average at σ = 15, 0.99 dB at σ = 25 and **2.46 dB at σ = 50**, reaching **3.81 dB**
 on McMaster.
